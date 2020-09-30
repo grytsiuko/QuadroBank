@@ -7,7 +7,9 @@
 using namespace std;
 
 class FrontendCommunication {
+
 private:
+
     BackendCommunication backendCommunication;
 
 public:

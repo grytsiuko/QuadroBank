@@ -3,4 +3,4 @@ project(QuadroBank)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(QuadroBank frontend/main.cpp frontend/communication/frontend_communication.h backend/communication/backend_communication.h)
+add_executable(QuadroBank frontend/main.cpp frontend/communication/frontend_communication.h backend/communication/backend_communication.h backend/user_service/user_service.h backend/user_service/user_repository.h)
