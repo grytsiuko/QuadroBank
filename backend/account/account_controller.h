@@ -21,6 +21,10 @@ public:
     Response<SessionTokenDto> authorize(const AccountAuthorizeDto &account_authorize_dto) const {
         return _account_service.authorize(account_authorize_dto);
     }
+
+    Response<AccountBalanceDto> check_balance(const SessionTokenDto &sessionTokenDto) const {
+        return _account_service.check_balance(sessionTokenDto);
+    }
 };
 
 #endif

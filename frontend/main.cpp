@@ -1,5 +1,8 @@
 #include <iostream>
+#include <cassert>
 #include "actions/account_actions.h"
+
+using std::cout;
 
 int main() {
     AccountActions &accountActions = AccountActions::get_instance();
@@ -7,9 +10,11 @@ int main() {
             AccountAuthorizeDto{"1111 1111 1111 1111", "1111"}
     );
     if (authorizeResponse.is_success()) {
-        std::cout << authorizeResponse.get_response()->_token;
+        Response<AccountBalanceDto> balanceResponse = accountActions.check_balance(*authorizeResponse.get_response());
+        assert(balanceResponse.is_success());
+        cout << balanceResponse.get_response()->_balance;
     } else {
-        std::cout << "Unauthorized";
+        cout << "Unauthorized";
     }
     return 0;
 }
