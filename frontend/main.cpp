@@ -2,10 +2,10 @@
 #include "actions/account_actions.h"
 
 int main() {
-    Response<SessionTokenDto> authorizeResponse =
-            AccountActions::get_instance().authorize(AccountAuthorizeDto{
-                "1111 1111 1111 1111", "1111"
-            });
+    AccountActions &accountActions = AccountActions::get_instance();
+    Response<SessionTokenDto> authorizeResponse = accountActions.authorize(
+            AccountAuthorizeDto{"1111 1111 1111 1111", "1111"}
+    );
     if (authorizeResponse.is_success()) {
         std::cout << authorizeResponse.get_response()->_token;
     } else {

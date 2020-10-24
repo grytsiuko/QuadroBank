@@ -24,12 +24,19 @@ public:
 
     Response(const Response &) = delete;
 
+    Response &operator=(const Response &) = delete;
+
     Response(const Response &&response) noexcept: _value(response._value), _error(response._error) {
         response._value = nullptr;
         response._error = nullptr;
     }
 
-    Response &operator=(const Response &) = delete;
+    Response &operator=(Response &&response) noexcept {
+        _value = response._value;
+        _error = response.error;
+        response._value = nullptr;
+        response._error = nullptr;
+    }
 
     static Response success(const T *value) {
         return Response(value, nullptr);

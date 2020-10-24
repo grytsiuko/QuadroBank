@@ -4,27 +4,19 @@
 #include "dto/session_token_dto.h"
 #include "dto/account_authorize_dto.h"
 #include "account_service.h"
+#include "../utils/singleton.h"
 
-class AccountController {
+class AccountController: public Singleton<AccountController> {
 
 private:
+
+    friend Singleton;
 
     const AccountService &_account_service;
 
     AccountController() : _account_service(AccountService::get_instance()) {}
 
-    ~AccountController() = default;
-
 public:
-
-    AccountController(const AccountController &) = delete;
-
-    AccountController &operator=(const AccountController &) = delete;
-
-    static AccountController &get_instance() {
-        static AccountController instance;
-        return instance;
-    }
 
     Response<SessionTokenDto> authorize(const AccountAuthorizeDto &account_authorize_dto) const {
         return _account_service.authorize(account_authorize_dto);

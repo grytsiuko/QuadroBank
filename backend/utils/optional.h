@@ -18,11 +18,16 @@ public:
 
     Optional(const Optional &) = delete;
 
+    Optional &operator=(const Optional &) = delete;
+
     Optional(const Optional &&optional) noexcept: _value(optional._value) {
         optional._value = nullptr;
     }
 
-    Optional &operator=(const Optional &) = delete;
+    Optional &operator=(Optional &&optional) noexcept {
+        _value = optional._value;
+        optional._value = nullptr;
+    }
 
     static Optional of(const T *value) {
         return Optional(value);

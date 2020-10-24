@@ -9,9 +9,11 @@
 using std::string;
 using std::vector;
 
-class AccountRepositoryInMemory: public AccountRepositoryInterface {
+class AccountRepositoryInMemory: public AccountRepositoryInterface<AccountRepositoryInMemory> {
 
 private:
+
+    friend Singleton;
 
     vector<Account> _accounts;
 
@@ -21,8 +23,6 @@ private:
         _accounts.push_back(Account{"3333 3333 3333 3333", "3333"});
     }
 
-    ~AccountRepositoryInMemory() override = default;
-
     Optional<Account> _get_by_card_number(const string &card_number) const override {
         for (const Account &account:_accounts){
             if (account._card_number == card_number) {
@@ -31,17 +31,6 @@ private:
         }
         return Optional<Account>::empty();
     };
-
-public:
-
-    AccountRepositoryInMemory(const AccountRepositoryInMemory &) = delete;
-
-    AccountRepositoryInMemory &operator=(const AccountRepositoryInMemory &) = delete;
-
-    static AccountRepositoryInMemory &get_instance() {
-        static AccountRepositoryInMemory instance;
-        return instance;
-    }
 };
 
 #endif //QUADROBANK_ACCOUNT_REPOSITORY_IN_MEMORY_H

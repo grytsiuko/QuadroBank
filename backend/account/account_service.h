@@ -6,27 +6,19 @@
 #include "account_repository_interface.h"
 #include "account_repository_in_memory.h"
 #include "../utils/response.h"
+#include "../utils/singleton.h"
 
-class AccountService {
+class AccountService: public Singleton<AccountService> {
 
 private:
 
-    const AccountRepositoryInterface &_account_repository;
+    friend Singleton;
 
-    AccountService() : _account_repository(AccountRepositoryInMemory::get_instance()) {}
+    const AccountRepositoryInterface<AccountRepositoryInMemory> &_account_repository;
 
-    ~AccountService() = default;
+    AccountService() : _account_repository(AccountRepositoryInterface<AccountRepositoryInMemory>::get_instance()) {}
 
 public:
-
-    AccountService(const AccountService &) = delete;
-
-    AccountService &operator=(const AccountService &) = delete;
-
-    static AccountService &get_instance() {
-        static AccountService instance;
-        return instance;
-    }
 
     Response<SessionTokenDto> authorize(const AccountAuthorizeDto &account_authorize_dto) const {
         Optional<Account> account = _account_repository.get_by_card_number(account_authorize_dto._card_number);

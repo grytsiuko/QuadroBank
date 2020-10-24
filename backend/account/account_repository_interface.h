@@ -3,27 +3,18 @@
 
 #include "../utils/optional.h"
 #include "model/account.h"
+#include "../utils/singleton.h"
 
 using std::string;
 
-class AccountRepositoryInterface {
+template <class T>
+class AccountRepositoryInterface: public Singleton<T> {
 
 public:
 
     Optional<Account> get_by_card_number(const string &card_number) const {
         return _get_by_card_number(card_number);
     }
-
-protected:
-
-    AccountRepositoryInterface() = default;
-
-    virtual ~AccountRepositoryInterface() = default;
-
-    AccountRepositoryInterface(const AccountRepositoryInterface &) = default;
-
-    AccountRepositoryInterface &operator=(const AccountRepositoryInterface &) = default;
-
 
 private:
 
