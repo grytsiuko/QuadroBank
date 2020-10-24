@@ -33,6 +33,10 @@ public:
     Response<void> withdraw(const AccountUpdateDto &account_update_dto) const {
         return _account_controller.withdraw(account_update_dto);
     }
+
+    Response<void> transfer(const AccountTransferDto &account_transfer_dto) const {
+        return _account_controller.transfer(account_transfer_dto);
+    }
 };
 
 #endif

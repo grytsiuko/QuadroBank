@@ -10,6 +10,7 @@
 #include "dto/account_balance_dto.h"
 #include "../token/token_service.h"
 #include "dto/account_update_dto.h"
+#include "dto/account_transfer_dto.h"
 
 class AccountService : public Singleton<AccountService> {
 
@@ -95,6 +96,42 @@ public:
         }
 
         _account_repository.update(account_copy);
+        return Response<void>::success();
+    }
+
+    Response<void> transfer(const AccountTransferDto &account_transfer_dto) const {
+        if (account_transfer_dto._sum <= 0) {
+            return Response<void>::error(new string("Sum should be positive"));
+        }
+
+        string card_number = _token_service.get_card_number(account_transfer_dto._token);
+        Optional<Account> account = _account_repository.get_by_card_number(card_number);
+
+        if (account.is_empty()) {
+            return Response<void>::error(new string("Illegal token"));
+        }
+
+        Optional<Account> target_account = _account_repository.get_by_card_number(account_transfer_dto._target_card);
+
+        if (target_account.is_empty()) {
+            return Response<void>::error(new string("No such target card"));
+        }
+
+        Account account_copy = Account(*account.get());
+        Account target_account_copy = Account(*target_account.get());
+        account_copy._balance -= account_transfer_dto._sum;
+        target_account_copy._balance += account_transfer_dto._sum;
+
+        if (!account_copy._is_credit && account_copy._balance < 0) {
+            return Response<void>::error(new string("You have simple card, you cannot have negative balance"));
+        }
+
+        if (account_copy._is_credit && account_copy._balance < -account_copy._credit_limit) {
+            return Response<void>::error(new string("You cannot exceed your credit limit"));
+        }
+
+        _account_repository.update(account_copy);
+        _account_repository.update(target_account_copy);
         return Response<void>::success();
     }
 };
