@@ -70,6 +70,33 @@ public:
         _account_repository.update(account_copy);
         return Response<void>::success();
     }
+
+    Response<void> withdraw(const AccountUpdateDto &account_update_dto) const {
+        if (account_update_dto._sum <= 0) {
+            return Response<void>::error(new string("Sum should be positive"));
+        }
+
+        string card_number = _token_service.get_card_number(account_update_dto._token);
+        Optional<Account> account = _account_repository.get_by_card_number(card_number);
+
+        if (account.is_empty()) {
+            return Response<void>::error(new string("Illegal token"));
+        }
+
+        Account account_copy = Account(*account.get());
+        account_copy._balance -= account_update_dto._sum;
+
+        if (!account_copy._is_credit && account_copy._balance < 0) {
+            return Response<void>::error(new string("You have simple card, you cannot have negative balance"));
+        }
+
+        if (account_copy._is_credit && account_copy._balance < -account_copy._credit_limit) {
+            return Response<void>::error(new string("You cannot exceed your credit limit"));
+        }
+
+        _account_repository.update(account_copy);
+        return Response<void>::success();
+    }
 };
 
 #endif

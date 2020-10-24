@@ -23,6 +23,17 @@ int main() {
         balanceResponse = accountActions.check_balance(*authorizeResponse.get_response());
         assert(balanceResponse.is_success());
         cout << balanceResponse.get_response()->_balance << "\n";
+
+        // withdraw
+        Response<void> withdrawResponse = accountActions.withdraw(AccountUpdateDto{authorizeResponse.get_response()->_token, 1000});
+        assert(withdrawResponse.is_error());
+        withdrawResponse = accountActions.withdraw(AccountUpdateDto{authorizeResponse.get_response()->_token, 130});
+        assert(withdrawResponse.is_success());
+
+        // check balance
+        balanceResponse = accountActions.check_balance(*authorizeResponse.get_response());
+        assert(balanceResponse.is_success());
+        cout << balanceResponse.get_response()->_balance << "\n";
     } else {
         cout << "Unauthorized";
     }

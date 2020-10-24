@@ -29,6 +29,10 @@ public:
     Response<void> top_up(const AccountUpdateDto &accountUpdateDto) const {
         return _account_controller.top_up(accountUpdateDto);
     }
+
+    Response<void> withdraw(const AccountUpdateDto &account_update_dto) const {
+        return _account_controller.withdraw(account_update_dto);
+    }
 };
 
 #endif
