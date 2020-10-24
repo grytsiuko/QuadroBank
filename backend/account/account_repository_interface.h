@@ -16,9 +16,15 @@ public:
         return _get_by_card_number(card_number);
     }
 
+    void update(const Account &account) const {
+        return _update(account);
+    }
+
 private:
 
     virtual Optional<Account> _get_by_card_number(const string &card_number) const = 0;
+
+    virtual void _update(const Account &account) const = 0;
 };
 
 #endif //QUADROBANK_ACCOUNT_REPOSITORY_INTERFACE_H

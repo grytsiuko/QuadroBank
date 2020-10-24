@@ -15,7 +15,7 @@ private:
 
     friend Singleton;
 
-    vector<Account> _accounts;
+    mutable vector<Account> _accounts;
 
     AccountRepositoryInMemory() : _accounts(vector<Account>()) {
         _accounts.push_back(
@@ -25,7 +25,7 @@ private:
                 Account{"2222 2222 2222 2222", "2222", true, 200, 50}
         );
         _accounts.push_back(
-                Account{"3333 3333 3333 3333", "3333", true, 20, 300}
+                Account{"3333 3333 3333 3333", "3333", true, -20, 300}
         );
     }
 
@@ -37,6 +37,15 @@ private:
         }
         return Optional<Account>::empty();
     };
+
+    void _update(const Account &account) const override {
+        for (Account &curr : _accounts) {
+            if (curr._card_number == account._card_number) {
+                curr = account;
+                return;
+            }
+        }
+    }
 };
 
 #endif //QUADROBANK_ACCOUNT_REPOSITORY_IN_MEMORY_H

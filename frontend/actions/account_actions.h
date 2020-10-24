@@ -25,6 +25,10 @@ public:
     Response<AccountBalanceDto> check_balance(const SessionTokenDto &sessionTokenDto) const {
         return _account_controller.check_balance(sessionTokenDto);
     }
+
+    Response<void> top_up(const AccountUpdateDto &accountUpdateDto) const {
+        return _account_controller.top_up(accountUpdateDto);
+    }
 };
 
 #endif
