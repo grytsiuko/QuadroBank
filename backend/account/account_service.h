@@ -29,107 +29,89 @@ private:
 public:
 
     SessionTokenDto *authorize(const AccountAuthorizeDto &account_authorize_dto) const {
-        Optional<Account> account = _account_repository.get_by_card_number(account_authorize_dto._card_number);
-        if (account.is_empty()) {
-            throw Exception("No such card number");
-        }
+        Account account = _assert_account_by_card_number(account_authorize_dto._card_number);
 
-        if (account.get()->_pin != account_authorize_dto._pin) {
+        if (account._pin != account_authorize_dto._pin) {
             throw Exception("Illegal pin");
         }
 
-        return new SessionTokenDto{
-                _token_service.generate_token(*account.get())
-        };
+        return new SessionTokenDto{_token_service.generate_token(account)};
     }
 
     AccountBalanceDto *check_balance(const SessionTokenDto &session_token_dto) const {
-        string card_number = _token_service.get_card_number(session_token_dto._token);
-        Optional<Account> account = _account_repository.get_by_card_number(card_number);
+        Account account = _assert_account_by_token(session_token_dto._token);
 
-        if (account.is_empty()) {
-            throw Exception("Illegal token");
-        }
-
-        return new AccountBalanceDto(*account.get());
+        return new AccountBalanceDto(account);
     }
 
     void top_up(const AccountUpdateDto &account_update_dto) const {
-        if (account_update_dto._sum <= 0) {
-            throw Exception("Sum should be positive");
-        }
+        _assert_positive_sum(account_update_dto._sum);
 
-        string card_number = _token_service.get_card_number(account_update_dto._token);
-        Optional<Account> account = _account_repository.get_by_card_number(card_number);
+        Account account = _assert_account_by_token(account_update_dto._token);
+        account._balance += account_update_dto._sum;
 
-        if (account.is_empty()) {
-            throw Exception("Illegal token");
-        }
-
-        Account account_copy = Account(*account.get());
-        account_copy._balance += account_update_dto._sum;
-        _account_repository.update(account_copy);
+        _account_repository.update(account);
     }
 
     void withdraw(const AccountUpdateDto &account_update_dto) const {
-        if (account_update_dto._sum <= 0) {
-            throw Exception("Sum should be positive");
-        }
+        _assert_positive_sum(account_update_dto._sum);
 
-        string card_number = _token_service.get_card_number(account_update_dto._token);
-        Optional<Account> account = _account_repository.get_by_card_number(card_number);
+        Account account = _assert_account_by_token(account_update_dto._token);
+        account._balance -= account_update_dto._sum;
+        _assert_correct_balance(account);
 
-        if (account.is_empty()) {
-            throw Exception("Illegal token");
-        }
-
-        Account account_copy = Account(*account.get());
-        account_copy._balance -= account_update_dto._sum;
-
-        if (!account_copy._is_credit && account_copy._balance < 0) {
-            throw Exception("You have simple card, you cannot have negative balance");
-        }
-
-        if (account_copy._is_credit && account_copy._balance < -account_copy._credit_limit) {
-            throw Exception("You cannot exceed your credit limit");
-        }
-
-        _account_repository.update(account_copy);
+        _account_repository.update(account);
     }
 
     void transfer(const AccountTransferDto &account_transfer_dto) const {
-        if (account_transfer_dto._sum <= 0) {
+        _assert_positive_sum(account_transfer_dto._sum);
+
+        Account account = _assert_account_by_token(account_transfer_dto._token);
+        Account target_account = _assert_account_by_card_number(account_transfer_dto._target_card);
+
+        account._balance -= account_transfer_dto._sum;
+        target_account._balance += account_transfer_dto._sum;
+
+        _assert_correct_balance(account);
+
+        _account_repository.update(account);
+        _account_repository.update(target_account);
+    }
+
+private:
+
+    void _assert_positive_sum(int sum) const {
+        if (sum < 0) {
             throw Exception("Sum should be positive");
         }
+    }
 
-        string card_number = _token_service.get_card_number(account_transfer_dto._token);
+    void _assert_correct_balance(const Account &account) const {
+        if (!account._is_credit && account._balance < 0) {
+            throw Exception("You have simple card, you cannot have negative balance");
+        }
+        if (account._is_credit && account._balance < -account._credit_limit) {
+            throw Exception("You cannot exceed your credit limit");
+        }
+    }
+
+    Account _assert_account_by_token(const string &token) const {
+        string card_number = _token_service.get_card_number(token);
         Optional<Account> account = _account_repository.get_by_card_number(card_number);
 
         if (account.is_empty()) {
             throw Exception("Illegal token");
         }
+        return Account(*account.get());
+    }
 
-        Optional<Account> target_account = _account_repository.get_by_card_number(account_transfer_dto._target_card);
+    Account _assert_account_by_card_number(const string &card_number) const {
+        Optional<Account> account = _account_repository.get_by_card_number(card_number);
 
-        if (target_account.is_empty()) {
-            throw Exception("No such target card");
+        if (account.is_empty()) {
+            throw Exception("No such card number");
         }
-
-        Account account_copy = Account(*account.get());
-        Account target_account_copy = Account(*target_account.get());
-        account_copy._balance -= account_transfer_dto._sum;
-        target_account_copy._balance += account_transfer_dto._sum;
-
-        if (!account_copy._is_credit && account_copy._balance < 0) {
-            throw Exception("You have simple card, you cannot have negative balance");
-        }
-
-        if (account_copy._is_credit && account_copy._balance < -account_copy._credit_limit) {
-            throw Exception("You cannot exceed your credit limit");
-        }
-
-        _account_repository.update(account_copy);
-        _account_repository.update(target_account_copy);
+        return Account(*account.get());
     }
 };
 
