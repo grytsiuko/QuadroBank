@@ -3,9 +3,11 @@
 
 int main() {
     Response<SessionTokenDto> authorizeResponse =
-            AccountActions::get_instance().authorize(AccountAuthorizeDto{"123", "111"});
-    if (authorizeResponse.is_present()) {
-        std::cout << authorizeResponse.get_value()->_token;
+            AccountActions::get_instance().authorize(AccountAuthorizeDto{
+                "1111 1111 1111 1111", "1111"
+            });
+    if (authorizeResponse.is_success()) {
+        std::cout << authorizeResponse.get_response()->_token;
     } else {
         std::cout << "Unauthorized";
     }

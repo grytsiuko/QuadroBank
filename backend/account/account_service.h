@@ -41,7 +41,7 @@ public:
         auto *dto = new SessionTokenDto{
                 account_authorize_dto._card_number + "#" + account_authorize_dto._pin
         };
-        return Response<SessionTokenDto>::of(dto);
+        return Response<SessionTokenDto>::success(dto);
     }
 };
 

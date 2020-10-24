@@ -31,7 +31,7 @@ public:
 
     Response &operator=(const Response &) = delete;
 
-    static Response of(const T *value) {
+    static Response success(const T *value) {
         return Response(value, nullptr);
     }
 
@@ -39,15 +39,15 @@ public:
         return Response(nullptr, error);
     }
 
-    bool is_present() const {
+    bool is_success() const {
         return _value != nullptr;
     }
 
     bool is_error() const {
-        return !is_present();
+        return !is_success();
     }
 
-    const T *get_value() const {
+    const T *get_response() const {
         return _value;
     }
 
