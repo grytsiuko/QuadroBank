@@ -1,10 +1,13 @@
 #include <iostream>
-#include "communication/frontend_communication.h"
 #include "actions/account_actions.h"
 
 int main() {
-    SessionTokenDto sessionTokenDto =
+    Response<SessionTokenDto> authorizeResponse =
             AccountActions::get_instance().authorize(AccountAuthorizeDto{"123", "111"});
-    cout << sessionTokenDto._token;
+    if (authorizeResponse.is_present()) {
+        std::cout << authorizeResponse.get_value()->_token;
+    } else {
+        std::cout << "Unauthorized";
+    }
     return 0;
 }

@@ -26,7 +26,7 @@ public:
         return instance;
     }
 
-    SessionTokenDto authorize(const AccountAuthorizeDto &account_authorize_dto) const {
+    Response<SessionTokenDto> authorize(const AccountAuthorizeDto &account_authorize_dto) const {
         return _account_controller.authorize(account_authorize_dto);
     }
 };

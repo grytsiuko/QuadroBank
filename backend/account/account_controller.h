@@ -3,12 +3,15 @@
 
 #include "dto/session_token_dto.h"
 #include "dto/account_authorize_dto.h"
+#include "account_service.h"
 
 class AccountController {
 
 private:
 
-    AccountController() = default;
+    const AccountService &_account_service;
+
+    AccountController() : _account_service(AccountService::get_instance()) {}
 
     ~AccountController() = default;
 
@@ -23,8 +26,8 @@ public:
         return instance;
     }
 
-    SessionTokenDto authorize(const AccountAuthorizeDto &account_authorize_dto) const {
-        return SessionTokenDto{account_authorize_dto._card_number + "#" + account_authorize_dto._pin};
+    Response<SessionTokenDto> authorize(const AccountAuthorizeDto &account_authorize_dto) const {
+        return _account_service.authorize(account_authorize_dto);
     }
 };
 
