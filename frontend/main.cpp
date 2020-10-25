@@ -7,7 +7,6 @@ using std::cout;
 
 int main() {
     const Scheduler &scheduler = Scheduler::get_instance();
-    scheduler.start();
 
     // authorize
     AccountActions &accountActions = AccountActions::get_instance();

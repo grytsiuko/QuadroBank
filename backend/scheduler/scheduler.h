@@ -12,20 +12,24 @@ class Scheduler : public Singleton<Scheduler> {
 
 private:
 
+    friend Singleton;
+
+    mutable thread *_th;
+    mutable volatile bool _looping;
+
+    Scheduler() : _looping(true), _th(new thread([this] { loop(); })) {}
+
+    ~Scheduler() override {
+        _looping = false;
+        _th->join();
+        delete _th;
+    }
+
     void loop() const {
-        while (true) {
+        while (_looping) {
             cout << "************ I am scheduler ************\n";
             std::this_thread::sleep_for(std::chrono::milliseconds(500));
         }
-    }
-
-public:
-
-    void start() const {
-        cout << "********** Starting Scheduler **********\n";
-        thread([this] {
-            loop();
-        }).detach();
     }
 };
 
