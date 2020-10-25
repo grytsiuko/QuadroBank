@@ -6,7 +6,7 @@
 using std::cout;
 
 int main() {
-    Scheduler &scheduler = Scheduler::get_instance();
+    const Scheduler &scheduler = Scheduler::get_instance();
     scheduler.start();
 
     // authorize
@@ -42,6 +42,8 @@ int main() {
         assert(balanceResponse.is_success());
         cout << balanceResponse.get_response()->_balance << "\n";
 
+        std::this_thread::sleep_for(std::chrono::milliseconds(600));
+
         cout << "\n\ncheck other balance\n";
         Response<SessionTokenDto> authorizeResponse2 = accountActions.authorize(
                 AccountAuthorizeDto{"2222 2222 2222 2222", "2222"}
@@ -76,6 +78,6 @@ int main() {
         cout << "Unauthorized";
     }
 
-    scheduler.end();
+    std::this_thread::sleep_for(std::chrono::milliseconds(1100));
     return 0;
 }
