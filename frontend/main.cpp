@@ -1,10 +1,13 @@
 #include <iostream>
 #include <cassert>
 #include "actions/account_actions.h"
+#include "../backend/scheduler/scheduler.h"
 
 using std::cout;
 
 int main() {
+    const Scheduler &scheduler = Scheduler::get_instance();
+
     // authorize
     AccountActions &accountActions = AccountActions::get_instance();
     Response<SessionDto> authorizeResponse = accountActions.authorize(
@@ -39,6 +42,8 @@ int main() {
         balanceResponse = accountActions.check_balance(tokenDto);
         assert(balanceResponse.is_success());
         cout << balanceResponse.get_response()->_balance << "\n";
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(600));
 
         cout << "\n\ncheck other balance\n";
         Response<SessionDto> authorizeResponse2 = accountActions.authorize(
@@ -75,5 +80,7 @@ int main() {
     } else {
         cout << "Unauthorized";
     }
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(1100));
     return 0;
 }
