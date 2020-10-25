@@ -14,15 +14,14 @@ private:
 
     friend Singleton;
 
-    mutable thread *_th;
+    mutable thread _th;
     mutable volatile bool _looping;
 
-    Scheduler() : _looping(true), _th(new thread([this] { loop(); })) {}
+    Scheduler() : _looping(true), _th(thread([this] { loop(); })) {}
 
     ~Scheduler() override {
         _looping = false;
-        _th->join();
-        delete _th;
+        _th.join(); // to wait until tasks is done, not to interrupt
     }
 
     void loop() const {
