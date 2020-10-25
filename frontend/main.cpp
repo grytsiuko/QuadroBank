@@ -1,10 +1,14 @@
 #include <iostream>
 #include <cassert>
 #include "actions/account_actions.h"
+#include "../backend/scheduler/scheduler.h"
 
 using std::cout;
 
 int main() {
+    Scheduler &scheduler = Scheduler::get_instance();
+    scheduler.start();
+
     // authorize
     AccountActions &accountActions = AccountActions::get_instance();
     Response<SessionTokenDto> authorizeResponse = accountActions.authorize(
@@ -71,5 +75,7 @@ int main() {
     } else {
         cout << "Unauthorized";
     }
+
+    scheduler.end();
     return 0;
 }
