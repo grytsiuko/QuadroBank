@@ -1,7 +1,7 @@
 #ifndef QUADROBANK_ACCOUNT_ACTIONS_H
 #define QUADROBANK_ACCOUNT_ACTIONS_H
 
-#include "../../backend/account/dto/session_token_dto.h"
+#include "../../backend/account/dto/token_dto.h"
 #include "../../backend/account/dto/account_authorize_dto.h"
 #include "../../backend/account/account_controller.h"
 #include "../../backend/utils/singleton.h"
@@ -18,12 +18,12 @@ private:
 
 public:
 
-    Response<SessionTokenDto> authorize(const AccountAuthorizeDto &account_authorize_dto) const {
+    Response<SessionDto> authorize(const AccountAuthorizeDto &account_authorize_dto) const {
         return _account_controller.authorize(account_authorize_dto);
     }
 
-    Response<AccountBalanceDto> check_balance(const SessionTokenDto &sessionTokenDto) const {
-        return _account_controller.check_balance(sessionTokenDto);
+    Response<AccountBalanceDto> check_balance(const TokenDto &token_dto) const {
+        return _account_controller.check_balance(token_dto);
     }
 
     Response<void> top_up(const AccountUpdateDto &accountUpdateDto) const {

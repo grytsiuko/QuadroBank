@@ -2,7 +2,7 @@
 #define QUADROBANK_ACCOUNT_SERVICE_H
 
 #include "dto/account_authorize_dto.h"
-#include "dto/session_token_dto.h"
+#include "dto/token_dto.h"
 #include "account_repository_interface.h"
 #include "account_repository_in_memory.h"
 #include "../utils/response.h"
@@ -12,6 +12,9 @@
 #include "dto/account_update_dto.h"
 #include "dto/account_transfer_dto.h"
 #include "../utils/exception.h"
+#include "../user/user_repository_interface.h"
+#include "../user/user_repository_in_memory.h"
+#include "dto/session_dto.h"
 
 class AccountService : public Singleton<AccountService> {
 
@@ -20,26 +23,28 @@ private:
     friend Singleton;
 
     const AccountRepositoryInterface<AccountRepositoryInMemory> &_account_repository;
+    const UserRepositoryInterface<UserRepositoryInMemory> &_user_repository;
     const TokenService &_token_service;
 
     AccountService() :
             _account_repository(AccountRepositoryInterface<AccountRepositoryInMemory>::get_instance()),
+            _user_repository(UserRepositoryInterface<UserRepositoryInMemory>::get_instance()),
             _token_service(TokenService::get_instance()) {}
 
 public:
 
-    SessionTokenDto *authorize(const AccountAuthorizeDto &account_authorize_dto) const {
+    SessionDto *authorize(const AccountAuthorizeDto &account_authorize_dto) const {
         Account account = _assert_account_by_card_number(account_authorize_dto._card_number);
 
         if (account._pin != account_authorize_dto._pin) {
             throw Exception("Illegal pin");
         }
 
-        return new SessionTokenDto{_token_service.generate_token(account)};
+        return new SessionDto{_token_service.generate_token(account)};
     }
 
-    AccountBalanceDto *check_balance(const SessionTokenDto &session_token_dto) const {
-        Account account = _assert_account_by_token(session_token_dto._token);
+    AccountBalanceDto *check_balance(const TokenDto &token_dto) const {
+        Account account = _assert_account_by_token(token_dto._token);
 
         return new AccountBalanceDto(account);
     }
