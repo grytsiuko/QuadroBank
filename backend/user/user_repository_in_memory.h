@@ -22,7 +22,7 @@ private:
                 User{15, "Petro Petrov"}
         );
         _users.push_back(
-                User{15, "Stepan Stepanenko"}
+                User{20, "Stepan Stepanenko"}
         );
     }
 

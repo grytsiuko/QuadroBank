@@ -35,12 +35,13 @@ public:
 
     SessionDto *authorize(const AccountAuthorizeDto &account_authorize_dto) const {
         Account account = _assert_account_by_card_number(account_authorize_dto._card_number);
+        User user = _assert_user_by_id(account._user_id);
 
         if (account._pin != account_authorize_dto._pin) {
             throw Exception("Illegal pin");
         }
 
-        return new SessionDto{_token_service.generate_token(account)};
+        return new SessionDto{_token_service.generate_token(account), user._name};
     }
 
     AccountBalanceDto *check_balance(const TokenDto &token_dto) const {
@@ -117,6 +118,15 @@ private:
             throw Exception("No such card number");
         }
         return Account(*account.get());
+    }
+
+    User _assert_user_by_id(const int id) const {
+        Optional<User> user = _user_repository.get_by_id(id);
+
+        if (user.is_empty()) {
+            throw Exception("Internal error, no such user");
+        }
+        return User(*user.get());
     }
 };
 

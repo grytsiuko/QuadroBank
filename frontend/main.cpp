@@ -11,6 +11,7 @@ int main() {
             AccountAuthorizeDto{"1111 1111 1111 1111", "1111"}
     );
     if (authorizeResponse.is_success()) {
+        cout << "Authorized: " << authorizeResponse.get_response()->_name << "\n\n";
         TokenDto tokenDto = TokenDto{authorizeResponse.get_response()->_token};
         cout << "check balance\n";
         Response<AccountBalanceDto> balanceResponse = accountActions.check_balance(tokenDto);
@@ -44,6 +45,7 @@ int main() {
                 AccountAuthorizeDto{"2222 2222 2222 2222", "2222"}
         );
         assert(authorizeResponse2.is_success());
+        cout << "Authorized: " << authorizeResponse2.get_response()->_name << "\n\n";
         TokenDto tokenDto2 = TokenDto{authorizeResponse2.get_response()->_token};
         balanceResponse = accountActions.check_balance(tokenDto2);
         assert(balanceResponse.is_success());
