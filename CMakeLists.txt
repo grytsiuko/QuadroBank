@@ -10,6 +10,15 @@ add_executable(QuadroBank
         backend/account/dto/token_dto.h
         backend/account/dto/account_authorize_dto.h
         backend/account/account_controller.h
+        frontend/actions/deposit_actions.h
+        backend/deposit/dto/deposit_dto.h
+        backend/deposit/dto/deposit_variant_dto.h
+        backend/deposit/dto/deposit_create_dto.h
+        frontend/actions/regular_payment_actions.h
+        backend/regular_payment/dto/regular_payment_create_dto.h
+        backend/regular_payment/dto/regular_payment_update_dto.h
+        backend/regular_payment/dto/regular_payment_delete_dto.h
+        backend/regular_payment/dto/regular_payment_dto.h
         backend/scheduler/scheduler.h
         backend/account/account_service.h
         backend/account/account_repository_interface.h
