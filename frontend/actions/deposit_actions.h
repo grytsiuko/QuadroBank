@@ -4,7 +4,7 @@
 #include <vector>
 #include "../../backend/utils/singleton.h"
 #include "../../backend/utils/response.h"
-#include "../../backend/account/dto/session_token_dto.h"
+#include "../../backend/account/dto/token_dto.h"
 #include "../../backend/deposit/dto/deposit_dto.h"
 #include "../../backend/deposit/dto/deposit_variant_dto.h"
 #include "../../backend/deposit/dto/deposit_create_dto.h"
@@ -21,7 +21,7 @@ private:
 
 public:
 
-    Response<vector<DepositDto>> get_all_by_user(const SessionTokenDto &session_token_dto) const {
+    Response<vector<DepositDto>> get_all_by_user(const TokenDto &token_dto) const {
         auto *result = new vector<DepositDto>();
         result->push_back(
                 DepositDto{45, 2592000, 1603640493, 1606232493, 0.09, 400}
@@ -29,7 +29,7 @@ public:
         return Response<vector<DepositDto>>::success(result);
     }
 
-    Response<vector<DepositVariantDto>> get_possible_variants(const SessionTokenDto &session_token_dto) const {
+    Response<vector<DepositVariantDto>> get_possible_variants(const TokenDto &token_dto) const {
         auto *result = new vector<DepositVariantDto>();
         result->push_back(
                 DepositVariantDto{2592000, 0.09}

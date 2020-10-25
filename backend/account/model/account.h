@@ -7,6 +7,7 @@ using std::string;
 
 struct Account {
     string _card_number;
+    int _user_id;
     string _pin;
     bool _is_credit;
     int _balance;

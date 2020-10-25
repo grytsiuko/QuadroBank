@@ -1,18 +1,23 @@
 #include <iostream>
 #include <cassert>
 #include "actions/account_actions.h"
+#include "../backend/scheduler/scheduler.h"
 
 using std::cout;
 
 int main() {
+    const Scheduler &scheduler = Scheduler::get_instance();
+
     // authorize
     AccountActions &accountActions = AccountActions::get_instance();
-    Response<SessionTokenDto> authorizeResponse = accountActions.authorize(
+    Response<SessionDto> authorizeResponse = accountActions.authorize(
             AccountAuthorizeDto{"1111 1111 1111 1111", "1111"}
     );
     if (authorizeResponse.is_success()) {
+        cout << "Authorized: " << authorizeResponse.get_response()->_name << "\n\n";
+        TokenDto tokenDto = TokenDto{authorizeResponse.get_response()->_token};
         cout << "check balance\n";
-        Response<AccountBalanceDto> balanceResponse = accountActions.check_balance(*authorizeResponse.get_response());
+        Response<AccountBalanceDto> balanceResponse = accountActions.check_balance(tokenDto);
         assert(balanceResponse.is_success());
         cout << balanceResponse.get_response()->_balance << "\n";
 
@@ -21,7 +26,7 @@ int main() {
                 AccountUpdateDto{authorizeResponse.get_response()->_token, 10});
 
         cout << "check balance\n";
-        balanceResponse = accountActions.check_balance(*authorizeResponse.get_response());
+        balanceResponse = accountActions.check_balance(tokenDto);
         assert(balanceResponse.is_success());
         cout << balanceResponse.get_response()->_balance << "\n";
 
@@ -34,16 +39,20 @@ int main() {
         assert(withdrawResponse.is_success());
 
         cout << "check balance\n";
-        balanceResponse = accountActions.check_balance(*authorizeResponse.get_response());
+        balanceResponse = accountActions.check_balance(tokenDto);
         assert(balanceResponse.is_success());
         cout << balanceResponse.get_response()->_balance << "\n";
 
+        std::this_thread::sleep_for(std::chrono::milliseconds(600));
+
         cout << "\n\ncheck other balance\n";
-        Response<SessionTokenDto> authorizeResponse2 = accountActions.authorize(
+        Response<SessionDto> authorizeResponse2 = accountActions.authorize(
                 AccountAuthorizeDto{"2222 2222 2222 2222", "2222"}
         );
         assert(authorizeResponse2.is_success());
-        balanceResponse = accountActions.check_balance(*authorizeResponse2.get_response());
+        cout << "Authorized: " << authorizeResponse2.get_response()->_name << "\n\n";
+        TokenDto tokenDto2 = TokenDto{authorizeResponse2.get_response()->_token};
+        balanceResponse = accountActions.check_balance(tokenDto2);
         assert(balanceResponse.is_success());
         cout << "Other: " << balanceResponse.get_response()->_balance << "\n";
 
@@ -60,16 +69,18 @@ int main() {
         assert(transferResponse.is_success());
 
         cout << "check balance\n";
-        balanceResponse = accountActions.check_balance(*authorizeResponse.get_response());
+        balanceResponse = accountActions.check_balance(tokenDto);
         assert(balanceResponse.is_success());
         cout << balanceResponse.get_response()->_balance << "\n";
 
         cout << "check other balance\n";
-        balanceResponse = accountActions.check_balance(*authorizeResponse2.get_response());
+        balanceResponse = accountActions.check_balance(tokenDto2);
         assert(balanceResponse.is_success());
         cout << "Other: " << balanceResponse.get_response()->_balance << "\n";
     } else {
         cout << "Unauthorized";
     }
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(1100));
     return 0;
 }

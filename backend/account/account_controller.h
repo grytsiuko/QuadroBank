@@ -1,7 +1,7 @@
 #ifndef QUADROBANK_ACCOUNT_CONTROLLER_H
 #define QUADROBANK_ACCOUNT_CONTROLLER_H
 
-#include "dto/session_token_dto.h"
+#include "dto/token_dto.h"
 #include "dto/account_authorize_dto.h"
 #include "account_service.h"
 #include "../utils/singleton.h"
@@ -18,18 +18,18 @@ private:
 
 public:
 
-    Response<SessionTokenDto> authorize(const AccountAuthorizeDto &account_authorize_dto) const {
+    Response<SessionDto> authorize(const AccountAuthorizeDto &account_authorize_dto) const {
         try{
-            SessionTokenDto *result = _account_service.authorize(account_authorize_dto);
-            return Response<SessionTokenDto>::success(result);
+            SessionDto *result = _account_service.authorize(account_authorize_dto);
+            return Response<SessionDto>::success(result);
         } catch (const Exception &exception) {
-            return Response<SessionTokenDto>::error(new string(exception.get_message()));
+            return Response<SessionDto>::error(new string(exception.get_message()));
         }
     }
 
-    Response<AccountBalanceDto> check_balance(const SessionTokenDto &sessionTokenDto) const {
+    Response<AccountBalanceDto> check_balance(const TokenDto &token_dto) const {
         try {
-            AccountBalanceDto *result = _account_service.check_balance(sessionTokenDto);
+            AccountBalanceDto *result = _account_service.check_balance(token_dto);
             return Response<AccountBalanceDto>::success(result);
         } catch (const Exception &exception) {
             return Response<AccountBalanceDto>::error(new string(exception.get_message()));
