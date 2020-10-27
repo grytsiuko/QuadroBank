@@ -59,6 +59,7 @@ public:
 
         Account account = _assert_account_by_token(account_update_dto._token);
         account._balance += account_update_dto._sum;
+        _update_credit_start(account);
 
         _account_repository.update(account);
     }
@@ -70,7 +71,7 @@ public:
         account._balance -= account_update_dto._sum;
 
         _assert_correct_balance(account);
-        _update_credit_start(account, account_update_dto._sum);
+        _update_credit_start(account);
 
         _account_repository.update(account);
     }
@@ -85,7 +86,7 @@ public:
         target_account._balance += account_transfer_dto._sum;
 
         _assert_correct_balance(account);
-        _update_credit_start(account, account_transfer_dto._sum);
+        _update_credit_start(account);
 
         _account_repository.update(account);
         _account_repository.update(target_account);
@@ -120,7 +121,7 @@ private:
         }
     }
 
-    void _update_credit_start(Account &account, int sum) const {
+    void _update_credit_start(Account &account) const {
         if (account._credit_start != 0 && account._balance >= 0) {
             account._credit_start = 0;
             return;

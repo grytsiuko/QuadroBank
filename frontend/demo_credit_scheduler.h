@@ -45,7 +45,10 @@ void demo_credit_scheduler() {
     );
     assert(withdrawResponse.is_success());
 
-    demo_credit_check_balance(tokenDto);
+    for (int i = 0; i < 2; i++) {
+        demo_credit_check_balance(tokenDto);
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    }
 }
 
 #endif //QUADROBANK_DEMO_CREDIT_SCHEDULER_H
