@@ -1,6 +1,7 @@
 #ifndef QUADROBANK_ACCOUNT_SERVICE_H
 #define QUADROBANK_ACCOUNT_SERVICE_H
 
+#include <cmath>
 #include "dto/account_authorize_dto.h"
 #include "dto/token_dto.h"
 #include "account_repository_interface.h"
@@ -21,6 +22,7 @@ class AccountService : public Singleton<AccountService> {
 private:
 
     const static int CREDIT_SECONDS = 1;
+    constexpr const static double CREDIT_PERCENTAGE = 1.2;
 
     friend Singleton;
 
@@ -94,6 +96,11 @@ public:
             return a._credit_start != 0 && a._credit_start + CREDIT_SECONDS < time(nullptr);
         };
         return _account_repository.get_list(AccountSpecification(debtors_filter));
+    }
+
+    void punish_debtor(Account account) const {
+        account._balance = floor(account._balance * CREDIT_PERCENTAGE);
+        _account_repository.update(account);
     }
 
 private:

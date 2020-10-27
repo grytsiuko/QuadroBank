@@ -46,6 +46,10 @@ private:
 
     void check_credits() const {
         vector<Account> debtors = _account_service.get_debtors();
+        for (const Account &account:debtors) {
+            _account_service.punish_debtor(account);
+            log("Punished " + account._card_number);
+        }
     }
 };
 
