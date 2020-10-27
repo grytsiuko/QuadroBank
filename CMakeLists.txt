@@ -37,4 +37,7 @@ add_executable(QuadroBank
         backend/user/model/user.h
         backend/user/user_repository_in_memory.h
         backend/account/dto/session_dto.h
-        backend/log/log_service.h)
+        backend/log/log_service.h
+        frontend/demo_account.h
+        frontend/demo_credit_scheduler.h
+        )

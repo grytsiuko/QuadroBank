@@ -4,6 +4,7 @@
 #include <iostream>
 #include <thread>
 #include "../utils/singleton.h"
+#include "../log/log_service.h"
 
 using std::cout;
 using std::thread;
