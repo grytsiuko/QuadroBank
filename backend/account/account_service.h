@@ -96,7 +96,7 @@ public:
         bool (*debtors_filter)(const Account &) = [](auto &a) {
             return a._credit_start != 0 && a._credit_start + CREDIT_SECONDS < time(nullptr);
         };
-        return _account_repository.get_list(AccountSpecification(debtors_filter));
+        return _account_repository.get_list(Specification<Account>(debtors_filter));
     }
 
     void punish_debtor(Account account) const {

@@ -30,7 +30,7 @@ private:
     }
 
 
-    vector<Account> _get_list(const AccountSpecification &account_specification) const override {
+    vector<Account> _get_list(const Specification<Account> &account_specification) const override {
         vector<Account> result = vector<Account>();
         for (const Account &account:_accounts) {
             if (account_specification.filter(account)) {

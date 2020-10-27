@@ -5,7 +5,7 @@
 #include "../utils/optional.h"
 #include "model/account.h"
 #include "../utils/singleton.h"
-#include "account_specification.h"
+#include "../db/specification.h"
 
 using std::string;
 using std::vector;
@@ -15,7 +15,7 @@ class AccountRepositoryInterface: public Singleton<T> {
 
 public:
 
-    vector<Account> get_list(const AccountSpecification &account_specification) const {
+    vector<Account> get_list(const Specification<Account> &account_specification) const {
         return _get_list(account_specification);
     }
 
@@ -29,7 +29,7 @@ public:
 
 private:
 
-    virtual vector<Account> _get_list(const AccountSpecification &account_specification) const = 0;
+    virtual vector<Account> _get_list(const Specification<Account> &account_specification) const = 0;
 
     virtual Optional<Account> _get_by_card_number(const string &card_number) const = 0;
 
