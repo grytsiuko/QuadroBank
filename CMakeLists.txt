@@ -40,4 +40,4 @@ add_executable(QuadroBank
         backend/log/log_service.h
         frontend/demo_account.h
         frontend/demo_credit_scheduler.h
-        )
+        backend/account/account_specification.h)

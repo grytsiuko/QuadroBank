@@ -29,6 +29,17 @@ private:
         );
     }
 
+
+    vector<Account> _get_list(const AccountSpecification &account_specification) const override {
+        vector<Account> result = vector<Account>();
+        for (const Account &account:_accounts) {
+            if (account_specification.filter(account)) {
+                result.push_back(account);
+            }
+        }
+        return result;
+    };
+
     Optional<Account> _get_by_card_number(const string &card_number) const override {
         for (const Account &account:_accounts) {
             if (account._card_number == card_number) {

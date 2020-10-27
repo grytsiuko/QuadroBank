@@ -20,6 +20,8 @@ class AccountService : public Singleton<AccountService> {
 
 private:
 
+    const static int CREDIT_SECONDS = 1;
+
     friend Singleton;
 
     const AccountRepositoryInterface<AccountRepositoryInMemory> &_account_repository;
@@ -85,6 +87,13 @@ public:
 
         _account_repository.update(account);
         _account_repository.update(target_account);
+    }
+
+    vector<Account> get_debtors() const {
+        bool (*debtors_filter)(const Account &) = [](auto &a) {
+            return a._credit_start != 0 && a._credit_start + CREDIT_SECONDS < time(nullptr);
+        };
+        return _account_repository.get_list(AccountSpecification(debtors_filter));
     }
 
 private:

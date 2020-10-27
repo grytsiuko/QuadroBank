@@ -33,6 +33,8 @@ void demo_credit_scheduler() {
     balanceResponse = accountActions.check_balance(tokenDto);
     assert(balanceResponse.is_success());
     cout << balanceResponse.get_response()->_balance << "\n";
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(5100));
 }
 
 #endif //QUADROBANK_DEMO_CREDIT_SCHEDULER_H
