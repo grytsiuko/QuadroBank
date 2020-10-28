@@ -36,6 +36,7 @@ public:
         _error = response._error;
         response._value = nullptr;
         response._error = nullptr;
+        return *this;
     }
 
     static Response success(const T *value) {
