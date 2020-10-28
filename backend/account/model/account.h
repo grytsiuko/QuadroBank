@@ -12,6 +12,7 @@ struct Account {
     bool _is_credit;
     int _balance;
     int _credit_limit;
+    time_t _credit_start;
 };
 
 #endif //QUADROBANK_ACCOUNT_H

@@ -19,15 +19,26 @@ private:
 
     AccountRepositoryInMemory() : _accounts(vector<Account>()) {
         _accounts.push_back(
-                Account{"1111 1111 1111 1111", 15, "1111", true, 100, 50}
+                Account{"1111 1111 1111 1111", 15, "1111", true, 100, 50, 0}
         );
         _accounts.push_back(
-                Account{"2222 2222 2222 2222", 15, "2222", false, 200}
+                Account{"2222 2222 2222 2222", 15, "2222", false, 200, 0, 0}
         );
         _accounts.push_back(
-                Account{"3333 3333 3333 3333", 20, "3333", true, -20, 300}
+                Account{"3333 3333 3333 3333", 20, "3333", true, 0, 300, 0}
         );
     }
+
+
+    vector<Account> _get_list(const Specification<Account> &account_specification) const override {
+        vector<Account> result = vector<Account>();
+        for (const Account &account:_accounts) {
+            if (account_specification.filter(account)) {
+                result.push_back(account);
+            }
+        }
+        return result;
+    };
 
     Optional<Account> _get_by_card_number(const string &card_number) const override {
         for (const Account &account:_accounts) {
