@@ -40,4 +40,4 @@ add_executable(QuadroBank
         backend/log/log_service.h
         frontend/demo_account.h
         frontend/demo_credit_scheduler.h
-        backend/db/specification.h)
+        backend/db/specification.h backend/deposit/deposit_controller.h backend/deposit/deposit_repository_in_memory.h backend/deposit/deposit_repository_interface.h backend/deposit/model/deposit.h backend/deposit/deposit_service.h backend/deposit/deposit_repository_in_memory.cpp backend/deposit/deposit_service.cpp)
