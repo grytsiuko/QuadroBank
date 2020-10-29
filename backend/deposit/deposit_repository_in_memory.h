@@ -18,7 +18,7 @@ private:
 
     void _add(const Deposit& deposit) const override;
 
-    void _remove(const Deposit& deposit) const override;
+    void _remove(int id) const override;
 
     vector<Deposit> _get_list(const Specification<Deposit>& deposit_specification) const override;
 

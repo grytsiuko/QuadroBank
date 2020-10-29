@@ -20,8 +20,8 @@ void DepositRepositoryInMemory::_add(const Deposit &deposit) const {
     }
 }
 
-void DepositRepositoryInMemory::_remove(const Deposit &deposit) const {
-    _deposits = _get_list(Specification<Deposit>([&] (const Deposit& d) { return d._id != deposit._id;}));
+void DepositRepositoryInMemory::_remove(const int id) const {
+    _deposits = _get_list(Specification<Deposit>([=] (const Deposit& d) { return d._id != id;}));
 }
 
 vector<Deposit> DepositRepositoryInMemory::_get_list(const Specification<Deposit> &deposit_specification) const {

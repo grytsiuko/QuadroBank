@@ -16,8 +16,8 @@ public:
         _add(deposit);
     }
 
-    void remove(const Deposit& deposit) const {
-        _remove(deposit);
+    void remove(const int id) const {
+        _remove(id);
     }
 
     vector<Deposit> get_list(const Specification<Deposit>& deposit_specification) const {
@@ -28,7 +28,7 @@ private:
 
     virtual void _add(const Deposit& deposit) const = 0;
 
-    virtual void _remove(const Deposit& deposit) const = 0;
+    virtual void _remove(int id) const = 0;
 
     virtual vector<Deposit> _get_list(const Specification<Deposit> &deposit_specification) const = 0;
 };
