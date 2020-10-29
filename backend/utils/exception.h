@@ -1,7 +1,7 @@
 #ifndef QUADROBANK_EXCEPTION_H
 #define QUADROBANK_EXCEPTION_H
 
-#include <bits/exception.h>
+#include <exception>
 #include <string>
 #include <utility>
 

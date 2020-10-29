@@ -2,7 +2,7 @@
 #define LOGINMENU_H
 
 #include <QWidget>
-#include "../utils/singleton.h"
+#include "backend/utils/singleton.h"
 #include "../utils/object_ui.h"
 #include "ui_loginmenu.h"
 
