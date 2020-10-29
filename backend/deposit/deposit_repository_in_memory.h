@@ -6,12 +6,11 @@
 #include "../utils/singleton.h"
 #include <ctime>
 
-class DepositRepositoryInMemory : public DepositRepositoryInterface<DepositRepositoryInMemory> {
-
-private:
+class DepositRepositoryInMemory : public DepositRepositoryInterface, public Singleton<DepositRepositoryInMemory> {
 
     friend Singleton;
 
+private:
     mutable vector<Deposit> _deposits;
 
     DepositRepositoryInMemory() {
@@ -21,19 +20,12 @@ private:
         );
     }
 
-    void _add(Deposit& deposit) const override {
+    void _add(const Deposit& deposit) const override {
         _deposits.push_back(deposit);
     }
 
-    void _remove(Deposit& deposit) const override {
-        vector<Deposit> result;
-        for (const Deposit& in_mem_deposist : _deposits) {
-            if (deposit._id != in_mem_deposist._id) {
-                result.push_back(deposit);
-            }
-        }
-        _deposits = result;
-//        _deposits = _get_list(Specification<Deposit>([&] (const Deposit& d) { return d._id != deposit._id;})); todo std::function in specification.h
+    void _remove(const Deposit& deposit) const override {
+        _deposits = _get_list(Specification<Deposit>([&] (const Deposit& d) { return d._id != deposit._id;}));
     }
 
     vector<Deposit> _get_list(const Specification<Deposit>& deposit_specification) const override {

@@ -8,8 +8,7 @@
 
 using std::vector;
 
-template <class T>
-class DepositRepositoryInterface: public Singleton<T> {
+class DepositRepositoryInterface {
 
 public:
 
@@ -27,9 +26,9 @@ public:
 
 private:
 
-    virtual void _add(Deposit& deposit) const = 0;
+    virtual void _add(const Deposit& deposit) const = 0;
 
-    virtual void _remove(Deposit& deposit) const = 0;
+    virtual void _remove(const Deposit& deposit) const = 0;
 
     virtual vector<Deposit> _get_list(const Specification<Deposit> &deposit_specification) const = 0;
 };
