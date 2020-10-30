@@ -1,12 +1,14 @@
+#include <backend/utils/exception.h>
 #include "deposit_repository_in_memory.h"
+#include "backend/utils/time_intervals.h"
 
 int DepositRepositoryInMemory::_freeId = 1;
 
 DepositRepositoryInMemory::DepositRepositoryInMemory() {
     int curr_time = time(nullptr);
-    int period_sec = 10;
+    int period_sec = 10 * TimeIntervals::SECOND;
     _deposits.push_back(
-            Deposit{_get_free_id(), "1111 1111 1111 1111", 10, 5, curr_time, curr_time + period_sec, 100}
+            Deposit{_get_free_id(), "1111 1111 1111 1111", 0.09, period_sec, curr_time, curr_time + period_sec, 100}
     );
 }
 
@@ -16,7 +18,7 @@ void DepositRepositoryInMemory::_add(const Deposit &deposit) const {
         copy._id = _get_free_id();
         _deposits.push_back(copy);
     } else {
-        _deposits.push_back(deposit);
+        throw Exception("An attempt to create deposit with possibly wrong id");
     }
 }
 
