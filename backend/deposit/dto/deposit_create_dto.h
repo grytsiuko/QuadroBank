@@ -8,7 +8,6 @@ using std::string;
 struct DepositCreateDto {
     string _token;
     double _percentage;
-    int _period_sec;
     int _sum;
 };
 

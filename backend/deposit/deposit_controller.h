@@ -33,14 +33,24 @@ public:
         }
     }
 
-    vector<DepositVariantDto> get_possible_variants() const{
+    Response<vector<DepositVariantDto>> get_possible_variants() const{
         log("get_possible_variants");
-        return _deposit_service.get_possible_variants();
+        try{
+            vector<DepositVariantDto> deposit_variants =  _deposit_service.get_possible_variants();
+            return Response<vector<DepositVariantDto>>::success(new vector<DepositVariantDto>(std::move(deposit_variants)));
+        } catch (const Exception &exception) {
+            return Response<vector<DepositVariantDto>>::error(new string(exception.get_message()));
+        }
     }
 
-    void add(const DepositCreateDto& depositCreateDto){
+    Response<void> add(const DepositCreateDto& depositCreateDto){
         log("add");
-        _deposit_service.add(depositCreateDto);
+        try{
+            _deposit_service.add(depositCreateDto);
+            return Response<void>::success();
+        } catch (const Exception &exception) {
+            return Response<void>::error(new string(exception.get_message()));
+        }
     }
 };
 

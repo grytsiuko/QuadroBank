@@ -2,7 +2,7 @@
 #define QUADROBANK_DEPOSIT_VARIANT_DTO_H
 
 struct DepositVariantDto {
-    int _period;
+    int _period_sec;
     double _percentage;
 };
 

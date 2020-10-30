@@ -4,12 +4,12 @@
 
 vector<DepositDto> DepositService::get_all_by_user(const SessionDto &sessionDto) const {
     const string card_number = _token_service.get_card_number(sessionDto._token);
-    const Optional<Account> optionalAccount = _account_repository.get_by_card_number(card_number);
-    if (optionalAccount.is_empty()) {
+    const Optional<Account> optional_account = _account_repository.get_by_card_number(card_number);
+    if (optional_account.is_empty()) {
         throw Exception("Illegal token");
     }
 
-    const Account account = *optionalAccount.get();
+    const Account account = *optional_account.get();
     const vector<Account> accounts = _account_repository.get_list(
             Specification<Account>([&](const Account &acc) { return acc._user_id == account._user_id; }));
 
@@ -33,17 +33,26 @@ vector<DepositDto> DepositService::get_all_by_user(const SessionDto &sessionDto)
 }
 
 vector<DepositVariantDto> DepositService::get_possible_variants() const {
-    vector<DepositVariantDto> all_variants;
-    all_variants.push_back(DepositVariantDto{100, 9});
-    all_variants.push_back(DepositVariantDto{1000, 10});
-    all_variants.push_back(DepositVariantDto{10000, 10.5});
-    return all_variants;
+    vector<DepositVariant> deposit_variants = _deposit_variant_repository.get_list(Specification<DepositVariant>([](const DepositVariant&){return true;}));
+    vector<DepositVariantDto> possible_variants;
+    possible_variants.reserve(deposit_variants.size());
+    for(DepositVariant& dep_var : deposit_variants){
+        possible_variants.push_back(DepositVariantDto{dep_var._period_sec, dep_var._percentage});
+    }
+    return possible_variants;
 }
 
 void DepositService::add(const DepositCreateDto &depositCreateDto) const {
+    const Optional<DepositVariant> optional_deposit_variant = _deposit_variant_repository.get_by_percentage(depositCreateDto._percentage);
+
+    if(optional_deposit_variant.is_empty()){
+        throw Exception("Illegal percentage");
+    }
+
+    DepositVariant deposit_variant = *optional_deposit_variant.get();
     const string card_number = _token_service.get_card_number(depositCreateDto._token);
     const time_t currDate = time(nullptr);
-    Deposit deposit{0, card_number,  depositCreateDto._percentage, depositCreateDto._period_sec, currDate, currDate+depositCreateDto._period_sec, depositCreateDto._sum};
+    Deposit deposit{0, card_number, depositCreateDto._percentage, deposit_variant._period_sec, currDate, currDate + deposit_variant._period_sec, depositCreateDto._sum};
     _deposit_repository.add(deposit);
 }
 

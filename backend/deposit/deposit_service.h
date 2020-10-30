@@ -12,6 +12,8 @@
 #include "../utils/exception.h"
 #include "dto/deposit_create_dto.h"
 #include "dto/deposit_variant_dto.h"
+#include "deposit_variant_repository_in_memory.h"
+#include "deposit_variant_repsitory_interface.h"
 
 class DepositService : public Singleton<DepositService> {
 
@@ -20,10 +22,12 @@ class DepositService : public Singleton<DepositService> {
 private:
     const DepositRepositoryInterface &_deposit_repository;
     const AccountRepositoryInterface<AccountRepositoryInMemory> &_account_repository;
+    const DepositVariantRepositoryInterface &_deposit_variant_repository;
     const TokenService &_token_service;
 
     DepositService() : _deposit_repository(DepositRepositoryInMemory::get_instance()),
                        _account_repository(AccountRepositoryInMemory::get_instance()),
+                       _deposit_variant_repository(DepositVariantRepositoryInMemory::get_instance()),
                        _token_service(TokenService::get_instance()) {}
 
 public:
