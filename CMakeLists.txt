@@ -106,6 +106,7 @@ add_executable(QuadroBank
         backend/deposit/deposit_variant_repsitory_interface.h 
         backend/deposit/deposit_variant_repository_in_memory.h 
         backend/deposit/deposit_variant_repository_in_memory.cpp
+        backend/utils/time_intervals.h
         )
 
 target_link_libraries(${PROJECT_NAME} Qt${QT_VERSION_MAJOR}::Widgets)
