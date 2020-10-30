@@ -101,6 +101,6 @@ add_executable(QuadroBank
 
         frontend/menus/LoginMenu/loginmenu.cpp
         frontend/menus/LoginMenu/loginmenu.h
-        frontend/menus/LoginMenu/loginmenu.ui)
+        frontend/menus/LoginMenu/loginmenu.ui backend/deposit/model/deposit_variant.h backend/deposit/deposit_variant_repsitory_interface.h backend/deposit/deposit_variant_repository_in_memory.h backend/deposit/deposit_variant_repository_in_memory.cpp)
 
 target_link_libraries(${PROJECT_NAME} Qt${QT_VERSION_MAJOR}::Widgets)
