@@ -1,6 +1,7 @@
 #ifndef QUADROBANK_DEPOSIT_CONTROLLER_H
 #define QUADROBANK_DEPOSIT_CONTROLLER_H
 
+#include "../account/dto/token_dto.h"
 #include "../utils/singleton.h"
 #include "deposit_service.h"
 #include "../log/log_service.h"
@@ -23,10 +24,10 @@ private:
     }
 
 public:
-    Response<vector<DepositDto>> get_all_by_user(const SessionDto& sessionDto) const{
+    Response<vector<DepositDto>> get_all_by_user(const TokenDto& tokenDto) const{
         log("get_all_by_user");
         try{
-            vector<DepositDto> deposits =  _deposit_service.get_all_by_user(sessionDto);
+            vector<DepositDto> deposits =  _deposit_service.get_all_by_user(tokenDto);
             return Response<vector<DepositDto>>::success(new vector<DepositDto>(std::move(deposits)));
         } catch (const Exception &exception) {
             return Response<vector<DepositDto>>::error(new string(exception.get_message()));

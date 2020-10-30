@@ -2,8 +2,8 @@
 
 #include "deposit_service.h"
 
-vector<DepositDto> DepositService::get_all_by_user(const SessionDto &sessionDto) const {
-    const string card_number = _token_service.get_card_number(sessionDto._token);
+vector<DepositDto> DepositService::get_all_by_user(const TokenDto &tokenDto) const {
+    const string card_number = _token_service.get_card_number(tokenDto._token);
     const Optional<Account> optional_account = _account_repository.get_by_card_number(card_number);
     if (optional_account.is_empty()) {
         throw Exception("Illegal token");
