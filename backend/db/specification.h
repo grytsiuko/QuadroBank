@@ -1,22 +1,25 @@
 #ifndef QUADROBANK_SPECIFICATION_H
 #define QUADROBANK_SPECIFICATION_H
 
+#include <functional>
 #include "../utils/non_copying.h"
 #include "../account/model/account.h"
+
+using std::function;
 
 template <class T>
 class Specification : public NonCopying {
 
 private:
 
-    bool (*_filter)(const T &);
+    const function<bool(const T&)> _filter;
 
 public:
 
-    explicit Specification(bool (*filter)(const T &)) :
-            _filter(filter) {};
+    explicit Specification(const function<bool(const T&)> filter) :
+            _filter(std::move(filter)) {};
 
-    bool filter(const T &t) const {
+    bool filter(const T& t) const {
         return _filter(t);
     }
 

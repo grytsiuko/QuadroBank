@@ -93,7 +93,7 @@ public:
     }
 
     vector<Account> get_debtors() const {
-        bool (*debtors_filter)(const Account &) = [](auto &a) {
+        function<bool(const Account&)> debtors_filter = [](auto &a) {
             return a._credit_start != 0 && a._credit_start + CREDIT_SECONDS < time(nullptr);
         };
         return _account_repository.get_list(Specification<Account>(debtors_filter));

@@ -50,12 +50,18 @@ add_executable(QuadroBank
         backend/log/log_service.h
         frontend/demo_account.h
         frontend/demo_credit_scheduler.h
-        backend/db/specification.h
+        backend/db/specification.h 
+        backend/deposit/deposit_controller.h 
+        backend/deposit/deposit_repository_in_memory.h 
+        backend/deposit/deposit_repository_interface.h 
+        backend/deposit/model/deposit.h 
+        backend/deposit/deposit_service.h 
+        backend/deposit/deposit_repository_in_memory.cpp 
+        backend/deposit/deposit_service.cpp   
 
         frontend/mainwindow.cpp
         frontend/mainwindow.h
         frontend/mainwindow.ui
-
 
         frontend/menus/utils/object_ui.h
         backend/utils/singleton.h
@@ -95,6 +101,12 @@ add_executable(QuadroBank
 
         frontend/menus/LoginMenu/loginmenu.cpp
         frontend/menus/LoginMenu/loginmenu.h
-        frontend/menus/LoginMenu/loginmenu.ui)
+        frontend/menus/LoginMenu/loginmenu.ui 
+        backend/deposit/model/deposit_variant.h 
+        backend/deposit/deposit_variant_repsitory_interface.h 
+        backend/deposit/deposit_variant_repository_in_memory.h 
+        backend/deposit/deposit_variant_repository_in_memory.cpp
+        backend/utils/time_intervals.h
+        )
 
 target_link_libraries(${PROJECT_NAME} Qt${QT_VERSION_MAJOR}::Widgets)

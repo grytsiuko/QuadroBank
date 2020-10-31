@@ -90,6 +90,7 @@ public:
     Response &operator=(Response &&response) noexcept {
         _error = response._error;
         response._error = nullptr;
+        return *this;
     }
 
     static Response success() {
