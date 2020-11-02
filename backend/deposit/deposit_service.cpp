@@ -32,7 +32,10 @@ vector<DepositDto> DepositService::get_all_by_user(const TokenDto &tokenDto) con
     return depositDtos;
 }
 
-vector<DepositVariantDto> DepositService::get_possible_variants() const {
+vector<DepositVariantDto> DepositService::get_possible_variants(const TokenDto &token_dto) const {
+    if (_account_repository.get_by_card_number(_token_service.get_card_number(token_dto._token)).is_empty()) {
+        throw Exception("Unauthorized");
+    }
     vector<DepositVariant> deposit_variants = _deposit_variant_repository.get_list(Specification<DepositVariant>([](const DepositVariant&){return true;}));
     vector<DepositVariantDto> possible_variants;
     possible_variants.reserve(deposit_variants.size());
@@ -43,6 +46,14 @@ vector<DepositVariantDto> DepositService::get_possible_variants() const {
 }
 
 void DepositService::add(const DepositCreateDto &depositCreateDto) const {
+    const string card_number = _token_service.get_card_number(depositCreateDto._token);
+    Optional<Account> account_optional = _account_repository.get_by_card_number(card_number);
+    if (account_optional.is_empty()) {
+        throw Exception("Internal error");
+    }
+    if (account_optional.get()->_is_credit) {
+        throw Exception("Unable to create deposits for credit cards");
+    }
     const Optional<DepositVariant> optional_deposit_variant = _deposit_variant_repository.get_by_percentage(depositCreateDto._percentage);
 
     if(optional_deposit_variant.is_empty()){
@@ -50,7 +61,6 @@ void DepositService::add(const DepositCreateDto &depositCreateDto) const {
     }
 
     DepositVariant deposit_variant = *optional_deposit_variant.get();
-    const string card_number = _token_service.get_card_number(depositCreateDto._token);
     const time_t currDate = time(nullptr);
     Deposit deposit{0, card_number, depositCreateDto._percentage, deposit_variant._period_sec, currDate, currDate + deposit_variant._period_sec, depositCreateDto._sum};
     _deposit_repository.add(deposit);

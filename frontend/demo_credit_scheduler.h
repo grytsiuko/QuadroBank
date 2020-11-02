@@ -1,6 +1,7 @@
 #ifndef QUADROBANK_DEMO_CREDIT_SCHEDULER_H
 #define QUADROBANK_DEMO_CREDIT_SCHEDULER_H
 
+#include <cassert>
 #include "../backend/scheduler/scheduler.h"
 #include "../backend/account/dto/account_authorize_dto.h"
 #include "../backend/utils/response.h"
@@ -46,7 +47,7 @@ void demo_credit_scheduler() {
     assert(withdrawResponse.is_success());
 
     for (int i = 0; i < 2; i++) {
-        demo_credit_check_balance(tokenDto);
+        demo_deposit_check_balance(tokenDto);
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
 }
