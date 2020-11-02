@@ -39,16 +39,7 @@ public:
 
     void add(const DepositCreateDto& depositCreateDto) const;
 
-    void remove(int id) const;
-
     vector<Deposit> get_to_be_paid() const;
-
-    vector<Deposit> get_finished() const {
-        function<bool(const Deposit&)> finished_filter = [](auto &a) {
-            return a._end_date < time(nullptr);
-        };
-        return _deposit_repository.get_list(Specification<Deposit>(finished_filter));
-    }
 
     void return_finished(const Deposit &deposit) const {
         Optional<Account> account_optional = _account_repository.get_by_card_number(deposit._account_card_number);

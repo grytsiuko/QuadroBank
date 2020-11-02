@@ -58,7 +58,7 @@ private:
     }
 
     void check_deposits() const {
-        vector<Deposit> finished = _deposit_service.get_finished();
+        vector<Deposit> finished = _deposit_service.get_to_be_paid();
         for (const Deposit &deposit:finished) {
             _deposit_service.return_finished(deposit);
             log("Returned deposit for " + deposit._account_card_number);

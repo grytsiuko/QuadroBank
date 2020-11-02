@@ -7,9 +7,6 @@ int DepositRepositoryInMemory::_freeId = 1;
 DepositRepositoryInMemory::DepositRepositoryInMemory() {
     int curr_time = time(nullptr);
     int period_sec = 10 * TimeIntervals::SECOND;
-//    _deposits.push_back(
-//            Deposit{_get_free_id(), "1111 1111 1111 1111", 0.09, period_sec, curr_time, curr_time + period_sec, 100}
-//    );
 }
 
 void DepositRepositoryInMemory::_add(const Deposit &deposit) const {

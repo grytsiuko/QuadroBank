@@ -10,16 +10,9 @@ vector<DepositDto> DepositService::get_all_by_user(const TokenDto &tokenDto) con
     }
 
     const Account account = *optional_account.get();
-    const vector<Account> accounts = _account_repository.get_list(
-            Specification<Account>([&](const Account &acc) { return acc._user_id == account._user_id; }));
 
     const vector<Deposit> deposits = _deposit_repository.get_list(Specification<Deposit>([&](const Deposit &d) {
-        for (const Account &acc : accounts) {
-            if (acc._card_number == d._account_card_number) {
-                return true;
-            }
-        }
-        return false;
+        return account._card_number == d._account_card_number;
     }));
 
     vector<DepositDto> depositDtos;
@@ -49,9 +42,10 @@ void DepositService::add(const DepositCreateDto &depositCreateDto) const {
     const string card_number = _token_service.get_card_number(depositCreateDto._token);
     Optional<Account> account_optional = _account_repository.get_by_card_number(card_number);
     if (account_optional.is_empty()) {
-        throw Exception("Internal error");
+        throw Exception("Illegal token");
     }
-    if (account_optional.get()->_is_credit) {
+    Account account = *account_optional.get();
+    if (account._is_credit) {
         throw Exception("Unable to create deposits for credit cards");
     }
     const Optional<DepositVariant> optional_deposit_variant = _deposit_variant_repository.get_by_percentage(depositCreateDto._percentage);
@@ -63,11 +57,9 @@ void DepositService::add(const DepositCreateDto &depositCreateDto) const {
     DepositVariant deposit_variant = *optional_deposit_variant.get();
     const time_t currDate = time(nullptr);
     Deposit deposit{0, card_number, depositCreateDto._percentage, deposit_variant._period_sec, currDate, currDate + deposit_variant._period_sec, depositCreateDto._sum};
+    account._balance -= depositCreateDto._sum;
     _deposit_repository.add(deposit);
-}
-
-void DepositService::remove(const int id) const {
-    _deposit_repository.remove(id);
+    _account_repository.update(account);
 }
 
 vector<Deposit> DepositService::get_to_be_paid() const {
