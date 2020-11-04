@@ -41,18 +41,7 @@ public:
 
     vector<Deposit> get_to_be_paid() const;
 
-    void return_finished(const Deposit &deposit) const {
-        Optional<Account> account_optional = _account_repository.get_by_card_number(deposit._account_card_number);
-
-        if (account_optional.is_empty()) {
-            throw Exception("Internal error");
-        }
-        Account account = *account_optional.get();
-
-        account._balance += floor(deposit._sum * (1 + deposit._percentage));
-        _account_repository.update(account);
-        _deposit_repository.remove(deposit._id);
-    }
+    void return_finished(const Deposit &deposit) const;
 
 
 };
