@@ -107,6 +107,6 @@ add_executable(QuadroBank
         backend/deposit/deposit_variant_repository_in_memory.h 
         backend/deposit/deposit_variant_repository_in_memory.cpp
         backend/utils/time_intervals.h
-        frontend/demo_deposit_scheduler.h backend/regular_payment/model/regular_payment.h backend/regular_payment/regular_payment_repository_interface.h backend/regular_payment/regular_payment_repository_in_memory.cpp backend/regular_payment/regular_payment_repository_in_memory.h)
+        frontend/demo_deposit_scheduler.h backend/regular_payment/model/regular_payment.h backend/regular_payment/regular_payment_repository_interface.h backend/regular_payment/regular_payment_repository_in_memory.cpp backend/regular_payment/regular_payment_repository_in_memory.h backend/regular_payment/regular_payment_service.cpp backend/regular_payment/regular_payment_service.h backend/regular_payment/regular_payment_controller.h)
 
 target_link_libraries(${PROJECT_NAME} Qt${QT_VERSION_MAJOR}::Widgets)

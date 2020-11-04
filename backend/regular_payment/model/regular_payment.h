@@ -6,9 +6,9 @@ using std::string;
 
 struct RegularPayment{
     int _id;
-    string _account_id;
+    string _account_card;
     int _period_sec;
-    string _target_account;
+    string _target_card;
     time_t _last_paid;
     int _sum;
 };
