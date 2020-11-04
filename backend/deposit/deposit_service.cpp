@@ -1,5 +1,6 @@
 
 
+#include <backend/utils/time_intervals.h>
 #include "deposit_service.h"
 
 vector<DepositDto> DepositService::get_all_by_user(const TokenDto &tokenDto) const {
@@ -77,7 +78,8 @@ void DepositService::return_finished(const Deposit &deposit) const {
     }
     Account account = *account_optional.get();
 
-    account._balance += floor(deposit._sum * (1 + deposit._percentage));
+    account._balance += deposit._sum;
+    account._balance += floor(deposit._sum * deposit._percentage / TimeIntervals::YEAR * deposit._period_sec);
     _account_repository.update(account);
     _deposit_repository.remove(deposit._id);
 }

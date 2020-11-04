@@ -41,7 +41,7 @@ void demo_deposit_scheduler() {
 
     // add deposit
     Response<void> depositResponse = depositActions.create(
-            DepositCreateDto{authorizeResponse.get_response()->_token, 0.09, 100}
+            DepositCreateDto{authorizeResponse.get_response()->_token, 10000, 20000}
     );
     assert(depositResponse.is_success());
 
