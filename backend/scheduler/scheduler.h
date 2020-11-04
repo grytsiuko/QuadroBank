@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <thread>
+#include <backend/deposit/model/deposit.h>
+#include <backend/deposit/deposit_service.h>
 #include "../utils/singleton.h"
 #include "../log/log_service.h"
 #include "../account/account_service.h"
@@ -20,12 +22,14 @@ private:
     mutable volatile bool _looping;
     const LogService &_log_service;
     const AccountService &_account_service;
+    const DepositService &_deposit_service;
 
     Scheduler() :
             _looping(true),
             _th(thread([this] { loop(); })),
             _log_service(LogService::get_instance()),
-            _account_service(AccountService::get_instance()) {}
+            _account_service(AccountService::get_instance()),
+            _deposit_service(DepositService::get_instance()) {}
 
     ~Scheduler() override {
         _looping = false;
@@ -40,6 +44,7 @@ private:
         while (_looping) {
             log("looping Scheduler");
             check_credits();
+            check_deposits();
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         }
     }
@@ -49,6 +54,14 @@ private:
         for (const Account &account:debtors) {
             _account_service.punish_debtor(account);
             log("Punished " + account._card_number);
+        }
+    }
+
+    void check_deposits() const {
+        vector<Deposit> finished = _deposit_service.get_to_be_paid();
+        for (const Deposit &deposit:finished) {
+            _deposit_service.return_finished(deposit);
+            log("Returned deposit for " + deposit._account_card_number);
         }
     }
 };

@@ -22,7 +22,7 @@ private:
                 Account{"1111 1111 1111 1111", 15, "1111", true, 100, 50, 0}
         );
         _accounts.push_back(
-                Account{"2222 2222 2222 2222", 15, "2222", false, 200, 0, 0}
+                Account{"2222 2222 2222 2222", 15, "2222", false, 20000, 0, 0}
         );
         _accounts.push_back(
                 Account{"3333 3333 3333 3333", 20, "3333", true, 0, 300, 0}

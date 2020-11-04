@@ -2,6 +2,7 @@
 #define QUADROBANK_DEPOSIT_SERVICE_H
 
 
+#include <cmath>
 #include "backend/account/dto/token_dto.h"
 #include "deposit_repository_interface.h"
 #include "deposit_repository_in_memory.h"
@@ -34,13 +35,14 @@ private:
 public:
     vector<DepositDto> get_all_by_user(const TokenDto &tokenDto) const;
 
-    vector<DepositVariantDto> get_possible_variants() const;
+    vector<DepositVariantDto> get_possible_variants(const TokenDto &token_dto) const;
 
     void add(const DepositCreateDto& depositCreateDto) const;
 
-    void remove(int id) const;
-
     vector<Deposit> get_to_be_paid() const;
+
+    void return_finished(const Deposit &deposit) const;
+
 
 };
 
