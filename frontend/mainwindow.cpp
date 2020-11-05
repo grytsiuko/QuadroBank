@@ -91,6 +91,10 @@ void MainWindow::set_withdrawmenu() {
     Ui::WithdrawMenu *withdrawmenu_ui = withdrawmenu_ui_getter.getUi(WithdrawMenu::get_instance());
     // connect buttons to slots
     connect(withdrawmenu_ui->back_button, SIGNAL(clicked()), this, SLOT(set_mainmenu()));
+    // pass token to menu
+    WithdrawMenu::get_instance().set_token(currentToken);
+    // reset stylesheets on inputs
+    withdrawmenu_ui->amount_input->setStyleSheet("");
     // get index of menu, we need to set, and set it
     menus->setCurrentIndex(menus->indexOf(&WithdrawMenu::get_instance()));
 }
