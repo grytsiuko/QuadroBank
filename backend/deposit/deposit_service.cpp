@@ -3,8 +3,8 @@
 #include <backend/utils/time_intervals.h>
 #include "deposit_service.h"
 
-vector<DepositDto> DepositService::get_all_by_user(const TokenDto &tokenDto) const {
-    const string card_number = _token_service.get_card_number(tokenDto._token);
+vector<DepositDto> DepositService::get_all_by_user(const TokenDto &token_dto) const {
+    const string card_number = _token_service.get_card_number(token_dto._token);
     const Optional<Account> optional_account = _account_repository.get_by_card_number(card_number);
     if (optional_account.is_empty()) {
         throw Exception("Illegal token");
@@ -16,14 +16,14 @@ vector<DepositDto> DepositService::get_all_by_user(const TokenDto &tokenDto) con
         return account._card_number == d._account_card_number;
     }));
 
-    vector<DepositDto> depositDtos;
+    vector<DepositDto> deposit_dtos;
 
-    depositDtos.reserve(deposits.size());
+    deposit_dtos.reserve(deposits.size());
     for (const Deposit& d : deposits) {
-        depositDtos.push_back(DepositDto{d._id, d._period_sec, d._start_date, d._end_date, d._percentage, d._sum});
+        deposit_dtos.push_back(DepositDto{d._id, d._period_sec, d._start_date, d._end_date, d._percentage, d._sum});
     }
 
-    return depositDtos;
+    return deposit_dtos;
 }
 
 vector<DepositVariantDto> DepositService::get_possible_variants(const TokenDto &token_dto) const {
@@ -39,8 +39,8 @@ vector<DepositVariantDto> DepositService::get_possible_variants(const TokenDto &
     return possible_variants;
 }
 
-void DepositService::add(const DepositCreateDto &depositCreateDto) const {
-    const string card_number = _token_service.get_card_number(depositCreateDto._token);
+void DepositService::add(const DepositCreateDto &deposit_create_dto) const {
+    const string card_number = _token_service.get_card_number(deposit_create_dto._token);
     Optional<Account> account_optional = _account_repository.get_by_card_number(card_number);
     if (account_optional.is_empty()) {
         throw Exception("Illegal token");
@@ -49,7 +49,7 @@ void DepositService::add(const DepositCreateDto &depositCreateDto) const {
     if (account._is_credit) {
         throw Exception("Unable to create deposits for credit cards");
     }
-    const Optional<DepositVariant> optional_deposit_variant = _deposit_variant_repository.get_by_percentage(depositCreateDto._percentage);
+    const Optional<DepositVariant> optional_deposit_variant = _deposit_variant_repository.get_by_percentage(deposit_create_dto._percentage);
 
     if(optional_deposit_variant.is_empty()){
         throw Exception("Illegal percentage");
@@ -60,8 +60,8 @@ void DepositService::add(const DepositCreateDto &depositCreateDto) const {
 
     DepositVariant deposit_variant = *optional_deposit_variant.get();
     const time_t currDate = time(nullptr);
-    Deposit deposit{0, card_number, depositCreateDto._percentage, deposit_variant._period_sec, currDate, currDate + deposit_variant._period_sec, depositCreateDto._sum};
-    account._balance -= depositCreateDto._sum;
+    Deposit deposit{0, card_number, deposit_create_dto._percentage, deposit_variant._period_sec, currDate, currDate + deposit_variant._period_sec, deposit_create_dto._sum};
+    account._balance -= deposit_create_dto._sum;
     _deposit_repository.add(deposit);
     _account_repository.update(account);
 }
