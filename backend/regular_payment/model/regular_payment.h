@@ -9,7 +9,7 @@ struct RegularPayment{
     string _account_card;
     int _period_sec;
     string _target_card;
-    time_t _last_paid;
+    time_t _next_time;
     int _sum;
 };
 
