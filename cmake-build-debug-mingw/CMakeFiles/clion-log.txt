@@ -1,4 +1,0 @@
-"C:\Program Files\JetBrains\CLion 2020.2.3\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_PREFIX_PATH=C:/Qt/5.15.1/mingw81_64/lib/cmake -G "CodeBlocks - MinGW Makefiles" C:\moop\QuadroBank
--- Configuring done
--- Generating done
--- Build files have been written to: C:/moop/QuadroBank/cmake-build-debug-mingw
