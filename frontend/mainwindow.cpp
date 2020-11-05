@@ -107,6 +107,10 @@ void MainWindow::set_refillmenu() {
     Ui::RefillMenu *refillmenu_ui = refillmenu_ui_getter.getUi(RefillMenu::get_instance());
     // connect buttons to slots
     connect(refillmenu_ui->back_button, SIGNAL(clicked()), this, SLOT(set_mainmenu()));
+
+    RefillMenu::get_instance().set_token(currentToken);
+
+    refillmenu_ui->amount_input->setStyleSheet("");
     // get index of menu, we need to set, and set it
     menus->setCurrentIndex(menus->indexOf(&RefillMenu::get_instance()));
 }
