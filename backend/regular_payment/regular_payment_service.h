@@ -43,6 +43,8 @@ public:
 
     vector<RegularPayment> get_to_be_paid() const;
 
+    void pay(RegularPayment regular_payment) const;
+
 };
 
 

@@ -20,7 +20,7 @@ void LoginMenu::login_validation(){
     );
     // if input is correct, then emit signal to MainWindow, to provide MainMenu
     if (authorizeResponse.is_success()){
-        TokenDto tokenDto = TokenDto{authorizeResponse.get_response()->_token};
+        TokenDto tokenDto = TokenDto{authorizeResponse.get_response()._token};
         emit input_validated();
         emit send_token(tokenDto);
         ui->card_number_input->setStyleSheet("border: 1px solid green");

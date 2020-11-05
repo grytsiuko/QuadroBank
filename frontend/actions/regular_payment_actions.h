@@ -23,8 +23,8 @@ private:
 public:
 
     Response<vector<RegularPaymentDto>> get_all_by_user(const TokenDto &token_dto) const {
-        auto *result = new vector<RegularPaymentDto>();
-        result->push_back(
+        auto result = vector<RegularPaymentDto>();
+        result.push_back(
                 RegularPaymentDto{45, 86400, "2222 2222 2222 2222", 10}
         );
         return Response<vector<RegularPaymentDto>>::success(result);

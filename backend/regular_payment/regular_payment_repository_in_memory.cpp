@@ -32,11 +32,16 @@ void RegularPaymentRepositoryInMemory::_update(const RegularPayment &regular_pay
             return;
         }
     }
+    throw Exception("Attempt to update non-existing regular payment");
 }
 
 void RegularPaymentRepositoryInMemory::_remove(int id) const {
-    _regular_payments = _get_list(
+    const vector<RegularPayment>& result = _get_list(
             Specification<RegularPayment>([=](const RegularPayment &rp) { return rp._id != id; }));
+    if(result.size() == _regular_payments.size()){
+        throw Exception("Attempt to delete non-existing regular payment");
+    }
+    _regular_payments = result;
 }
 
 vector<RegularPayment>
