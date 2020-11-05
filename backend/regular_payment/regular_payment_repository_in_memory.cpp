@@ -6,6 +6,15 @@ int RegularPaymentRepositoryInMemory::_freeId = 1;
 
 RegularPaymentRepositoryInMemory::RegularPaymentRepositoryInMemory() = default;
 
+Optional<RegularPayment> RegularPaymentRepositoryInMemory::_get_by_id(int id) const{
+    for(RegularPayment& rp : _regular_payments){
+        if(rp._id == id){
+            return Optional<RegularPayment>::of(&rp);
+        }
+    }
+    return Optional<RegularPayment>::empty();
+}
+
 void RegularPaymentRepositoryInMemory::_add(const RegularPayment &regular_payment) const {
     if (regular_payment._id == 0) {
         RegularPayment copy(regular_payment);

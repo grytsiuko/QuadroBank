@@ -15,6 +15,8 @@ private:
 
     RegularPaymentRepositoryInMemory();
 
+    Optional<RegularPayment> _get_by_id(int id) const override;
+
     void _add(const RegularPayment& regular_payment) const override;
 
     void _update(const RegularPayment& regular_payment) const override;
