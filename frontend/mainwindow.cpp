@@ -80,6 +80,7 @@ void MainWindow::set_transfermenu() {
     Ui::TransferMenu *transfermenu_ui = transfermenu_ui_getter.getUi(TransferMenu::get_instance());
     // connect buttons to slots
     connect(transfermenu_ui->back_button, SIGNAL(clicked()), this, SLOT(set_mainmenu()));
+    TransferMenu::get_instance().set_token(currentToken);
     // get index of menu, we need to set, and set it
     menus->setCurrentIndex(menus->indexOf(&TransferMenu::get_instance()));
 }
