@@ -123,6 +123,8 @@ void MainWindow::set_depositsmenu() {
     // connect buttons to slots
     connect(depositsmenu_ui->back_button, SIGNAL(clicked()), this, SLOT(set_mainmenu()));
     connect(depositsmenu_ui->new_deposit_button, SIGNAL(clicked()), this, SLOT(set_newdepositsmenu()));
+
+    DepositsMenu::get_instance().set_token(currentToken);
     // get index of menu, we need to set, and set it
     menus->setCurrentIndex(menus->indexOf(&DepositsMenu::get_instance()));
 }
