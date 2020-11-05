@@ -40,7 +40,7 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::set_token_dto(TokenDto const& ttt){
+void MainWindow::set_token_dto(TokenDto const &ttt) {
     currentToken = ttt;
 };
 
@@ -67,7 +67,8 @@ void MainWindow::set_loginmenu() {
     Ui::LoginMenu *loginmenu_ui = loginmenu_ui_getter.getUi(LoginMenu::get_instance());
     // connect buttons to slots
     connect(&LoginMenu::get_instance(), SIGNAL(input_validated()), this, SLOT(set_mainmenu()));
-    connect(&LoginMenu::get_instance(), SIGNAL(send_token(TokenDto const&)), this, SLOT(set_token_dto(TokenDto const&)));
+    connect(&LoginMenu::get_instance(), SIGNAL(send_token(TokenDto const&)), this,
+            SLOT(set_token_dto(TokenDto const&)));
     // get index of menu, we need to set, and set it
     menus->setCurrentIndex(menus->indexOf(&LoginMenu::get_instance()));
 }

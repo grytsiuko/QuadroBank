@@ -1,4 +1,0 @@
-C:/moop/QuadroBank/cmake-build-debug-mingw/CMakeFiles/QuadroBank.dir
-C:/moop/QuadroBank/cmake-build-debug-mingw/CMakeFiles/edit_cache.dir
-C:/moop/QuadroBank/cmake-build-debug-mingw/CMakeFiles/rebuild_cache.dir
-C:/moop/QuadroBank/cmake-build-debug-mingw/CMakeFiles/QuadroBank_autogen.dir
