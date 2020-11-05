@@ -142,7 +142,7 @@ private:
         if (account.is_empty()) {
             throw Exception("Illegal token");
         }
-        return Account(*account.get());
+        return account.get();
     }
 
     Account _assert_account_by_card_number(const string &card_number) const {
@@ -151,7 +151,7 @@ private:
         if (account.is_empty()) {
             throw Exception("No such card number");
         }
-        return Account(*account.get());
+        return account.get();
     }
 
     User _assert_user_by_id(const int id) const {
@@ -160,7 +160,7 @@ private:
         if (user.is_empty()) {
             throw Exception("Internal error, no such user");
         }
-        return User(*user.get());
+        return user.get();
     }
 };
 

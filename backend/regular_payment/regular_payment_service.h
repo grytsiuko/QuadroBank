@@ -30,7 +30,7 @@ private:
                        _account_repository(AccountRepositoryInMemory::get_instance()),
                        _token_service(TokenService::get_instance()) {}
 
-    const Account* _get_account(const string& token) const;
+    Account _get_account(const string& token) const;
 
 public:
     vector<RegularPaymentDto> get_all_by_user(const TokenDto &token_dto) const;

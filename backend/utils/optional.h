@@ -8,7 +8,13 @@ private:
 
     mutable const T *_value;
 
-    explicit Optional(const T *value) : _value(new T(*value)) {}
+    explicit Optional(const T *value) {
+        if(value == nullptr){
+            _value = nullptr;
+        } else {
+            _value = new T(*value);
+        }
+    }
 
 public:
 
@@ -45,8 +51,8 @@ public:
         return !is_present();
     }
 
-    const T *get() const {
-        return _value;
+    const T &get() const {
+        return *_value;
     }
 };
 
