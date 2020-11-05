@@ -27,10 +27,10 @@ void NewDepositMenu::load_deposit_variants() {
         const vector<DepositVariantDto> *depositVector = depositVectorResponse.get_response();
 
         for (const DepositVariantDto &dep_var : *depositVector) {
-            cout << dep_var._period_sec << " " << dep_var._percentage << std::endl;
             QString balanceString = QString("Deposit for %1 with %2%").arg(dep_var._period_sec).arg(
                     dep_var._percentage);
-            QString dataString = QString("%1.%2").arg(dep_var._percentage).arg(dep_var._period_sec);
+
+            QString dataString = QString("%1").arg(dep_var._percentage);
             ui->comboBox->addItem(balanceString, dataString);
         }
     }
@@ -43,13 +43,10 @@ void NewDepositMenu::create_deposit() {
         ui->amount_input->setText("");
     } else {
         QVariant selected_variant = ui->comboBox->currentData();
-        QStringList percentage_period = selected_variant.toString().split('.', Qt::SkipEmptyParts);
-        cout << percentage_period.at(1).toLocal8Bit().constData() << std::endl;
-        cout << percentage_period.at(0).toLocal8Bit().constData() << std::endl;
         Response<void> responseTransfer = depositActions.create(
                 DepositCreateDto{currentToken._token,
-                                 percentage_period.at(0).toLocal8Bit().toDouble(),
-                                 percentage_period.at(1).toLocal8Bit().toInt()});
+                                 selected_variant.toDouble(),
+                                 amount});
         if (responseTransfer.is_success()) {
             ui->amount_input->setText("");
             update_balance_label();
