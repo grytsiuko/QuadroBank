@@ -43,7 +43,7 @@ private:
     Optional<Account> _get_by_card_number(const string &card_number) const override {
         for (const Account &account:_accounts) {
             if (account._card_number == card_number) {
-                return Optional<Account>::of(new Account(account));
+                return Optional<Account>::of(account);
             }
         }
         return Optional<Account>::empty();
