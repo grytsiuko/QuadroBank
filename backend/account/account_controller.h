@@ -30,20 +30,20 @@ public:
     Response<SessionDto> authorize(const AccountAuthorizeDto &account_authorize_dto) const {
         log("authorize");
         try {
-            SessionDto *result = _account_service.authorize(account_authorize_dto);
+            SessionDto result = _account_service.authorize(account_authorize_dto);
             return Response<SessionDto>::success(result);
         } catch (const Exception &exception) {
-            return Response<SessionDto>::error(new string(exception.get_message()));
+            return Response<SessionDto>::error(exception.get_message());
         }
     }
 
     Response<AccountBalanceDto> check_balance(const TokenDto &token_dto) const {
         log("check balance");
         try {
-            AccountBalanceDto *result = _account_service.check_balance(token_dto);
+            AccountBalanceDto result = _account_service.check_balance(token_dto);
             return Response<AccountBalanceDto>::success(result);
         } catch (const Exception &exception) {
-            return Response<AccountBalanceDto>::error(new string(exception.get_message()));
+            return Response<AccountBalanceDto>::error(exception.get_message());
         }
     }
 
@@ -53,7 +53,7 @@ public:
             _account_service.top_up(account_update_dto);
             return Response<void>::success();
         } catch (const Exception &exception) {
-            return Response<void>::error(new string(exception.get_message()));
+            return Response<void>::error(exception.get_message());
         }
     }
 
@@ -63,7 +63,7 @@ public:
             _account_service.withdraw(account_update_dto);
             return Response<void>::success();
         } catch (const Exception &exception) {
-            return Response<void>::error(new string(exception.get_message()));
+            return Response<void>::error(exception.get_message());
         }
     }
 
@@ -73,7 +73,7 @@ public:
             _account_service.transfer(account_transfer_dto);
             return Response<void>::success();
         } catch (const Exception &exception) {
-            return Response<void>::error(new string(exception.get_message()));
+            return Response<void>::error(exception.get_message());
         }
     }
 };

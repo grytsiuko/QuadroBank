@@ -27,9 +27,9 @@ public:
         log("get_all_by_user");
         try{
             vector<RegularPaymentDto> regular_payment_dtos = _regular_payment_service.get_all_by_user(token_dto);
-            return Response<vector<RegularPaymentDto>>::success(new vector<RegularPaymentDto>(std::move(regular_payment_dtos)));
+            return Response<vector<RegularPaymentDto>>::success(regular_payment_dtos);
         } catch (const Exception &exception) {
-            return Response<vector<RegularPaymentDto>>::error(new string(exception.get_message()));
+            return Response<vector<RegularPaymentDto>>::error(exception.get_message());
         }
     }
 
@@ -39,7 +39,7 @@ public:
             _regular_payment_service.add(regular_payment_create_dto);
             return Response<void>::success();
         } catch (const Exception &exception) {
-            return Response<void>::error(new string(exception.get_message()));
+            return Response<void>::error(exception.get_message());
         }
     }
 
@@ -49,7 +49,7 @@ public:
             _regular_payment_service.update(regular_payment_update_dto);
             return Response<void>::success();
         } catch (const Exception &exception) {
-            return Response<void>::error(new string(exception.get_message()));
+            return Response<void>::error(exception.get_message());
         }
     }
 
@@ -59,7 +59,7 @@ public:
             _regular_payment_service.remove(regular_payment_delete_dto);
             return Response<void>::success();
         } catch (const Exception &exception) {
-            return Response<void>::error(new string(exception.get_message()));
+            return Response<void>::error(exception.get_message());
         }
     }
 

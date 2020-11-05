@@ -9,7 +9,7 @@ RegularPaymentRepositoryInMemory::RegularPaymentRepositoryInMemory() = default;
 Optional<RegularPayment> RegularPaymentRepositoryInMemory::_get_by_id(int id) const{
     for(RegularPayment& rp : _regular_payments){
         if(rp._id == id){
-            return Optional<RegularPayment>::of(&rp);
+            return Optional<RegularPayment>::of(rp);
         }
     }
     return Optional<RegularPayment>::empty();
