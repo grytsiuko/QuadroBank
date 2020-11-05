@@ -19,7 +19,7 @@ public:
     ~DepositsMenu();
     void set_token(const TokenDto& token);
 private:
-    DepositsMenu(QWidget *parent = nullptr):
+    explicit DepositsMenu(QWidget *parent = nullptr):
         QWidget(parent),
         ui(new Ui::DepositsMenu)
     {

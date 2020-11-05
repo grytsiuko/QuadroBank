@@ -32,4 +32,4 @@ void DepositsMenu::update_deposits_list(){
 //
 //        }
     }
-};
+}

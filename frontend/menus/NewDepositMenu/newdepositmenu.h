@@ -5,6 +5,8 @@
 #include "backend/utils/singleton.h"
 #include "../utils/object_ui.h"
 #include "ui_newdepositmenu.h"
+#include "../../actions/deposit_actions.h"
+#include "../../actions/account_actions.h"
 
 
 namespace Ui {
@@ -17,15 +19,25 @@ class NewDepositMenu :  public QWidget, public Singleton<NewDepositMenu>
 
 public:
     ~NewDepositMenu();
+    void set_token(const TokenDto& token);
+private slots:
+    void create_deposit();
 private:
-    NewDepositMenu(QWidget *parent = nullptr):
+    explicit NewDepositMenu(QWidget *parent = nullptr):
         QWidget(parent),
         ui(new Ui::NewDepositMenu)
     {
         ui->setupUi(this);
+        connect( ui->new_deposit_button,SIGNAL(clicked()),this,SLOT(create_deposit()));
     };
+
+    void load_deposit_variants();
+    void update_balance_label();
     friend Singleton;
     friend object_ui<Ui::NewDepositMenu,NewDepositMenu>;
+    DepositActions &depositActions = DepositActions::get_instance();
+    AccountActions &accountActions = AccountActions::get_instance();
+    TokenDto currentToken;
     Ui::NewDepositMenu *ui;
 };
 
