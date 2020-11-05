@@ -54,6 +54,9 @@ void DepositService::add(const DepositCreateDto &depositCreateDto) const {
     if(optional_deposit_variant.is_empty()){
         throw Exception("Illegal percentage");
     }
+    if (depositCreateDto._sum <= 0) {
+        throw Exception("Unable to create deposit with negative sum");
+    }
 
     DepositVariant deposit_variant = *optional_deposit_variant.get();
     const time_t currDate = time(nullptr);
