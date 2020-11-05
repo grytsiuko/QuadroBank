@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="QuadroBank"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\Qt\;CMake Files\..\..\Qt\5.15.1\;CMake Files\..\..\Qt\5.15.1\mingw81_64\;CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\;CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\;CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5\;CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Widgets\;CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Gui\;CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Core\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="C:/moop/QuadroBank/cmake-build-debug-mingw"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MINGW/mingw64/bin/mingw32-make.exe -f &quot;C:/moop/QuadroBank/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/MINGW/mingw64/bin/mingw32-make.exe -f &quot;C:/moop/QuadroBank/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MINGW/mingw64/bin/mingw32-make.exe -f &quot;C:/moop/QuadroBank/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MINGW/mingw64/bin/mingw32-make.exe -f &quot;C:/moop/QuadroBank/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="QuadroBank">
+				<Option output="C:/moop/QuadroBank/cmake-build-debug-mingw/QuadroBank.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/moop/QuadroBank/cmake-build-debug-mingw"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DQT_WIDGETS_LIB"/>
+					<Add option="-DQT_GUI_LIB"/>
+					<Add option="-DQT_CORE_LIB"/>
+					<Add directory="C:/moop/QuadroBank/cmake-build-debug-mingw"/>
+					<Add directory="C:/moop/QuadroBank"/>
+					<Add directory="C:/moop/QuadroBank/cmake-build-debug-mingw/QuadroBank_autogen/include"/>
+					<Add directory="C:/Qt/5.15.1/mingw81_64/include"/>
+					<Add directory="C:/Qt/5.15.1/mingw81_64/include/QtWidgets"/>
+					<Add directory="C:/Qt/5.15.1/mingw81_64/include/QtGui"/>
+					<Add directory="C:/Qt/5.15.1/mingw81_64/include/QtANGLE"/>
+					<Add directory="C:/Qt/5.15.1/mingw81_64/include/QtCore"/>
+					<Add directory="C:/Qt/5.15.1/mingw81_64/./mkspecs/win32-g++"/>
+					<Add directory="C:/MINGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++"/>
+					<Add directory="C:/MINGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="C:/MINGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward"/>
+					<Add directory="C:/MINGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include"/>
+					<Add directory="C:/MINGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed"/>
+					<Add directory="C:/MINGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MINGW/mingw64/bin/mingw32-make.exe -f &quot;C:/moop/QuadroBank/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 QuadroBank"/>
+					<CompileFile command="C:/MINGW/mingw64/bin/mingw32-make.exe -f &quot;C:/moop/QuadroBank/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MINGW/mingw64/bin/mingw32-make.exe -f &quot;C:/moop/QuadroBank/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MINGW/mingw64/bin/mingw32-make.exe -f &quot;C:/moop/QuadroBank/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="QuadroBank/fast">
+				<Option output="C:/moop/QuadroBank/cmake-build-debug-mingw/QuadroBank.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/moop/QuadroBank/cmake-build-debug-mingw"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DQT_WIDGETS_LIB"/>
+					<Add option="-DQT_GUI_LIB"/>
+					<Add option="-DQT_CORE_LIB"/>
+					<Add directory="C:/moop/QuadroBank/cmake-build-debug-mingw"/>
+					<Add directory="C:/moop/QuadroBank"/>
+					<Add directory="C:/moop/QuadroBank/cmake-build-debug-mingw/QuadroBank_autogen/include"/>
+					<Add directory="C:/Qt/5.15.1/mingw81_64/include"/>
+					<Add directory="C:/Qt/5.15.1/mingw81_64/include/QtWidgets"/>
+					<Add directory="C:/Qt/5.15.1/mingw81_64/include/QtGui"/>
+					<Add directory="C:/Qt/5.15.1/mingw81_64/include/QtANGLE"/>
+					<Add directory="C:/Qt/5.15.1/mingw81_64/include/QtCore"/>
+					<Add directory="C:/Qt/5.15.1/mingw81_64/./mkspecs/win32-g++"/>
+					<Add directory="C:/MINGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++"/>
+					<Add directory="C:/MINGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="C:/MINGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward"/>
+					<Add directory="C:/MINGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include"/>
+					<Add directory="C:/MINGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed"/>
+					<Add directory="C:/MINGW/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MINGW/mingw64/bin/mingw32-make.exe -f &quot;C:/moop/QuadroBank/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 QuadroBank/fast"/>
+					<CompileFile command="C:/MINGW/mingw64/bin/mingw32-make.exe -f &quot;C:/moop/QuadroBank/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MINGW/mingw64/bin/mingw32-make.exe -f &quot;C:/moop/QuadroBank/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MINGW/mingw64/bin/mingw32-make.exe -f &quot;C:/moop/QuadroBank/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="C:/moop/QuadroBank/cmake-build-debug-mingw"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MINGW/mingw64/bin/mingw32-make.exe -f &quot;C:/moop/QuadroBank/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/MINGW/mingw64/bin/mingw32-make.exe -f &quot;C:/moop/QuadroBank/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MINGW/mingw64/bin/mingw32-make.exe -f &quot;C:/moop/QuadroBank/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MINGW/mingw64/bin/mingw32-make.exe -f &quot;C:/moop/QuadroBank/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="C:/moop/QuadroBank/cmake-build-debug-mingw"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MINGW/mingw64/bin/mingw32-make.exe -f &quot;C:/moop/QuadroBank/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/MINGW/mingw64/bin/mingw32-make.exe -f &quot;C:/moop/QuadroBank/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MINGW/mingw64/bin/mingw32-make.exe -f &quot;C:/moop/QuadroBank/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MINGW/mingw64/bin/mingw32-make.exe -f &quot;C:/moop/QuadroBank/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="QuadroBank_autogen">
+				<Option working_dir="C:/moop/QuadroBank/cmake-build-debug-mingw"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MINGW/mingw64/bin/mingw32-make.exe -f &quot;C:/moop/QuadroBank/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 QuadroBank_autogen"/>
+					<CompileFile command="C:/MINGW/mingw64/bin/mingw32-make.exe -f &quot;C:/moop/QuadroBank/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MINGW/mingw64/bin/mingw32-make.exe -f &quot;C:/moop/QuadroBank/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MINGW/mingw64/bin/mingw32-make.exe -f &quot;C:/moop/QuadroBank/cmake-build-debug-mingw/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="C:/moop/QuadroBank/backend/account/account_controller.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/account/account_repository_in_memory.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/account/account_repository_interface.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/account/account_service.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/account/dto/account_authorize_dto.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/account/dto/account_balance_dto.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/account/dto/account_transfer_dto.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/account/dto/account_update_dto.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/account/dto/session_dto.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/account/dto/token_dto.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/account/model/account.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/db/specification.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/deposit/deposit_controller.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/deposit/deposit_repository_in_memory.cpp">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/deposit/deposit_repository_in_memory.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/deposit/deposit_repository_interface.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/deposit/deposit_service.cpp">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/deposit/deposit_service.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/deposit/deposit_variant_repository_in_memory.cpp">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/deposit/deposit_variant_repository_in_memory.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/deposit/deposit_variant_repsitory_interface.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/deposit/dto/deposit_create_dto.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/deposit/dto/deposit_dto.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/deposit/dto/deposit_variant_dto.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/deposit/model/deposit.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/deposit/model/deposit_variant.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/log/log_service.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/regular_payment/dto/regular_payment_create_dto.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/regular_payment/dto/regular_payment_delete_dto.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/regular_payment/dto/regular_payment_dto.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/regular_payment/dto/regular_payment_update_dto.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/scheduler/scheduler.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/token/token_service.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/user/model/user.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/user/user_repository_in_memory.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/user/user_repository_interface.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/utils/exception.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/utils/non_copying.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/utils/optional.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/utils/response.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/utils/singleton.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/backend/utils/time_intervals.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/cmake-build-debug-mingw/QuadroBank_autogen/mocs_compilation.cpp">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/actions/account_actions.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/actions/deposit_actions.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/actions/regular_payment_actions.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/demo_account.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/demo_credit_scheduler.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/demo_deposit_scheduler.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/main.cpp">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/mainwindow.cpp">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/mainwindow.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/mainwindow.ui">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/menus/DepositsMenu/depositsmenu.cpp">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/menus/DepositsMenu/depositsmenu.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/menus/DepositsMenu/depositsmenu.ui">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/menus/LoginMenu/loginmenu.cpp">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/menus/LoginMenu/loginmenu.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/menus/LoginMenu/loginmenu.ui">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/menus/MainMenu/mainmenu.cpp">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/menus/MainMenu/mainmenu.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/menus/MainMenu/mainmenu.ui">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/menus/NewDepositMenu/newdepositmenu.cpp">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/menus/NewDepositMenu/newdepositmenu.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/menus/NewDepositMenu/newdepositmenu.ui">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/menus/NewPaymentMenu/newpaymentmenu.cpp">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/menus/NewPaymentMenu/newpaymentmenu.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/menus/NewPaymentMenu/newpaymentmenu.ui">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/menus/PaymentsMenu/paymentsmenu.cpp">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/menus/PaymentsMenu/paymentsmenu.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/menus/PaymentsMenu/paymentsmenu.ui">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/menus/RefillMenu/refillmenu.cpp">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/menus/RefillMenu/refillmenu.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/menus/RefillMenu/refillmenu.ui">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/menus/TransferMenu/transfermenu.cpp">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/menus/TransferMenu/transfermenu.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/menus/TransferMenu/transfermenu.ui">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/menus/WithdrawMenu/withdrawmenu.cpp">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/menus/WithdrawMenu/withdrawmenu.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/menus/WithdrawMenu/withdrawmenu.ui">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/frontend/menus/utils/object_ui.h">
+			<Option target="QuadroBank"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5/Qt5Config.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5/Qt5ConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5/Qt5ModuleLocation.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Widgets/Qt5WidgetsConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Widgets\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Widgets\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Widgets/Qt5WidgetsConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Widgets\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Widgets/Qt5WidgetsMacros.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Widgets\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Widgets/Qt5Widgets_QWindowsVistaStylePlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Widgets\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Gui/Qt5GuiConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Gui/Qt5GuiConfigExtras.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Gui/Qt5GuiConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QGifPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QICNSPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QICOPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QJpegPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QMinimalIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QOffscreenIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QSvgIconPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QSvgPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QTgaPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QTiffPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QTuioTouchPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QWbmpPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QWebpPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QWindowsDirect2DIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QWindowsIntegrationPlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Gui/Qt5Gui_QXdgDesktopPortalThemePlugin.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Gui\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Core/Qt5CoreConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Core\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Core/Qt5CoreConfigExtras.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Core\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Core/Qt5CoreConfigExtrasMkspecDir.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Core\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Core/Qt5CoreConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Core\"/>
+		</Unit>
+		<Unit filename="C:/moop/QuadroBank/../../Qt/5.15.1/mingw81_64/lib/cmake/Qt5Core/Qt5CoreMacros.cmake">
+			<Option virtualFolder="CMake Files\..\..\Qt\5.15.1\mingw81_64\lib\cmake\Qt5Core\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

@@ -111,7 +111,7 @@ public:
 
     const string *get_error() const {
         return _error;
-    }
+    }   
 };
 
 #endif //QUADROBANK_RESPONSE_H
