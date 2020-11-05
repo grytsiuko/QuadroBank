@@ -16,21 +16,27 @@ void DepositsMenu::update_deposits_list() {
 
     if (depositVectorResponse.is_success()) {
         const vector<DepositDto> *depositVector = depositVectorResponse.get_response();
-        QStandardItemModel model(depositVector->capacity(), 4);
+        auto* currentModel = new QStandardItemModel(depositVector->capacity(), 4);
+        currentModel->setHeaderData(0, Qt::Horizontal, QObject::tr("Start Date"));
+        currentModel->setHeaderData(1, Qt::Horizontal, QObject::tr("End Date"));
+        currentModel->setHeaderData(2, Qt::Horizontal, QObject::tr("%"));
+        currentModel->setHeaderData(3, Qt::Horizontal, QObject::tr("Amount"));
         for (int i = 0; i < depositVector->capacity(); i++) {
-            cout << depositVector->at(i)._start_date << " " << depositVector->at(i)._percentage << std::endl;
-            cout << depositVector->at(i)._end_date << " " << depositVector->at(i)._sum << std::endl;
-//            model.setItem(i, 0, new QStandardItem(depositVector->at(i)._start_date));
-//            model.setItem(i, 1, new QStandardItem(depositVector->at(i)._end_date));
-//            model.setItem(i, 2, new QStandardItem(depositVector->at(i)._percentage));
-//            model.setItem(i, 3, new QStandardItem(depositVector->at(i)._sum));
+            currentModel->setData(currentModel->index(i,0), depositVector->at(i)._start_date);
+            currentModel->setData(currentModel->index(i,1), depositVector->at(i)._end_date);
+            currentModel->setData(currentModel->index(i,2), depositVector->at(i)._percentage);
+            currentModel->setData(currentModel->index(i,3), depositVector->at(i)._sum);
+
         }
-//        ui->deposits_table->setModel(&model);
-//        for (const DepositDto& dep_var : *depositVector){
-//            cout << dep_var._start_date << " " << dep_var._period_sec
-//            << " " << dep_var._percentage << " "<< dep_var._sum << std::endl;
-//            QStandardItem* deposit_item = new QStandardItem(QString"");
-//
-//        }
+
+        ui->deposits_table->setModel(currentModel);
+
+//      stretch table to fit all space
+        for (int c = 0; c < (ui->deposits_table->horizontalHeader()->count()); ++c)
+        {
+            ui->deposits_table->horizontalHeader()->setSectionResizeMode(
+                    c, QHeaderView::Stretch);
+        }
+
     }
 }

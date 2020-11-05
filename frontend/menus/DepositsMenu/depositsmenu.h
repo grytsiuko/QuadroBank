@@ -24,6 +24,7 @@ private:
         ui(new Ui::DepositsMenu)
     {
         ui->setupUi(this);
+
     };
 
     void update_deposits_list();
