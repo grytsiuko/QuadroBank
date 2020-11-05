@@ -24,6 +24,10 @@ void RegularPaymentService::add(const RegularPaymentCreateDto &regular_payment_c
     const Account account = _get_account(regular_payment_create_dto._token);
     time_t current_time = time(nullptr);
 
+    if(regular_payment_create_dto._target_card == account._card_number){
+        throw Exception("Unable to create regular payment to the same account");
+    }
+
     if(regular_payment_create_dto._next_time <= current_time){
         throw Exception("Next payment should be in the future");
     }
@@ -57,6 +61,10 @@ void RegularPaymentService::update(const RegularPaymentUpdateDto &regular_paymen
     Optional<RegularPayment> optional_payment = _regular_payment_repository.get_by_id(regular_payment_update_dto._payment_id);
     if(optional_payment.is_empty()){
         throw Exception("Attempt to change non-existent regular payment");
+    }
+
+    if(regular_payment_update_dto._target_card == account._card_number){
+        throw Exception("Unable to create regular payment to the same account");
     }
 
     if(regular_payment_update_dto._next_time <= current_time){
