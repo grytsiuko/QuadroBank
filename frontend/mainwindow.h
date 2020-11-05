@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QStackedWidget>
+#include <backend/account/dto/token_dto.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,6 +18,7 @@ public:
     ~MainWindow();
 
 private slots:
+    void set_token_dto(TokenDto const& ttt);
     void set_mainmenu();
     void set_loginmenu();
     void set_transfermenu();
@@ -30,5 +32,6 @@ private slots:
 private:
     QStackedWidget* menus=nullptr;
     Ui::MainWindow *ui;
+    TokenDto currentToken;
 };
 #endif // MAINWINDOW_H
