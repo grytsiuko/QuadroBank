@@ -37,7 +37,7 @@ private:
 
 public:
 
-    SessionDto *authorize(const AccountAuthorizeDto &account_authorize_dto) const {
+    SessionDto authorize(const AccountAuthorizeDto &account_authorize_dto) const {
         Account account = _assert_account_by_card_number(account_authorize_dto._card_number);
         User user = _assert_user_by_id(account._user_id);
 
@@ -45,13 +45,13 @@ public:
             throw Exception("Illegal pin");
         }
 
-        return new SessionDto{_token_service.generate_token(account), user._name};
+        return SessionDto{_token_service.generate_token(account), user._name};
     }
 
-    AccountBalanceDto *check_balance(const TokenDto &token_dto) const {
+    AccountBalanceDto check_balance(const TokenDto &token_dto) const {
         Account account = _assert_account_by_token(token_dto._token);
 
-        return new AccountBalanceDto(account);
+        return AccountBalanceDto(account);
     }
 
     void top_up(const AccountUpdateDto &account_update_dto) const {

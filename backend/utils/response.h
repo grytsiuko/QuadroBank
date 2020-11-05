@@ -39,12 +39,12 @@ public:
         return *this;
     }
 
-    static Response success(const T *value) {
-        return Response(value, nullptr);
+    static Response success(const T &value) {
+        return Response(new T(value), nullptr);
     }
 
-    static Response error(const string *error) {
-        return Response(nullptr, error);
+    static Response error(const string &error) {
+        return Response(nullptr, new string(error));
     }
 
     bool is_success() const {
@@ -55,12 +55,12 @@ public:
         return !is_success();
     }
 
-    const T *get_response() const {
-        return _value;
+    const T &get_response() const {
+        return *_value;
     }
 
-    const string *get_error() const {
-        return _error;
+    const string &get_error() const {
+        return *_error;
     }
 };
 
@@ -97,8 +97,8 @@ public:
         return Response(nullptr);
     }
 
-    static Response error(const string *error) {
-        return Response(error);
+    static Response error(const string &error) {
+        return Response(new string(error));
     }
 
     bool is_success() const {
@@ -109,8 +109,8 @@ public:
         return !is_success();
     }
 
-    const string *get_error() const {
-        return _error;
+    const string &get_error() const {
+        return *_error;
     }
 };
 

@@ -28,9 +28,9 @@ public:
         log("get_all_by_user");
         try{
             vector<DepositDto> deposits =  _deposit_service.get_all_by_user(tokenDto);
-            return Response<vector<DepositDto>>::success(new vector<DepositDto>(std::move(deposits)));
+            return Response<vector<DepositDto>>::success(deposits);
         } catch (const Exception &exception) {
-            return Response<vector<DepositDto>>::error(new string(exception.get_message()));
+            return Response<vector<DepositDto>>::error(exception.get_message());
         }
     }
 
@@ -38,9 +38,9 @@ public:
         log("get_possible_variants");
         try{
             vector<DepositVariantDto> deposit_variants =  _deposit_service.get_possible_variants(token_dto);
-            return Response<vector<DepositVariantDto>>::success(new vector<DepositVariantDto>(std::move(deposit_variants)));
+            return Response<vector<DepositVariantDto>>::success(deposit_variants);
         } catch (const Exception &exception) {
-            return Response<vector<DepositVariantDto>>::error(new string(exception.get_message()));
+            return Response<vector<DepositVariantDto>>::error(exception.get_message());
         }
     }
 
@@ -50,7 +50,7 @@ public:
             _deposit_service.add(depositCreateDto);
             return Response<void>::success();
         } catch (const Exception &exception) {
-            return Response<void>::error(new string(exception.get_message()));
+            return Response<void>::error(exception.get_message());
         }
     }
 };

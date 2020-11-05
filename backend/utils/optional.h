@@ -8,13 +8,7 @@ private:
 
     mutable const T *_value;
 
-    explicit Optional(const T *value) {
-        if(value == nullptr){
-            _value = nullptr;
-        } else {
-            _value = new T(*value);
-        }
-    }
+    explicit Optional(const T *value): _value(value) {}
 
 public:
 
@@ -36,7 +30,7 @@ public:
     }
 
     static Optional of(const T &value) {
-        return Optional(&value);
+        return Optional(new T(value));
     }
 
     static Optional empty() {
