@@ -111,7 +111,7 @@ void RegularPaymentService::remove(const RegularPaymentDeleteDto &regular_paymen
 vector<RegularPayment> RegularPaymentService::get_to_be_paid() const {
     time_t current_time = time(nullptr);
     return _regular_payment_repository.get_list(Specification<RegularPayment>(
-            [&](const RegularPayment& rp){return rp._next_time + rp._period_sec <= current_time;}
+            [&](const RegularPayment& rp){return rp._next_time <= current_time;}
             ));
 }
 
@@ -123,4 +123,36 @@ Account RegularPaymentService::_get_account(const string &token) const {
     }
 
     return optional_account.get();
+}
+
+void RegularPaymentService::pay(RegularPayment regular_payment) const {
+    Optional<Account> optional_from = _account_repository.get_by_card_number(regular_payment._account_card);
+    Optional<Account> optional_to = _account_repository.get_by_card_number(regular_payment._target_card);
+    if(optional_from.is_empty() || optional_to.is_empty()){
+        throw Exception("Internal error");
+    }
+
+    Account from_account = optional_from.get();
+    Account to_account = optional_to.get();
+
+    if(from_account._balance + from_account._credit_limit < regular_payment._sum){
+        //todo notify
+        int removed = _regular_payment_repository.remove(regular_payment._id);
+        if(removed == 0){
+            throw Exception("Internal error");
+        }
+        return;
+    }
+
+    from_account._balance -= regular_payment._sum;
+    to_account._balance += regular_payment._sum;
+
+    _account_repository.update(from_account);
+    _account_repository.update(to_account);
+
+    regular_payment._next_time += regular_payment._period_sec;
+    int updated = _regular_payment_repository.update(regular_payment);
+    if(updated == 0){
+        throw Exception("Internal error");
+    }
 }

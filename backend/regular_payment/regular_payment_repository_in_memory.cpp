@@ -25,18 +25,21 @@ void RegularPaymentRepositoryInMemory::_add(const RegularPayment &regular_paymen
     }
 }
 
-void RegularPaymentRepositoryInMemory::_update(const RegularPayment &regular_payment) const {
+int RegularPaymentRepositoryInMemory::_update(const RegularPayment &regular_payment) const {
     for (RegularPayment &rp : _regular_payments) {
         if (rp._id == regular_payment._id) {
             rp = regular_payment;
-            return;
+            return 1;
         }
     }
+    return 0;
 }
 
-void RegularPaymentRepositoryInMemory::_remove(int id) const {
+int RegularPaymentRepositoryInMemory::_remove(int id) const {
+    int old_size = _regular_payments.size();
     _regular_payments = _get_list(
             Specification<RegularPayment>([=](const RegularPayment &rp) { return rp._id != id; }));
+    return old_size - _regular_payments.size();
 }
 
 vector<RegularPayment>

@@ -2,6 +2,7 @@
 #define QUADROBANK_REGULAR_PAYMENT_ACTIONS_H
 
 #include <vector>
+#include <backend/regular_payment/regular_payment_controller.h>
 #include "../../backend/utils/singleton.h"
 #include "../../backend/utils/response.h"
 #include "../../backend/regular_payment/dto/regular_payment_dto.h"
@@ -18,28 +19,26 @@ private:
 
     friend Singleton;
 
-    RegularPaymentActions() = default;
+    const RegularPaymentController& _regular_payment_controller;
+
+    RegularPaymentActions(): _regular_payment_controller(RegularPaymentController::get_instance()) {};
 
 public:
 
     Response<vector<RegularPaymentDto>> get_all_by_user(const TokenDto &token_dto) const {
-        auto *result = new vector<RegularPaymentDto>();
-        result->push_back(
-                RegularPaymentDto{45, 86400, "2222 2222 2222 2222", 10}
-        );
-        return Response<vector<RegularPaymentDto>>::success(result);
+        return _regular_payment_controller.get_all_by_user(token_dto);
     }
 
     Response<void> create(const RegularPaymentCreateDto &regular_payment_create_dto) const {
-        return Response<void>::success();
+        return _regular_payment_controller.add(regular_payment_create_dto);
     }
 
     Response<void> update(const RegularPaymentUpdateDto &regular_payment_update_dto) const {
-        return Response<void>::success();
+        return _regular_payment_controller.update(regular_payment_update_dto);
     }
 
     Response<void> remove(const RegularPaymentDeleteDto &regular_payment_delete_dto) const {
-        return Response<void>::success();
+        return _regular_payment_controller.remove(regular_payment_delete_dto);
     }
 };
 
