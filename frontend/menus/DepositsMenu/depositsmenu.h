@@ -23,8 +23,8 @@ private:
         QWidget(parent),
         ui(new Ui::DepositsMenu)
     {
+        cout <<"token: "<< currentToken._token << std::endl;
         ui->setupUi(this);
-
     };
 
     void update_deposits_list();

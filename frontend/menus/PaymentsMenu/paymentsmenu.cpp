@@ -1,6 +1,5 @@
 #include <QtGui/QStandardItemModel>
 #include "paymentsmenu.h"
-#include "../utils/date_util.h"
 
 PaymentsMenu::~PaymentsMenu()
 {
@@ -8,6 +7,7 @@ PaymentsMenu::~PaymentsMenu()
 }
 
 void PaymentsMenu::set_token(const TokenDto &token) {
+
     currentToken = token;
     update_payments_list();
 }
@@ -25,9 +25,7 @@ void PaymentsMenu::update_payments_list() {
             currentModel->setData(currentModel->index(i,0),paymentsVector->at(i)._period_sec);
             currentModel->setData(currentModel->index(i,1), QString::fromStdString(paymentsVector->at(i)._target_card));
             currentModel->setData(currentModel->index(i,2), paymentsVector->at(i)._sum);
-
         }
-
         ui->payments_table->setModel(currentModel);
 
 //      stretch table to fit all space

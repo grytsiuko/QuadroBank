@@ -6,6 +6,7 @@
 #include "../utils/object_ui.h"
 #include "ui_mainmenu.h"
 
+
 namespace Ui {
 class MainMenu;
 }

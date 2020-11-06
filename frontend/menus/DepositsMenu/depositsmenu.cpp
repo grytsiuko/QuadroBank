@@ -1,13 +1,17 @@
 #include "depositsmenu.h"
 #include "ui_depositsmenu.h"
 #include <QStandardItemModel>
+
 #include "../utils/date_util.h"
+
 DepositsMenu::~DepositsMenu() {
     delete ui;
 }
 
 void DepositsMenu::set_token(const TokenDto &token) {
-    currentToken = token;
+    if (currentToken._token != token._token){
+        currentToken = token;
+    }
     update_deposits_list();
 }
 
