@@ -15,7 +15,7 @@ void LoginMenu::login_validation(){
     // debug info
     qInfo() << "Card Number input: "<< card_data;
     qInfo() << "Pin input: "<< pin_data;
-    Response<SessionDto> authorizeResponse = accountActions.authorize(
+    const Response<SessionDto>& authorizeResponse = accountActions.authorize(
             AccountAuthorizeDto{card_data.toStdString(), pin_data.toStdString()}
     );
     // if input is correct, then emit signal to MainWindow, to provide MainMenu
@@ -23,8 +23,6 @@ void LoginMenu::login_validation(){
         TokenDto tokenDto = TokenDto{authorizeResponse.get_response()._token};
         emit input_validated();
         emit send_token(tokenDto);
-        ui->card_number_input->setStyleSheet("border: 1px solid green");
-        ui->password_input->setStyleSheet("border: 1px solid green");
         ui->card_number_input->setText("");
 
     }

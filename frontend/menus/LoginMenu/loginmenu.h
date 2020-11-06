@@ -30,12 +30,15 @@ private:
             QWidget(parent),
             ui(new Ui::LoginMenu) {
         ui->setupUi(this);
+
+        disconnect(ui->enter_button, SIGNAL(clicked()), this, SLOT(login_validation()));
         connect(ui->enter_button, SIGNAL(clicked()), this, SLOT(login_validation()));
     };
 
     friend Singleton;
     friend object_ui<Ui::LoginMenu, LoginMenu>;
     AccountActions &accountActions = AccountActions::get_instance();
+    TokenDto currentToken;
     Ui::LoginMenu *ui;
 };
 

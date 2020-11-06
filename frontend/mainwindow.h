@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QStackedWidget>
 #include <backend/account/dto/token_dto.h>
+#include "../backend/scheduler/scheduler.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -28,10 +29,12 @@ private slots:
     void set_newdepositsmenu();
     void set_paymentsmenu();
     void set_newpaymentmenu();
+    void set_updatepaymentmenu();
 
 private:
     QStackedWidget* menus=nullptr;
     Ui::MainWindow *ui;
     TokenDto currentToken;
+//    const Scheduler& scheduler = Scheduler::get_instance();
 };
 #endif // MAINWINDOW_H

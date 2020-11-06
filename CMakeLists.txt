@@ -71,6 +71,10 @@ add_executable(QuadroBank
         frontend/menus/MainMenu/mainmenu.h
         frontend/menus/MainMenu/mainmenu.ui
 
+        frontend/menus/UpdatePaymentMenu/updatepaymentmenu.cpp
+        frontend/menus/UpdatePaymentMenu/updatepaymentmenu.ui
+        frontend/menus/UpdatePaymentMenu/updatepaymentmenu.h
+
         frontend/menus/NewDepositMenu/newdepositmenu.cpp
         frontend/menus/NewDepositMenu/newdepositmenu.h
         frontend/menus/NewDepositMenu/newdepositmenu.ui
@@ -115,6 +119,8 @@ add_executable(QuadroBank
         backend/regular_payment/regular_payment_service.cpp
         backend/regular_payment/regular_payment_service.h
         backend/regular_payment/regular_payment_controller.h
+        frontend/menus/utils/date_util.h
         frontend/demo_regular_payment_scheduler.h)
+
 
 target_link_libraries(${PROJECT_NAME} Qt${QT_VERSION_MAJOR}::Widgets)
