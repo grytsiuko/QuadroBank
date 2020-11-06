@@ -29,6 +29,7 @@ private:
         ui->setupUi(this);
         disconnect( ui->new_payment_button,SIGNAL(clicked()),this,SLOT(create_payment()));
         connect( ui->new_payment_button,SIGNAL(clicked()),this,SLOT(create_payment()));
+
     };
     void set_payment_date_variants();
     void update_balance_label();

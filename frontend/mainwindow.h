@@ -29,6 +29,7 @@ private slots:
     void set_newdepositsmenu();
     void set_paymentsmenu();
     void set_newpaymentmenu();
+    void set_updatepaymentmenu();
 
 private:
     QStackedWidget* menus=nullptr;

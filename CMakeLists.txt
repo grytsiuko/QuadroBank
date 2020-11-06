@@ -71,6 +71,10 @@ add_executable(QuadroBank
         frontend/menus/MainMenu/mainmenu.h
         frontend/menus/MainMenu/mainmenu.ui
 
+        frontend/menus/UpdatePaymentMenu/updatepaymentmenu.cpp
+        frontend/menus/UpdatePaymentMenu/updatepaymentmenu.ui
+        frontend/menus/UpdatePaymentMenu/updatepaymentmenu.h
+
         frontend/menus/NewDepositMenu/newdepositmenu.cpp
         frontend/menus/NewDepositMenu/newdepositmenu.h
         frontend/menus/NewDepositMenu/newdepositmenu.ui

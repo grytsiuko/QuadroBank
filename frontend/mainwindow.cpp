@@ -11,6 +11,7 @@
 #include "menus/NewDepositMenu/newdepositmenu.h"
 #include "menus/PaymentsMenu/paymentsmenu.h"
 #include "menus/NewPaymentMenu/newpaymentmenu.h"
+#include "menus/UpdatePaymentMenu/updatepaymentmenu.h"
 //including utils
 #include "menus/utils/object_ui.h"
 //QT includes
@@ -31,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
     menus->addWidget(&NewDepositMenu::get_instance());
     menus->addWidget(&PaymentsMenu::get_instance());
     menus->addWidget(&NewPaymentMenu::get_instance());
+    menus->addWidget(&UpdatePaymentMenu::get_instance());
     setCentralWidget(menus);
 
     set_loginmenu();
@@ -185,6 +187,16 @@ void MainWindow::set_paymentsmenu() {
     disconnect(paymentsmenu_ui->new_payment_button, SIGNAL(clicked()), this, SLOT(set_newpaymentmenu()));
     connect(paymentsmenu_ui->new_payment_button, SIGNAL(clicked()), this, SLOT(set_newpaymentmenu()));
 
+    disconnect(&PaymentsMenu::get_instance(), SIGNAL(go_update()), this,
+               SLOT(set_updatepaymentmenu()));
+    connect(&PaymentsMenu::get_instance(), SIGNAL(go_update()), this,
+               SLOT(set_updatepaymentmenu()));
+
+    disconnect(&PaymentsMenu::get_instance(), SIGNAL(edit_payment(const RegularPaymentDto*)),
+            &UpdatePaymentMenu::get_instance(), SLOT(update_payment(const RegularPaymentDto*)));
+    connect(&PaymentsMenu::get_instance(), SIGNAL(edit_payment(const RegularPaymentDto*)),
+            &UpdatePaymentMenu::get_instance(), SLOT(update_payment(const RegularPaymentDto*)));
+
     PaymentsMenu::get_instance().set_token(currentToken);
     // get index of menu, we need to set, and set it
     menus->setCurrentIndex(menus->indexOf(&PaymentsMenu::get_instance()));
@@ -206,7 +218,25 @@ void MainWindow::set_newpaymentmenu() {
     menus->setCurrentIndex(menus->indexOf(&NewPaymentMenu::get_instance()));
 }
 
+void MainWindow::set_updatepaymentmenu(){
+    // create object ui getter
+    object_ui<Ui::UpdatePaymentMenu, UpdatePaymentMenu> updatepaymentmenu_ui_getter;
+    // retrieve ui object
+    Ui::UpdatePaymentMenu *updatepaymentmenu_ui = updatepaymentmenu_ui_getter.getUi(UpdatePaymentMenu::get_instance());
+    // connect buttons to slots
 
+    disconnect(updatepaymentmenu_ui->back_button, SIGNAL(clicked()), this, SLOT(set_paymentsmenu()));
+    connect(updatepaymentmenu_ui->back_button, SIGNAL(clicked()), this, SLOT(set_paymentsmenu()));
+
+    disconnect(&UpdatePaymentMenu::get_instance(), SIGNAL(updated()), this, SLOT(set_paymentsmenu()));
+    connect(&UpdatePaymentMenu::get_instance(), SIGNAL(updated()), this, SLOT(set_paymentsmenu()));
+
+
+    UpdatePaymentMenu::get_instance().set_token(currentToken);
+
+    // get index of menu, we need to set, and set it
+    menus->setCurrentIndex(menus->indexOf(&UpdatePaymentMenu::get_instance()));
+};
 
 
 
