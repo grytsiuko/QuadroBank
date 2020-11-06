@@ -20,12 +20,12 @@ public:
         _add(regular_payment);
     }
 
-    void update(const RegularPayment& regular_payment) const {
-        _update(regular_payment);
+    int update(const RegularPayment& regular_payment) const {
+        return _update(regular_payment);
     }
 
-    void remove(const int id) const {
-        _remove(id);
+    int remove(const int id) const {
+        return _remove(id);
     }
 
     vector<RegularPayment> get_list(const Specification<RegularPayment>& regular_payment_specification) const {
@@ -38,9 +38,9 @@ private:
 
     virtual void _add(const RegularPayment& regular_payment) const = 0;
 
-    virtual void _update(const RegularPayment& regular_payment) const = 0;
+    virtual int _update(const RegularPayment& regular_payment) const = 0;
 
-    virtual void _remove(int id) const = 0;
+    virtual int _remove(int id) const = 0;
 
     virtual vector<RegularPayment> _get_list(const Specification<RegularPayment> &regular_payment_specification) const = 0;
 };

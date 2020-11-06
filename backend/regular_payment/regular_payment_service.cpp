@@ -137,7 +137,10 @@ void RegularPaymentService::pay(RegularPayment regular_payment) const {
 
     if(from_account._balance + from_account._credit_limit < regular_payment._sum){
         //todo notify
-        _regular_payment_repository.remove(regular_payment._id);
+        int removed = _regular_payment_repository.remove(regular_payment._id);
+        if(removed == 0){
+            throw Exception("Internal error");
+        }
         return;
     }
 
@@ -148,5 +151,8 @@ void RegularPaymentService::pay(RegularPayment regular_payment) const {
     _account_repository.update(to_account);
 
     regular_payment._next_time += regular_payment._period_sec;
-    _regular_payment_repository.update(regular_payment);
+    int updated = _regular_payment_repository.update(regular_payment);
+    if(updated == 0){
+        throw Exception("Internal error");
+    }
 }

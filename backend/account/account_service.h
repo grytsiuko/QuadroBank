@@ -2,6 +2,7 @@
 #define QUADROBANK_ACCOUNT_SERVICE_H
 
 #include <cmath>
+#include <ctime>
 #include "dto/account_authorize_dto.h"
 #include "dto/token_dto.h"
 #include "account_repository_interface.h"
