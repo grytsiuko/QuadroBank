@@ -61,7 +61,7 @@ void MainWindow::set_mainmenu() {
     disconnect(mainmenu_ui->withdraw_button, SIGNAL(clicked()), this, SLOT(set_withdrawmenu()));
     connect(mainmenu_ui->withdraw_button, SIGNAL(clicked()), this, SLOT(set_withdrawmenu()));
 
-    disconnect(mainmenu_ui->deposits_button, SIGNAL(clicked()), this, SLOT(set_depositsmenu()));
+    disconnect(mainmenu_ui->refill_button, SIGNAL(clicked()), this, SLOT(set_depositsmenu()));
     connect(mainmenu_ui->refill_button, SIGNAL(clicked()), this, SLOT(set_refillmenu()));
 
     disconnect(mainmenu_ui->deposits_button, SIGNAL(clicked()), this, SLOT(set_depositsmenu()));
@@ -129,6 +129,7 @@ void MainWindow::set_refillmenu() {
     // retrieve ui object
     Ui::RefillMenu *refillmenu_ui = refillmenu_ui_getter.getUi(RefillMenu::get_instance());
     // connect buttons to slots
+
     disconnect(refillmenu_ui->back_button, SIGNAL(clicked()), this, SLOT(set_mainmenu()));
     connect(refillmenu_ui->back_button, SIGNAL(clicked()), this, SLOT(set_mainmenu()));
 

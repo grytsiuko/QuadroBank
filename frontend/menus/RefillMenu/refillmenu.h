@@ -30,6 +30,7 @@ private:
     {
 
         ui->setupUi(this);
+
         disconnect( ui->refill_button,SIGNAL(clicked()),this,SLOT(refill()));
         connect( ui->refill_button,SIGNAL(clicked()),this,SLOT(refill()));
     }
