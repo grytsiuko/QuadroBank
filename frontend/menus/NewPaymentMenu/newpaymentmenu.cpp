@@ -22,6 +22,7 @@ void NewPaymentMenu::set_token(const TokenDto &token) {
 }
 
 void NewPaymentMenu::set_payment_date_variants() {
+    ui->comboBox->clear();
     ui->comboBox->addItem("Seconds", TimeIntervals::SECOND);
     ui->comboBox->addItem("Minutes", TimeIntervals::MINUTE);
     ui->comboBox->addItem("Hours", TimeIntervals::HOUR);
