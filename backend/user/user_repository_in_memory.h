@@ -29,7 +29,7 @@ private:
     Optional<User> _get_by_id(const int id) const override {
         for (const User &user:_users) {
             if (user._id == id) {
-                return Optional<User>::of(new User(user));
+                return Optional<User>::of(user);
             }
         }
         return Optional<User>::empty();

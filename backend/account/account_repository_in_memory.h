@@ -22,13 +22,13 @@ private:
                 Account{"1111 1111 1111 1111", 15, "1111", true, 100, 50, 0}
         );
         _accounts.push_back(
-                Account{"2222 2222 2222 2222", 15, "2222", false, 20000, 0, 0}
+                Account{"2222 2222 2222 2222", 16, "2222", false, 20000, 0, 0}
         );
         _accounts.push_back(
                 Account{"3333 3333 3333 3333", 20, "3333", true, 0, 300, 0}
         );
         _accounts.push_back(
-                Account{"1234", 20, "3333", false, 555, 300, 0}
+                Account{"1234", 20, "3333", false, 555, 0, 0}
         );
     }
 
@@ -46,7 +46,7 @@ private:
     Optional<Account> _get_by_card_number(const string &card_number) const override {
         for (const Account &account:_accounts) {
             if (account._card_number == card_number) {
-                return Optional<Account>::of(new Account(account));
+                return Optional<Account>::of(account);
             }
         }
         return Optional<Account>::empty();

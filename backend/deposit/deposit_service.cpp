@@ -10,7 +10,7 @@ vector<DepositDto> DepositService::get_all_by_user(const TokenDto &token_dto) co
         throw Exception("Illegal token");
     }
 
-    const Account account = *optional_account.get();
+    const Account& account = optional_account.get();
 
     const vector<Deposit> deposits = _deposit_repository.get_list(Specification<Deposit>([&](const Deposit &d) {
         return account._card_number == d._account_card_number;
@@ -45,7 +45,7 @@ void DepositService::add(const DepositCreateDto &deposit_create_dto) const {
     if (account_optional.is_empty()) {
         throw Exception("Illegal token");
     }
-    Account account = *account_optional.get();
+    Account account = account_optional.get();
     if (account._is_credit) {
         throw Exception("Unable to create deposits for credit cards");
     }
@@ -58,7 +58,7 @@ void DepositService::add(const DepositCreateDto &deposit_create_dto) const {
         throw Exception("Unable to create deposit with negative sum");
     }
 
-    DepositVariant deposit_variant = *optional_deposit_variant.get();
+    const DepositVariant& deposit_variant = optional_deposit_variant.get();
     const time_t currDate = time(nullptr);
     Deposit deposit{0, card_number, deposit_create_dto._percentage, deposit_variant._period_sec, currDate, currDate + deposit_variant._period_sec, deposit_create_dto._sum};
     account._balance -= deposit_create_dto._sum;
@@ -79,7 +79,7 @@ void DepositService::return_finished(const Deposit &deposit) const {
     if (account_optional.is_empty()) {
         throw Exception("Internal error");
     }
-    Account account = *account_optional.get();
+    Account account = account_optional.get();
 
     account._balance += deposit._sum;
     account._balance += floor(deposit._sum * deposit._percentage / TimeIntervals::YEAR * deposit._period_sec);

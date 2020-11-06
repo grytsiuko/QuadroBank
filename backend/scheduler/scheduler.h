@@ -5,6 +5,7 @@
 #include <thread>
 #include <backend/deposit/model/deposit.h>
 #include <backend/deposit/deposit_service.h>
+#include <backend/regular_payment/regular_payment_service.h>
 #include "../utils/singleton.h"
 #include "../log/log_service.h"
 #include "../account/account_service.h"
@@ -23,13 +24,15 @@ private:
     const LogService &_log_service;
     const AccountService &_account_service;
     const DepositService &_deposit_service;
+    const RegularPaymentService& _regular_payment_service;
 
     Scheduler() :
             _looping(true),
             _th(thread([this] { loop(); })),
             _log_service(LogService::get_instance()),
             _account_service(AccountService::get_instance()),
-            _deposit_service(DepositService::get_instance()) {}
+            _deposit_service(DepositService::get_instance()),
+            _regular_payment_service(RegularPaymentService::get_instance()){}
 
     ~Scheduler() override {
         _looping = false;
@@ -45,6 +48,7 @@ private:
             log("looping Scheduler");
             check_credits();
             check_deposits();
+            check_regular_payments();
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         }
     }
@@ -64,6 +68,14 @@ private:
             log("Returned deposit for " + deposit._account_card_number);
         }
     }
+
+    void check_regular_payments() const{
+        vector<RegularPayment> should_be_paid = _regular_payment_service.get_to_be_paid();
+        for(RegularPayment& rp : should_be_paid){
+            _regular_payment_service.pay(rp);
+            log("Regular payment from " + rp._account_card + " to " + rp._target_card);
+        }
+    };
 };
 
 #endif //QUADROBANK_SCHEDULER_H

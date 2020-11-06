@@ -12,14 +12,14 @@
 void demo_deposit_check_balance(const TokenDto &tokenDto) {
     Response<AccountBalanceDto> balanceResponse = AccountActions::get_instance().check_balance(tokenDto);
     assert(balanceResponse.is_success());
-    cout << balanceResponse.get_response()->_balance << "\n";
+    cout << balanceResponse.get_response()._balance << "\n";
 }
 
 void demo_deposit_show_deposits(const TokenDto &tokenDto) {
     Response<vector<DepositDto>> depositResponse = DepositActions::get_instance().get_all_by_user(tokenDto);
     assert(depositResponse.is_success());
-    cout << depositResponse.get_response()->size() << " deposits\n";
-    for (const DepositDto &depositDto:*depositResponse.get_response()) {
+    cout << depositResponse.get_response().size() << " deposits\n";
+    for (const DepositDto &depositDto:depositResponse.get_response()) {
         cout << depositDto._sum << " until " << ctime(&depositDto._end_date) << std::endl;
     }
 }
@@ -34,14 +34,14 @@ void demo_deposit_scheduler() {
             AccountAuthorizeDto{"2222 2222 2222 2222", "2222"}
     );
     assert(authorizeResponse.is_success());
-    TokenDto tokenDto = TokenDto{authorizeResponse.get_response()->_token};
+    TokenDto tokenDto = TokenDto{authorizeResponse.get_response()._token};
 
     demo_deposit_check_balance(tokenDto);
     demo_deposit_show_deposits(tokenDto);
 
     // add deposit
     Response<void> depositResponse = depositActions.create(
-            DepositCreateDto{authorizeResponse.get_response()->_token, 10000, 20000}
+            DepositCreateDto{authorizeResponse.get_response()._token, 10000, 20000}
     );
     assert(depositResponse.is_success());
 

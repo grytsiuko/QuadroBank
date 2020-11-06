@@ -24,7 +24,7 @@ DepositVariantRepositoryInMemory::_get_list(const Specification<DepositVariant> 
 Optional<DepositVariant> DepositVariantRepositoryInMemory::_get_by_percentage(double percentage) const {
     for (const DepositVariant& deposit_variant : _deposit_variants) {
         if (deposit_variant._percentage == percentage) {
-            return Optional<DepositVariant>::of(new DepositVariant(deposit_variant));
+            return Optional<DepositVariant>::of(deposit_variant);
         }
     }
     return Optional<DepositVariant>::empty();
