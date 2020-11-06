@@ -54,7 +54,7 @@ void DepositService::add(const DepositCreateDto &deposit_create_dto) const {
     if(optional_deposit_variant.is_empty()){
         throw Exception("Illegal percentage");
     }
-    if (depositCreateDto._sum <= 0) {
+    if (deposit_create_dto._sum <= 0) {
         throw Exception("Unable to create deposit with negative sum");
     }
 
