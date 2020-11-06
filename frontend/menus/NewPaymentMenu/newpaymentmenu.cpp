@@ -26,7 +26,7 @@ void NewPaymentMenu::set_payment_date_variants() {
     ui->comboBox->addItem("Minutes", TimeIntervals::MINUTE);
     ui->comboBox->addItem("Hours", TimeIntervals::HOUR);
     ui->comboBox->addItem("Days", TimeIntervals::DAY);
-    ui->comboBox->addItem("Days", TimeIntervals::MONTH);
+    ui->comboBox->addItem("Month", TimeIntervals::MONTH);
 };
 
 void NewPaymentMenu::create_payment() {
@@ -58,6 +58,7 @@ void NewPaymentMenu::create_payment() {
                 if (responsePaymentCreation.is_success()) {
                     ui->amount_input->setText("");
                     ui->card_input->setText("");
+                    ui->quantity_input->setText("");
                 }
             }
         }
