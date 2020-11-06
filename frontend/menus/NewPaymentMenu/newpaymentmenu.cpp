@@ -9,8 +9,8 @@ NewPaymentMenu::~NewPaymentMenu() {
 void NewPaymentMenu::update_balance_label() {
     Response<AccountBalanceDto> balanceDTO = accountActions.check_balance(currentToken);
     if (balanceDTO.is_success()) {
-        const AccountBalanceDto *account_balance = balanceDTO.get_response();
-        QString balanceString = QString("Your Balance: %1 $").arg(account_balance->_balance);
+        const AccountBalanceDto& account_balance = balanceDTO.get_response();
+        QString balanceString = QString::number(account_balance._balance);
         ui->LabelName->setText(balanceString);
     }
 }
@@ -47,7 +47,7 @@ void NewPaymentMenu::create_payment() {
                 int period = selected_variant.toInt() * quantity;
                 time_t next_time = time(nullptr) + period;
 
-                Response<void> responsePaymentCreation = paymentActions.create(
+                const Response<void>& responsePaymentCreation = paymentActions.create(
                         RegularPaymentCreateDto{
                                 currentToken._token,
                                 next_time,

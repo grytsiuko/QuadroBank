@@ -11,10 +11,10 @@ void RefillMenu::set_token(const TokenDto &token) {
 }
 
 void RefillMenu::update_balance_label() {
-    Response<AccountBalanceDto> balanceDTO = accountActions.check_balance(currentToken);
+    const Response<AccountBalanceDto>& balanceDTO = accountActions.check_balance(currentToken);
     if (balanceDTO.is_success()) {
-        const AccountBalanceDto *account_balance = balanceDTO.get_response();
-        QString balanceString = QString("Your Balance: %1 $").arg(account_balance->_balance);
+        const AccountBalanceDto& account_balance = balanceDTO.get_response();
+        QString balanceString = QString::number(account_balance._balance);
         ui->LabelName->setText(balanceString);
     }
 }
@@ -24,7 +24,7 @@ void RefillMenu::refill(){
     if (amount < 1) {
         ui->amount_input->setStyleSheet("border: 1px solid red");
     } else {
-        Response<void> responseTransfer = accountActions.top_up(
+        const Response<void>& responseTransfer = accountActions.top_up(
                 AccountUpdateDto{currentToken._token, amount});
         if (responseTransfer.is_success()){
             update_balance_label();

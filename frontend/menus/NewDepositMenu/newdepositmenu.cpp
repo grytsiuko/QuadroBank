@@ -8,8 +8,8 @@ NewDepositMenu::~NewDepositMenu() {
 void NewDepositMenu::update_balance_label() {
     Response<AccountBalanceDto> balanceDTO = accountActions.check_balance(currentToken);
     if (balanceDTO.is_success()) {
-        const AccountBalanceDto *account_balance = balanceDTO.get_response();
-        QString balanceString = QString("Your Balance: %1 $").arg(account_balance->_balance);
+        const AccountBalanceDto account_balance = balanceDTO.get_response();
+        QString balanceString = QString("Your Balance: %1 $").arg(account_balance._balance);
         ui->LabelName->setText(balanceString);
     }
 }
@@ -24,9 +24,9 @@ void NewDepositMenu::load_deposit_variants() {
     Response<vector<DepositVariantDto>> depositVectorResponse = depositActions.get_possible_variants(currentToken);
 
     if (depositVectorResponse.is_success()) {
-        const vector<DepositVariantDto> *depositVector = depositVectorResponse.get_response();
+        const vector<DepositVariantDto>& depositVector = depositVectorResponse.get_response();
 
-        for (const DepositVariantDto &dep_var : *depositVector) {
+        for (const DepositVariantDto &dep_var : depositVector) {
             QString balanceString = QString("Deposit for %1 with %2%").arg(dep_var._period_sec).arg(
                     dep_var._percentage);
 
@@ -43,7 +43,7 @@ void NewDepositMenu::create_deposit() {
         ui->amount_input->setText("");
     } else {
         QVariant selected_variant = ui->comboBox->currentData();
-        Response<void> responseTransfer = depositActions.create(
+        const Response<void>& responseTransfer = depositActions.create(
                 DepositCreateDto{currentToken._token,
                                  selected_variant.toDouble(),
                                  amount});

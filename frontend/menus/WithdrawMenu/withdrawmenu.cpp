@@ -14,8 +14,8 @@ void WithdrawMenu::set_token(const TokenDto& token){
 void WithdrawMenu::update_balance_label(){
     Response<AccountBalanceDto> balanceDTO = accountActions.check_balance(currentToken);
     if (balanceDTO.is_success()) {
-        const AccountBalanceDto *account_balance = balanceDTO.get_response();
-        QString balanceString = QString("Your Balance: %1 $").arg(account_balance->_balance);
+        const AccountBalanceDto& account_balance = balanceDTO.get_response();
+        QString balanceString = QString::number(account_balance._balance);
         ui->LabelName->setText(balanceString);
     }
 };
@@ -26,7 +26,7 @@ void WithdrawMenu::withdraw(){
         ui->amount_input->setStyleSheet("border: 1px solid red");
     }
     else{
-        Response<void> responseWithdraw = accountActions.withdraw(AccountUpdateDto{currentToken._token, amount});
+        const Response<void>& responseWithdraw = accountActions.withdraw(AccountUpdateDto{currentToken._token, amount});
         if (responseWithdraw.is_success()){
             ui->amount_input->setStyleSheet("border: 1px solid green");
             update_balance_label();

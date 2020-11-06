@@ -13,8 +13,8 @@ void TransferMenu::set_token(const TokenDto &token) {
 void TransferMenu::update_balance_label() {
     Response<AccountBalanceDto> balanceDTO = accountActions.check_balance(currentToken);
     if (balanceDTO.is_success()) {
-        const AccountBalanceDto *account_balance = balanceDTO.get_response();
-        QString balanceString = QString("Your Balance: %1 $").arg(account_balance->_balance);
+        const AccountBalanceDto account_balance = balanceDTO.get_response();
+        QString balanceString = QString::number(account_balance._balance);
         ui->LabelName->setText(balanceString);
     }
 }
@@ -26,7 +26,7 @@ void TransferMenu::transfer() {
         ui->amount_input->setStyleSheet("border: 1px solid red");
         ui->amount_input->setText("");
     } else {
-        Response<void> responseTransfer = accountActions.transfer(
+        const Response<void>& responseTransfer = accountActions.transfer(
                 AccountTransferDto{currentToken._token, ui->card_number_input->text().toStdString(), amount});
         if (responseTransfer.is_success()){
             ui->card_number_input->setText("");

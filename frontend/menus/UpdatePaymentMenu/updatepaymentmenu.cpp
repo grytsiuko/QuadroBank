@@ -20,8 +20,7 @@ void UpdatePaymentMenu::set_payment_date_variants() {
 
 QuantityPeriod *UpdatePaymentMenu::get_quantity_and_period(int period_sec) {
     int currentSeconds = period_sec;
-    QuantityPeriod *res = new QuantityPeriod{0, 0};
-    int currentPeriod = 1;
+    auto *res = new QuantityPeriod{0, 0};
     int periods[5] = {TimeIntervals::SECOND, TimeIntervals::MINUTE,
                       TimeIntervals::HOUR, TimeIntervals::DAY,
                       TimeIntervals::MONTH};
@@ -67,7 +66,7 @@ void UpdatePaymentMenu::send_update_dto(){
                 int period = selected_variant.toInt() * quantity;
                 time_t next_time = time(nullptr) + period;
 
-                Response<void> responseUpdatePayment =
+                const Response<void>& responseUpdatePayment =
                         paymentActions.update(RegularPaymentUpdateDto{
                                 currentToken._token,
                                 payment_id,

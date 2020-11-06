@@ -19,17 +19,17 @@ void DepositsMenu::update_deposits_list() {
     Response<vector<DepositDto>> depositVectorResponse = depositActions.get_all_by_user(currentToken);
 
     if (depositVectorResponse.is_success()) {
-        const vector<DepositDto> *depositVector = depositVectorResponse.get_response();
-        auto* currentModel = new QStandardItemModel(depositVector->capacity(), 4);
+        const vector<DepositDto>& depositVector = depositVectorResponse.get_response();
+        auto* currentModel = new QStandardItemModel(depositVector.capacity(), 4);
         currentModel->setHeaderData(0, Qt::Horizontal, QObject::tr("Start Date"));
         currentModel->setHeaderData(1, Qt::Horizontal, QObject::tr("End Date"));
         currentModel->setHeaderData(2, Qt::Horizontal, QObject::tr("%"));
         currentModel->setHeaderData(3, Qt::Horizontal, QObject::tr("Amount"));
-        for (int i = 0; i < depositVector->capacity(); i++) {;
-            currentModel->setData(currentModel->index(i,0), create_date_from_unix(depositVector->at(i)._start_date));
-            currentModel->setData(currentModel->index(i,1), create_date_from_unix(depositVector->at(i)._end_date));
-            currentModel->setData(currentModel->index(i,2), depositVector->at(i)._percentage);
-            currentModel->setData(currentModel->index(i,3), depositVector->at(i)._sum);
+        for (int i = 0; i < depositVector.capacity(); i++) {;
+            currentModel->setData(currentModel->index(i,0), create_date_from_unix(depositVector.at(i)._start_date));
+            currentModel->setData(currentModel->index(i,1), create_date_from_unix(depositVector.at(i)._end_date));
+            currentModel->setData(currentModel->index(i,2), depositVector.at(i)._percentage);
+            currentModel->setData(currentModel->index(i,3), depositVector.at(i)._sum);
 
         }
 
