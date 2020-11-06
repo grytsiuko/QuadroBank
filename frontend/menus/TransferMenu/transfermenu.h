@@ -29,6 +29,7 @@ private:
         ui(new Ui::TransferMenu)
     {
         ui->setupUi(this);
+        disconnect( ui->transfer_button,SIGNAL(clicked()),this,SLOT(transfer()));
         connect( ui->transfer_button,SIGNAL(clicked()),this,SLOT(transfer()));
     };
     friend Singleton;

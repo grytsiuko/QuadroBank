@@ -28,6 +28,7 @@ private:
         ui(new Ui::NewDepositMenu)
     {
         ui->setupUi(this);
+        disconnect( ui->new_deposit_button,SIGNAL(clicked()),this,SLOT(create_deposit()));
         connect( ui->new_deposit_button,SIGNAL(clicked()),this,SLOT(create_deposit()));
     };
 

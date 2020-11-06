@@ -9,9 +9,7 @@ DepositsMenu::~DepositsMenu() {
 }
 
 void DepositsMenu::set_token(const TokenDto &token) {
-    if (currentToken._token != token._token){
-        currentToken = token;
-    }
+    currentToken = token;
     update_deposits_list();
 }
 

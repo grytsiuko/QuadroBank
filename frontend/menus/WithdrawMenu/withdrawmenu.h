@@ -29,6 +29,7 @@ private:
         ui(new Ui::WithdrawMenu)
     {
         ui->setupUi(this);
+        disconnect( ui->withdraw_button,SIGNAL(clicked()),this,SLOT(withdraw()));
         connect( ui->withdraw_button,SIGNAL(clicked()),this,SLOT(withdraw()));
     }
     friend Singleton;
