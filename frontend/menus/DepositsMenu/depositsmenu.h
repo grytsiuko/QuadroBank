@@ -28,7 +28,6 @@ private:
     };
 
     void update_deposits_list();
-
     friend Singleton;
     friend object_ui<Ui::DepositsMenu,DepositsMenu>;
     DepositActions &depositActions = DepositActions::get_instance();

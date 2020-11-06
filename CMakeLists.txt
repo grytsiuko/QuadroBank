@@ -114,6 +114,6 @@ add_executable(QuadroBank
         backend/regular_payment/regular_payment_repository_in_memory.h
         backend/regular_payment/regular_payment_service.cpp
         backend/regular_payment/regular_payment_service.h
-        backend/regular_payment/regular_payment_controller.h)
+        backend/regular_payment/regular_payment_controller.h frontend/menus/utils/date_util.h)
 
 target_link_libraries(${PROJECT_NAME} Qt${QT_VERSION_MAJOR}::Widgets)
