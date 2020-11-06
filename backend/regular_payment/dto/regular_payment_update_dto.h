@@ -9,7 +9,7 @@ struct RegularPaymentUpdateDto {
     string _token;
     int _payment_id;
     int _period_sec;
-    int _next_time;
+    time_t _next_time;
     string _target_card;
     int _sum;
 };

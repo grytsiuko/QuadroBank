@@ -82,6 +82,10 @@ public:
         Account account = _assert_account_by_token(account_transfer_dto._token);
         Account target_account = _assert_account_by_card_number(account_transfer_dto._target_card);
 
+        if (account._card_number == target_account._card_number) {
+            throw Exception("Unable to transfer to the same account");
+        }
+
         account._balance -= account_transfer_dto._sum;
         target_account._balance += account_transfer_dto._sum;
 

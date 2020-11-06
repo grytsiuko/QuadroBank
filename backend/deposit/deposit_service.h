@@ -33,16 +33,15 @@ private:
                        _token_service(TokenService::get_instance()) {}
 
 public:
-    vector<DepositDto> get_all_by_user(const TokenDto &tokenDto) const;
+    vector<DepositDto> get_all_by_user(const TokenDto &token_dto) const;
 
     vector<DepositVariantDto> get_possible_variants(const TokenDto &token_dto) const;
 
-    void add(const DepositCreateDto& depositCreateDto) const;
+    void add(const DepositCreateDto& deposit_create_dto) const;
 
     vector<Deposit> get_to_be_paid() const;
 
     void return_finished(const Deposit &deposit) const;
-
 
 };
 
