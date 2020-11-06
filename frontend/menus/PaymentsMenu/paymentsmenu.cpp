@@ -24,16 +24,17 @@ void  PaymentsMenu::edit(const QModelIndex & index){
 }
 
 void PaymentsMenu::update_payments_list() {
-    Response<vector<RegularPaymentDto>> paymentsVectorResponse = paymentsActions.get_all_by_user(currentToken);
+    const Response<vector<RegularPaymentDto>>& paymentsVectorResponse = paymentsActions.get_all_by_user(currentToken);
 
     if (paymentsVectorResponse.is_success()) {
         const vector<RegularPaymentDto>& paymentsVector = paymentsVectorResponse.get_response();
+
         auto* currentModel = new QStandardItemModel(paymentsVector.capacity(), 4);
         currentModel->setHeaderData(0, Qt::Horizontal, QObject::tr("Period"));
         currentModel->setHeaderData(1, Qt::Horizontal, QObject::tr("To"));
         currentModel->setHeaderData(2, Qt::Horizontal, QObject::tr("Amount"));
         currentModel->setHeaderData(3, Qt::Horizontal, QObject::tr("id"));
-        for (int i = 0; i < paymentsVector.capacity(); i++) {;
+        for (int i = 0; i < paymentsVector.capacity(); i++) {
             currentModel->setData(currentModel->index(i,0),paymentsVector.at(i)._period_sec);
             currentModel->setData(currentModel->index(i,1), QString::fromStdString(paymentsVector.at(i)._target_card));
             currentModel->setData(currentModel->index(i,2), paymentsVector.at(i)._sum);
@@ -48,5 +49,8 @@ void PaymentsMenu::update_payments_list() {
                     c, QHeaderView::Stretch);
         }
 
+    }
+    else{
+        std::cout << "Bad getter regular payment" << std::endl;
     }
 }

@@ -31,13 +31,18 @@ public slots:
     void update_payment(const RegularPaymentDto*);
 private slots:
     void send_update_dto();
+    void send_delete_dto();
 
 private:
     explicit UpdatePaymentMenu(QWidget *parent = nullptr) :
             QWidget(parent),
             ui(new Ui::UpdatePaymentMenu) {
         ui->setupUi(this);
+        disconnect(ui->new_payment_button,SIGNAL(clicked()), this, SLOT(send_update_dto()));
         connect(ui->new_payment_button,SIGNAL(clicked()), this, SLOT(send_update_dto()));
+
+        disconnect(ui->delete_button,SIGNAL(clicked()), this, SLOT(send_delete_dto()));
+        connect(ui->delete_button,SIGNAL(clicked()), this, SLOT(send_delete_dto()));
     }
 
     void set_payment_date_variants();

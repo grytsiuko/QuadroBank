@@ -60,6 +60,9 @@ void NewPaymentMenu::create_payment() {
                     ui->card_input->setText("");
                     ui->quantity_input->setText("");
                 }
+                else{
+                    std::cout<< responsePaymentCreation.get_error() << std::endl;
+                }
             }
         }
 

@@ -48,6 +48,22 @@ void UpdatePaymentMenu::update_payment(const RegularPaymentDto *currentPayment) 
     }
 }
 
+void UpdatePaymentMenu::send_delete_dto(){
+    const Response<void>& responseDeletePayment =
+            paymentActions.remove(RegularPaymentDeleteDto{
+                currentToken._token,
+                payment_id
+            });
+    if (responseDeletePayment.is_success()){
+        ui->amount_input->setText("");
+        ui->card_input->setText("");
+        ui->quantity_input->setText("");
+        emit updated();
+    }
+
+}
+
+
 void UpdatePaymentMenu::send_update_dto(){
     int amount = ui->amount_input->text().toInt();
     if (amount < 1) {
