@@ -24,8 +24,8 @@ class AccountService : public Singleton<AccountService> {
 
 private:
 
-    const static int CREDIT_SECONDS = 1;
-    constexpr const static double CREDIT_PERCENTAGE = 1.2;
+    const static int CREDIT_SECONDS = 10;
+    constexpr const static double CREDIT_COEFFICIENT = 1.2;
 
     friend Singleton;
 
@@ -127,10 +127,14 @@ public:
     }
 
     void punish_debtor(Account account) const {
-        account._balance = floor(account._balance * CREDIT_PERCENTAGE);
+        account._balance = floor(account._balance * CREDIT_COEFFICIENT);
+        account._credit_start += CREDIT_SECONDS;
         _account_repository.update(account);
         User user = _auth_service.assert_user(account._user_id);
         _notification_service.notify(user, account, "You has been punished for your debt");
+        if (account._credit_start + CREDIT_SECONDS < time(nullptr)) {
+            punish_debtor(account);
+        }
     }
 
 private:
