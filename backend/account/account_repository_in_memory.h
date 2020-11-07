@@ -31,7 +31,7 @@ private:
                 Account{"1234", 20, "3333", false, 555, 0, 0}
         );
         _accounts.push_back(
-                Account{"5342", 20, "3333", false, 754, 0, 0}
+                Account{"5342", 20, "3333", true, 754, 234, 0}
         );
     }
 

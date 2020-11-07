@@ -50,7 +50,5 @@ void PaymentsMenu::update_payments_list() {
         }
 
     }
-    else{
-        std::cout << "Bad getter regular payment" << std::endl;
-    }
+
 }
