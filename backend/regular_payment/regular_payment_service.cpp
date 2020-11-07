@@ -128,12 +128,6 @@ vector<RegularPayment> RegularPaymentService::get_to_be_paid() const {
 }
 
 void RegularPaymentService::pay(RegularPayment regular_payment) const {
-    Optional<Account> optional_from = _account_repository.get_by_card_number(regular_payment._account_card);
-    Optional<Account> optional_to = _account_repository.get_by_card_number(regular_payment._target_card);
-    if(optional_from.is_empty() || optional_to.is_empty()){
-        throw Exception("Internal error");
-    }
-
     Account from_account = _auth_service.assert_account(regular_payment._account_card);
     User from_user = _auth_service.assert_user(from_account._user_id);
     Account to_account = _auth_service.assert_account(regular_payment._target_card);
@@ -162,4 +156,8 @@ void RegularPaymentService::pay(RegularPayment regular_payment) const {
 
     _notification_service.notify(from_user, from_account, "Regular payment from your account performed");
     _notification_service.notify(to_user, to_account, "Regular payment to your account performed");
+
+    if (regular_payment._next_time <= time(nullptr)) {
+        pay(regular_payment);
+    }
 }
