@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <ctime>
+#include <map>
 #include <backend/notification/notification_service.h>
 #include <backend/auth/auth_service.h>
 #include "dto/account_authorize_dto.h"
@@ -20,6 +21,8 @@
 #include "../user/user_repository_in_memory.h"
 #include "dto/session_dto.h"
 
+using std::map;
+
 class AccountService : public Singleton<AccountService> {
 
 private:
@@ -35,6 +38,9 @@ private:
     const NotificationService &_notification_service;
     const AuthService &_auth_service;
 
+    const int MAX_INCORRECT_PINS = 3;
+    mutable map<string, int> _incorrect_pins;
+
     AccountService() :
             _account_repository(AccountRepositoryInterface<AccountRepositoryInMemory>::get_instance()),
             _user_repository(UserRepositoryInterface<UserRepositoryInMemory>::get_instance()),
@@ -48,9 +54,22 @@ public:
         Account account = _auth_service.assert_account(account_authorize_dto._card_number);
         User user = _auth_service.assert_user(account._user_id);
 
+        if(account._is_blocked){
+            throw Exception("This card is blocked, contact the nearest bank branch to fix it");
+        }
+
         if (account._pin != account_authorize_dto._pin) {
+            _incorrect_pins[account_authorize_dto._card_number] += 1;
+
+            if(_incorrect_pins[account_authorize_dto._card_number] >= MAX_INCORRECT_PINS){
+                account._is_blocked = true;
+                _account_repository.update(account);
+            }
+
             throw Exception("Illegal pin");
         }
+
+        _incorrect_pins.erase(account_authorize_dto._card_number);
 
         return SessionDto{_token_service.generate_token(account), user._name};
     }
@@ -146,10 +165,10 @@ private:
     }
 
     void _assert_correct_balance(const Account &account) const {
-        if (!account._is_credit && account._balance < 0) {
+        if (account._credit_limit == 0 && account._balance < 0) {
             throw Exception("You have simple card, you cannot have negative balance");
         }
-        if (account._is_credit && account._balance < -account._credit_limit) {
+        if (account._credit_limit != 0 && account._balance < -account._credit_limit) {
             throw Exception("You cannot exceed your credit limit");
         }
     }

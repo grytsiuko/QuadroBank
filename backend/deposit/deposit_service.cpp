@@ -39,7 +39,7 @@ void DepositService::add(const DepositCreateDto &deposit_create_dto) const {
     Account account = _auth_service.assert_account(card_number);
     User user = _auth_service.assert_user(account._user_id);
 
-    if (account._is_credit) {
+    if (account._credit_limit != 0) {
         throw Exception("Unable to create deposits for credit cards");
     }
     const Optional<DepositVariant> optional_deposit_variant = _deposit_variant_repository.get_by_percentage(deposit_create_dto._percentage);
