@@ -17,23 +17,9 @@ private:
 
     mutable vector<User> _users;
 
-    UserRepositoryInMemory() : _users(vector<User>()) {
-        _users.push_back(
-                User{15, "Petro Petrov"}
-        );
-        _users.push_back(
-                User{20, "Stepan Stepanenko"}
-        );
-    }
+    UserRepositoryInMemory();
 
-    Optional<User> _get_by_id(const int id) const override {
-        for (const User &user:_users) {
-            if (user._id == id) {
-                return Optional<User>::of(user);
-            }
-        }
-        return Optional<User>::empty();
-    };
+    Optional<User> _get_by_id(const int id) const override;
 };
 
 #endif //QUADROBANK_USER_REPOSITORY_IN_MEMORY_H
