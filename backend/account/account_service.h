@@ -83,6 +83,8 @@ public:
         Account account = _auth_service.assert_account(card_number);
         User user = _auth_service.assert_user(account._user_id);
 
+        account._balance -= account_update_dto._sum;
+
         _assert_correct_balance(account);
         _update_credit_start(account);
 
