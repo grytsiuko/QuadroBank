@@ -6,7 +6,7 @@
 #include "../utils/object_ui.h"
 #include "ui_updatepaymentmenu.h"
 #include "../../actions/regular_payment_actions.h"
-
+#include "../../actions/account_actions.h"
 
 
 struct QuantityPeriod{
@@ -46,13 +46,14 @@ private:
     }
 
     void set_payment_date_variants();
-
+    void update_balance_label();
 
     QuantityPeriod* get_quantity_and_period(int);
     int payment_id = 0;
     friend Singleton;
     friend object_ui<Ui::UpdatePaymentMenu, UpdatePaymentMenu>;
     RegularPaymentActions &paymentActions = RegularPaymentActions::get_instance();
+    AccountActions &accountActions = AccountActions::get_instance();
     TokenDto currentToken;
     Ui::UpdatePaymentMenu *ui;
 };
