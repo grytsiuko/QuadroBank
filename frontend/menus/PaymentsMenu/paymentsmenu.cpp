@@ -1,6 +1,6 @@
 #include <QtGui/QStandardItemModel>
 #include "paymentsmenu.h"
-
+#include "new"
 PaymentsMenu::~PaymentsMenu()
 {
     delete ui;
@@ -35,7 +35,8 @@ void PaymentsMenu::update_payments_list() {
         currentModel->setHeaderData(2, Qt::Horizontal, QObject::tr("Amount"));
         currentModel->setHeaderData(3, Qt::Horizontal, QObject::tr("id"));
         for (int i = 0; i < paymentsVector.capacity(); i++) {
-            currentModel->setData(currentModel->index(i,0),paymentsVector.at(i)._period_sec);
+            QuantityPeriod* quantityPeriod = get_quantity_and_period(paymentsVector.at(i)._period_sec);
+        currentModel->setData(currentModel->index(i,0), QString("%1 - %2").arg(quantityPeriod->quantity).arg(quantityPeriod->period));
             currentModel->setData(currentModel->index(i,1), QString::fromStdString(paymentsVector.at(i)._target_card));
             currentModel->setData(currentModel->index(i,2), paymentsVector.at(i)._sum);
             currentModel->setData(currentModel->index(i,3), paymentsVector.at(i)._id);

@@ -32,22 +32,7 @@ void UpdatePaymentMenu::set_payment_date_variants() {
     ui->comboBox->addItem("Month", TimeIntervals::MONTH);
 };
 
-QuantityPeriod *UpdatePaymentMenu::get_quantity_and_period(int period_sec) {
-    int currentSeconds = period_sec;
-    auto *res = new QuantityPeriod{0, 0};
-    int periods[5] = {TimeIntervals::SECOND, TimeIntervals::MINUTE,
-                      TimeIntervals::HOUR, TimeIntervals::DAY,
-                      TimeIntervals::MONTH};
-    int i;
-    for (i = 0; i < 5; ++i) {
-        if (currentSeconds / periods[i] < 1) {
-            break;
-        }
-    }
-    res->period = periods[i-1];
-    res->quantity = period_sec / (res->period);
-    return res;
-}
+
 
 void UpdatePaymentMenu::update_payment(const RegularPaymentDto *currentPayment) {
     set_payment_date_variants();
