@@ -50,6 +50,9 @@ void DepositService::add(const DepositCreateDto &deposit_create_dto) const {
     if (deposit_create_dto._sum <= 0) {
         throw Exception("Unable to create deposit with negative sum");
     }
+    if (account._balance < deposit_create_dto._sum) {
+        throw Exception("Not enough money");
+    }
 
     const DepositVariant& deposit_variant = optional_deposit_variant.get();
     const time_t currDate = time(nullptr);
