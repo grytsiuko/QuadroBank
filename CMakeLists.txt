@@ -120,7 +120,11 @@ add_executable(QuadroBank
         backend/regular_payment/regular_payment_service.h
         backend/regular_payment/regular_payment_controller.h
         frontend/menus/utils/date_util.h
-        frontend/demo_regular_payment_scheduler.h)
+        frontend/demo_regular_payment_scheduler.h
+
+        backend/notification/notification_service.h
+        backend/auth/auth_service.h
+        )
 
 
 target_link_libraries(${PROJECT_NAME} Qt${QT_VERSION_MAJOR}::Widgets)
