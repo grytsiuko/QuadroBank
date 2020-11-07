@@ -41,7 +41,7 @@ void PaymentsMenu::update_payments_list() {
             currentModel->setData(currentModel->index(i,3), paymentsVector.at(i)._id);
         }
         ui->payments_table->setModel(currentModel);
-        ui->payments_table->setColumnHidden(4,true);
+        ui->payments_table->setColumnHidden(3,true);
 //      stretch table to fit all space
         for (int c = 0; c < (ui->payments_table->horizontalHeader()->count()); ++c)
         {

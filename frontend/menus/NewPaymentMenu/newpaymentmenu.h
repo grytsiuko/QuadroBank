@@ -33,6 +33,7 @@ private:
     };
     void set_payment_date_variants();
     void update_balance_label();
+    void set_up_date_time_edit();
     RegularPaymentActions &paymentActions = RegularPaymentActions::get_instance();
     AccountActions &accountActions = AccountActions::get_instance();
     TokenDto currentToken;
