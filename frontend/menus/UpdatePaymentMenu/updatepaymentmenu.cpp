@@ -10,6 +10,15 @@ void UpdatePaymentMenu::set_token(const TokenDto &token) {
     currentToken = token;
 }
 
+void UpdatePaymentMenu::update_balance_label(){
+    Response<AccountBalanceDto> balanceDTO = accountActions.check_balance(currentToken);
+    if (balanceDTO.is_success()) {
+        const AccountBalanceDto& account_balance = balanceDTO.get_response();
+        QString balanceString = QString("Your Balance: %1 $").arg(account_balance._balance);
+        ui->LabelName->setText(balanceString);
+    }
+}
+
 void UpdatePaymentMenu::set_payment_date_variants() {
     ui->comboBox->clear();
     ui->comboBox->addItem("Seconds", TimeIntervals::SECOND);
@@ -38,6 +47,7 @@ QuantityPeriod *UpdatePaymentMenu::get_quantity_and_period(int period_sec) {
 
 void UpdatePaymentMenu::update_payment(const RegularPaymentDto *currentPayment) {
     set_payment_date_variants();
+    update_balance_label();
     QuantityPeriod *quantityPeriod = get_quantity_and_period(currentPayment->_period_sec);
     ui->amount_input->setText(QString::number(currentPayment->_sum));
     ui->card_input->setText(QString::fromStdString(currentPayment->_target_card));

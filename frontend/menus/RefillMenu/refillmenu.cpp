@@ -14,7 +14,7 @@ void RefillMenu::update_balance_label() {
     const Response<AccountBalanceDto>& balanceDTO = accountActions.check_balance(currentToken);
     if (balanceDTO.is_success()) {
         const AccountBalanceDto& account_balance = balanceDTO.get_response();
-        QString balanceString = QString::number(account_balance._balance);
+        QString balanceString = QString("Your Balance: %1 $").arg(account_balance._balance);
         ui->LabelName->setText(balanceString);
     }
 }

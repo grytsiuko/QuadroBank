@@ -19,7 +19,7 @@ public:
     ~WithdrawMenu();
 
     void set_token(const TokenDto& token);
-    void update_balance_label();
+
 public slots:
     void withdraw();
 
@@ -32,6 +32,7 @@ private:
         disconnect( ui->withdraw_button,SIGNAL(clicked()),this,SLOT(withdraw()));
         connect( ui->withdraw_button,SIGNAL(clicked()),this,SLOT(withdraw()));
     }
+    void update_balance_label();
     friend Singleton;
     friend object_ui<Ui::WithdrawMenu,WithdrawMenu>;
     AccountActions &accountActions = AccountActions::get_instance();
