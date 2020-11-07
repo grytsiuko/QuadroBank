@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <ctime>
+#include <map>
 #include <backend/notification/notification_service.h>
 #include <backend/auth/auth_service.h>
 #include "dto/account_authorize_dto.h"
@@ -20,20 +21,27 @@
 #include "../user/user_repository_in_memory.h"
 #include "dto/session_dto.h"
 
+using std::map;
+
 class AccountService : public Singleton<AccountService> {
+
+    friend Singleton;
 
 private:
 
     const static int CREDIT_SECONDS = 10;
     constexpr const static double CREDIT_COEFFICIENT = 1.2;
 
-    friend Singleton;
+    const int MAX_INCORRECT_PINS = 3;
+    mutable map<string, int> _incorrect_pins;
 
     const AccountRepositoryInterface<AccountRepositoryInMemory> &_account_repository;
     const UserRepositoryInterface<UserRepositoryInMemory> &_user_repository;
     const TokenService &_token_service;
     const NotificationService &_notification_service;
     const AuthService &_auth_service;
+
+
 
     AccountService() :
             _account_repository(AccountRepositoryInterface<AccountRepositoryInMemory>::get_instance()),
@@ -44,125 +52,27 @@ private:
 
 public:
 
-    SessionDto authorize(const AccountAuthorizeDto &account_authorize_dto) const {
-        Account account = _auth_service.assert_account(account_authorize_dto._card_number);
-        User user = _auth_service.assert_user(account._user_id);
+    SessionDto authorize(const AccountAuthorizeDto &account_authorize_dto) const;
 
-        if (account._pin != account_authorize_dto._pin) {
-            throw Exception("Illegal pin");
-        }
+    AccountBalanceDto check_balance(const TokenDto &token_dto) const;
 
-        return SessionDto{_token_service.generate_token(account), user._name};
-    }
+    void top_up(const AccountUpdateDto &account_update_dto) const;
 
-    AccountBalanceDto check_balance(const TokenDto &token_dto) const {
-        string card_number = _token_service.get_card_number(token_dto._token);
-        Account account = _auth_service.assert_account(card_number);
+    void withdraw(const AccountUpdateDto &account_update_dto) const;
 
-        return AccountBalanceDto(account);
-    }
+    void transfer(const AccountTransferDto &account_transfer_dto) const;
 
-    void top_up(const AccountUpdateDto &account_update_dto) const {
-        _assert_positive_sum(account_update_dto._sum);
+    vector<Account> get_debtors() const;
 
-        string card_number = _token_service.get_card_number(account_update_dto._token);
-        Account account = _auth_service.assert_account(card_number);
-        User user = _auth_service.assert_user(account._user_id);
-
-        account._balance += account_update_dto._sum;
-        _update_credit_start(account);
-
-        _account_repository.update(account);
-        _notification_service.notify(user, account, "Top up performed");
-    }
-
-    void withdraw(const AccountUpdateDto &account_update_dto) const {
-        _assert_positive_sum(account_update_dto._sum);
-
-        string card_number = _token_service.get_card_number(account_update_dto._token);
-        Account account = _auth_service.assert_account(card_number);
-        User user = _auth_service.assert_user(account._user_id);
-
-        account._balance -= account_update_dto._sum;
-
-        _assert_correct_balance(account);
-        _update_credit_start(account);
-
-        _account_repository.update(account);
-        _notification_service.notify(user, account, "Withdraw performed");
-    }
-
-    void transfer(const AccountTransferDto &account_transfer_dto) const {
-        _assert_positive_sum(account_transfer_dto._sum);
-
-        string card_number = _token_service.get_card_number(account_transfer_dto._token);
-        Account account = _auth_service.assert_account(card_number);
-        User user = _auth_service.assert_user(account._user_id);
-
-        Account target_account = _auth_service.assert_account(account_transfer_dto._target_card);
-        User target_user = _auth_service.assert_user(target_account._user_id);
-
-        if (account._card_number == target_account._card_number) {
-            throw Exception("Unable to transfer to the same account");
-        }
-
-        account._balance -= account_transfer_dto._sum;
-        target_account._balance += account_transfer_dto._sum;
-
-        _assert_correct_balance(account);
-        _update_credit_start(account);
-
-        _account_repository.update(account);
-        _account_repository.update(target_account);
-
-        _notification_service.notify(user, account, "Transfer performed from your card");
-        _notification_service.notify(target_user, target_account, "Transfer performed to your card");
-    }
-
-    vector<Account> get_debtors() const {
-        function<bool(const Account&)> debtors_filter = [](auto &a) {
-            return a._credit_start != 0 && a._credit_start + CREDIT_SECONDS < time(nullptr);
-        };
-        return _account_repository.get_list(Specification<Account>(debtors_filter));
-    }
-
-    void punish_debtor(Account account) const {
-        account._balance = floor(account._balance * CREDIT_COEFFICIENT);
-        account._credit_start += CREDIT_SECONDS;
-        _account_repository.update(account);
-        User user = _auth_service.assert_user(account._user_id);
-        _notification_service.notify(user, account, "You has been punished for your debt");
-        if (account._credit_start + CREDIT_SECONDS < time(nullptr)) {
-            punish_debtor(account);
-        }
-    }
+    void punish_debtor(Account account) const;
 
 private:
 
-    void _assert_positive_sum(int sum) const {
-        if (sum < 0) {
-            throw Exception("Sum should be positive");
-        }
-    }
+    void _assert_positive_sum(int sum) const;
 
-    void _assert_correct_balance(const Account &account) const {
-        if (!account._is_credit && account._balance < 0) {
-            throw Exception("You have simple card, you cannot have negative balance");
-        }
-        if (account._is_credit && account._balance < -account._credit_limit) {
-            throw Exception("You cannot exceed your credit limit");
-        }
-    }
+    void _assert_correct_balance(const Account &account) const;
 
-    void _update_credit_start(Account &account) const {
-        if (account._credit_start != 0 && account._balance >= 0) {
-            account._credit_start = 0;
-            return;
-        }
-        if (account._credit_start == 0 && account._balance < 0) {
-            account._credit_start = time(nullptr);
-        }
-    }
+    void _update_credit_start(Account &account) const;
 };
 
 #endif
