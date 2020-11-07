@@ -47,6 +47,7 @@ QuantityPeriod *UpdatePaymentMenu::get_quantity_and_period(int period_sec) {
 
 void UpdatePaymentMenu::update_payment(const RegularPaymentDto *currentPayment) {
     set_payment_date_variants();
+    update_balance_label();
     QuantityPeriod *quantityPeriod = get_quantity_and_period(currentPayment->_period_sec);
     ui->amount_input->setText(QString::number(currentPayment->_sum));
     ui->card_input->setText(QString::fromStdString(currentPayment->_target_card));

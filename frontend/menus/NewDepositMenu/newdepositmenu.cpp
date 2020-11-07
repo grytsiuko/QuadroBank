@@ -28,7 +28,7 @@ void NewDepositMenu::load_deposit_variants() {
         ui->comboBox->clear();
         for (const DepositVariantDto &dep_var : depositVector) {
             QString balanceString = QString("Deposit for %1 with %2%").arg(dep_var._period_sec).arg(
-                    dep_var._percentage);
+                    dep_var._percentage*100);
 
             QString dataString = QString("%1").arg(dep_var._percentage);
             ui->comboBox->addItem(balanceString, dataString);
