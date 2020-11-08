@@ -23,6 +23,8 @@ private:
     }
 
 public:
+    Response<RegularPaymentDto> get_by_id(const RegularPaymentGetDto& get_dto) const;
+
     Response<vector<RegularPaymentDto>> get_all_by_user(const TokenDto& token_dto) const;
 
     Response<void> add(const RegularPaymentCreateDto& regular_payment_create_dto) const;

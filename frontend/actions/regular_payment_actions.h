@@ -25,6 +25,10 @@ private:
 
 public:
 
+    Response<RegularPaymentDto> get_by_id(const RegularPaymentGetDto& get_dto) const{
+        return _regular_payment_controller.get_by_id(get_dto);
+    }
+
     Response<vector<RegularPaymentDto>> get_all_by_user(const TokenDto &token_dto) const {
         return _regular_payment_controller.get_all_by_user(token_dto);
     }

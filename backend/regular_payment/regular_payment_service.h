@@ -7,6 +7,7 @@
 #include <backend/token/token_service.h>
 #include <backend/notification/notification_service.h>
 #include <backend/auth/auth_service.h>
+#include <backend/regular_payment/dto/regular_payment_get_dto.h>
 #include "regular_payment_repository_in_memory.h"
 #include "backend/regular_payment/dto/regular_payment_delete_dto.h"
 #include "backend/regular_payment/dto/regular_payment_create_dto.h"
@@ -37,6 +38,9 @@ private:
                               _auth_service(AuthService::get_instance()){}
 
 public:
+
+    RegularPaymentDto get_by_id(const RegularPaymentGetDto& get_dto) const;
+
     vector<RegularPaymentDto> get_all_by_user(const TokenDto &token_dto) const;
 
     void add(const RegularPaymentCreateDto& regular_payment_create_dto) const;
