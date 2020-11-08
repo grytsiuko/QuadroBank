@@ -4,10 +4,9 @@
 #include "deposit_variant_repository_in_memory.h"
 
 DepositVariantRepositoryInMemory::DepositVariantRepositoryInMemory() {
-    _deposit_variants.push_back(DepositVariant{10 * TimeIntervals::SECOND, 10000});
+    _deposit_variants.push_back(DepositVariant{10 * TimeIntervals::SECOND, 0.01});
     _deposit_variants.push_back(DepositVariant{TimeIntervals::MINUTE, 0.1});
-    _deposit_variants.push_back(DepositVariant{TimeIntervals::HOUR, 0.105});
-    _deposit_variants.push_back(DepositVariant{TimeIntervals::DAY, 0.12});
+    _deposit_variants.push_back(DepositVariant{2 * TimeIntervals::MINUTE, 0.3});
 }
 
 vector<DepositVariant>
