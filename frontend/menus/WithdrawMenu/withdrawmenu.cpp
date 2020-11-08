@@ -1,5 +1,6 @@
 #include "withdrawmenu.h"
 #include "ui_withdrawmenu.h"
+#include "../utils/info_message.h"
 
 WithdrawMenu::~WithdrawMenu()
 {
@@ -27,16 +28,18 @@ void WithdrawMenu::update_balance_label(){
 void WithdrawMenu::withdraw(){
     int amount = ui->amount_input->text().toInt();
     if (amount == 0) {
+        showInfo("Amount should be positive number");
         ui->amount_input->setStyleSheet("border: 1px solid red");
     }
     else{
         const Response<void>& responseWithdraw = accountActions.withdraw(AccountUpdateDto{currentToken._token, amount});
         if (responseWithdraw.is_success()){
             ui->amount_input->setStyleSheet("border: 1px solid green");
+            showInfo("Withdraw successfully processed");
             update_balance_label();
         }
         else{
-            ui->amount_input->setStyleSheet("border: 1px solid orange");
+            showInfo(QString::fromStdString(responseWithdraw.get_error()));
         }
     }
     ui->amount_input->setText("");

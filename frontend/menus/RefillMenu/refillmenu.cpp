@@ -1,5 +1,6 @@
 #include "refillmenu.h"
 #include "ui_refillmenu.h"
+#include "../utils/info_message.h"
 
 RefillMenu::~RefillMenu()
 {
@@ -26,12 +27,17 @@ void RefillMenu::update_balance_label() {
 void RefillMenu::refill(){
     int amount = ui->amount_input->text().toInt();
     if (amount < 1) {
+        showInfo("Amount should be positive number");
         ui->amount_input->setStyleSheet("border: 1px solid red");
     } else {
         const Response<void>& responseTransfer = accountActions.top_up(
                 AccountUpdateDto{currentToken._token, amount});
         if (responseTransfer.is_success()){
+            showInfo("Successfully refilled");
             update_balance_label();
+        }
+        else{
+            showInfo(QString::fromStdString(responseTransfer.get_error()));
         }
     }
     ui->amount_input->setText("");

@@ -1,5 +1,5 @@
 #include "newdepositmenu.h"
-
+#include "../utils/info_message.h"
 
 NewDepositMenu::~NewDepositMenu() {
     delete ui;
@@ -39,12 +39,16 @@ void NewDepositMenu::load_deposit_variants() {
         }
 
     }
+    else{
+        showInfo(QString::fromStdString(depositVectorResponse.get_error()));
+    }
 }
 
 void NewDepositMenu::create_deposit() {
     int amount = ui->amount_input->text().toInt();
     if (amount < 1) {
         ui->amount_input->setStyleSheet("border: 1px solid red");
+        showInfo("Amount should be positive number");
         ui->amount_input->setText("");
     } else {
         QVariant selected_variant = ui->comboBox->currentData();
@@ -54,7 +58,11 @@ void NewDepositMenu::create_deposit() {
                                  amount});
         if (responseTransfer.is_success()) {
             ui->amount_input->setText("");
+            showInfo("Deposit successfully created");
             update_balance_label();
+        }
+        else{
+            showInfo(QString::fromStdString(responseTransfer.get_error()));
         }
 
     }

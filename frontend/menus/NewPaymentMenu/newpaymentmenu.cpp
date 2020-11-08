@@ -1,6 +1,7 @@
 #include "newpaymentmenu.h"
 #include "../../../backend/utils/time_intervals.h"
 #include "QDate"
+#include "../utils/info_message.h"
 
 NewPaymentMenu::~NewPaymentMenu() {
     delete ui;
@@ -48,16 +49,22 @@ void NewPaymentMenu::create_payment() {
     int amount = ui->amount_input->text().toInt();
     if (amount < 1) {
         ui->amount_input->setStyleSheet("border: 1px solid red");
+        showInfo("Amount should be positive number");
         ui->amount_input->setText("");
-    } else {
+    }
+    else {
         QString card = ui->card_input->text();
         if (card.length() < 1) {
+            showInfo("Card input should not be empty");
             ui->card_input->setStyleSheet("border: 1px solid red");
-        } else {
+        }
+        else {
             int quantity = ui->quantity_input->text().toInt();
             if (quantity < 1) {
+                showInfo("Quantity should be positive number");
                 ui->quantity_input->setStyleSheet("border: 1px solid red");
-            } else {
+            }
+            else {
                 if (ui->dateTimeEdit->dateTime() < QDateTime::currentDateTime()){
                     ui->dateTimeEdit->setDateTime(QDateTime::currentDateTime());
                 }
@@ -74,11 +81,13 @@ void NewPaymentMenu::create_payment() {
                                 amount
                         });
                 if (responsePaymentCreation.is_success()) {
+                    showInfo("Regular payment successfully created");
                     ui->amount_input->setText("");
                     ui->card_input->setText("");
                     ui->quantity_input->setText("");
-                } else {
-                    std::cout << responsePaymentCreation.get_error() << std::endl;
+                }
+                else {
+                    showInfo(QString::fromStdString(responsePaymentCreation.get_error()));
                 }
             }
         }

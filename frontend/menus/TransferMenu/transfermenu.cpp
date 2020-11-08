@@ -1,6 +1,6 @@
 #include "transfermenu.h"
 #include "ui_transfermenu.h"
-#include <QToolTip>
+#include "../utils/info_message.h"
 TransferMenu::~TransferMenu() {
     delete ui;
 }
@@ -27,6 +27,7 @@ void TransferMenu::update_balance_label() {
 void TransferMenu::transfer() {
     int amount = ui->amount_input->text().toInt();
     if (amount < 1) {
+        showInfo("Amount should be positive number");
         ui->amount_input->setStyleSheet("border: 1px solid red");
         ui->amount_input->setText("");
     } else {
@@ -35,10 +36,11 @@ void TransferMenu::transfer() {
         if (responseTransfer.is_success()){
             ui->card_number_input->setText("");
             ui->amount_input->setText("");
+            showInfo("Successfully created transfer");
             update_balance_label();
         }
         else{
-            ui->card_number_input->setStyleSheet("border: 1px solid orange");
+            showInfo(QString::fromStdString(responseTransfer.get_error()));
         }
     }
 

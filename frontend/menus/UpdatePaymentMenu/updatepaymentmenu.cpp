@@ -1,6 +1,7 @@
 #include "updatepaymentmenu.h"
 #include <iostream>
-
+#include <QtCore/QDate>
+#include "../utils/info_message.h"
 
 UpdatePaymentMenu::~UpdatePaymentMenu() {
     delete ui;
@@ -22,6 +23,16 @@ void UpdatePaymentMenu::update_balance_label(){
         ui->LabelName->setText(balanceString);
     }
 }
+
+void UpdatePaymentMenu::set_up_date_time_edit() {
+    QDate today = QDate::currentDate();
+    QTime now = QTime::currentTime();
+    ui->dateTimeEdit->setDate(today);
+    ui->dateTimeEdit->setMinimumDate(today);
+    ui->dateTimeEdit->setTime(now);
+    ui->dateTimeEdit->setMinimumTime(now);
+};
+
 
 void UpdatePaymentMenu::set_payment_date_variants() {
     ui->comboBox->clear();
@@ -60,7 +71,11 @@ void UpdatePaymentMenu::send_delete_dto(){
         ui->amount_input->setText("");
         ui->card_input->setText("");
         ui->quantity_input->setText("");
+        showInfo("Regular payment was successfully deleted");
         emit updated();
+    }
+    else {
+        showInfo(QString::fromStdString(responseDeletePayment.get_error()));
     }
 
 }
@@ -70,19 +85,25 @@ void UpdatePaymentMenu::send_update_dto(){
     int amount = ui->amount_input->text().toInt();
     if (amount < 1) {
         ui->amount_input->setStyleSheet("border: 1px solid red");
+        showInfo("Amount should be positive number");
         ui->amount_input->setText("");
     } else {
         QString card = ui->card_input->text();
         if (card.length() < 1) {
+            showInfo("Card input should not be empty");
             ui->card_input->setStyleSheet("border: 1px solid red");
         } else {
             int quantity = ui->quantity_input->text().toInt();
             if (quantity < 1) {
+                showInfo("Quantity should be positive number");
                 ui->quantity_input->setStyleSheet("border: 1px solid red");
             } else {
+                if (ui->dateTimeEdit->dateTime() < QDateTime::currentDateTime()){
+                    ui->dateTimeEdit->setDateTime(QDateTime::currentDateTime());
+                }
                 QVariant selected_variant = ui->comboBox->currentData();
                 int period = selected_variant.toInt() * quantity;
-                time_t next_time = time(nullptr) + period;
+                time_t next_time = ui->dateTimeEdit->dateTime().toSecsSinceEpoch() + period;
 
                 const Response<void>& responseUpdatePayment =
                         paymentActions.update(RegularPaymentUpdateDto{
@@ -97,7 +118,11 @@ void UpdatePaymentMenu::send_update_dto(){
                     ui->amount_input->setText("");
                     ui->card_input->setText("");
                     ui->quantity_input->setText("");
+                    showInfo("Regular payment was successfully created");
                     emit updated();
+                }
+                else {
+                    showInfo(QString::fromStdString(responseUpdatePayment.get_error()));
                 }
             }
         }

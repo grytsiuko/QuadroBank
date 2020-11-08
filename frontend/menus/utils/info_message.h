@@ -4,5 +4,7 @@
 
 #ifndef QUADROBANK_INFO_MESSAGE_H
 #define QUADROBANK_INFO_MESSAGE_H
-
+#include "QString"
+#include "QMessageBox"
+void showInfo(const QString& info);
 #endif //QUADROBANK_INFO_MESSAGE_H

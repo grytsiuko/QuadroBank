@@ -43,6 +43,7 @@ private:
 
     void set_payment_date_variants();
     void update_balance_label();
+    void set_up_date_time_edit();
     int payment_id = 0;
     friend Singleton;
     friend object_ui<Ui::UpdatePaymentMenu, UpdatePaymentMenu>;
