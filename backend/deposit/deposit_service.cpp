@@ -75,7 +75,7 @@ void DepositService::return_finished(const Deposit &deposit) const {
     User user = _auth_service.assert_user(account._user_id);
 
     account._balance += deposit._sum;
-    account._balance += floor(deposit._sum * deposit._percentage / TimeIntervals::YEAR * deposit._period_sec);
+    account._balance += floor(deposit._sum * deposit._percentage);
     _account_repository.update(account);
     _deposit_repository.remove(deposit._id);
 
