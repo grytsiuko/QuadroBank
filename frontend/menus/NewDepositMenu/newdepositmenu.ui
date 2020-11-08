@@ -44,10 +44,16 @@
     </item>
     <item>
      <widget class="QLabel" name="LabelName">
+      <property name="baseSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
       <property name="font">
        <font>
         <family>Playbill</family>
-        <pointsize>36</pointsize>
+        <pointsize>28</pointsize>
        </font>
       </property>
       <property name="text">

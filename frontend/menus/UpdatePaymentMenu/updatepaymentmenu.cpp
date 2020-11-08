@@ -45,21 +45,29 @@ void UpdatePaymentMenu::set_payment_date_variants() {
 
 
 
-void UpdatePaymentMenu::update_payment(const RegularPaymentDto *currentPayment) {
+void UpdatePaymentMenu::update_payment(int currentPaymentId) {
     set_payment_date_variants();
     update_balance_label();
     set_up_date_time_edit();
-    QuantityPeriod *quantityPeriod = get_quantity_and_period(currentPayment->_period_sec);
-
-    ui->amount_input->setText(QString::number(currentPayment->_sum));
-    ui->card_input->setText(QString::fromStdString(currentPayment->_target_card));
-    ui->quantity_input->setText(QString::number(quantityPeriod->quantity));
-    payment_id = currentPayment->_id;
-    int index = ui->comboBox->findData(quantityPeriod->period);
-    if (index != -1) {
-        ui->comboBox->setCurrentIndex(index);
+    Response<RegularPaymentDto> currentPaymentResponse =
+            paymentActions.get_by_id(RegularPaymentGetDto{currentToken._token, currentPaymentId});
+    if (currentPaymentResponse.is_success()){
+        const RegularPaymentDto& currentPayment = currentPaymentResponse.get_response();
+        QuantityPeriod *quantityPeriod = get_quantity_and_period(currentPayment._period_sec);
+        ui->amount_input->setText(QString::number(1.*currentPayment._sum/100));
+        ui->card_input->setText(QString::fromStdString(currentPayment._target_card));
+        ui->quantity_input->setText(QString::number(quantityPeriod->quantity));
+        payment_id = currentPaymentId;
+        int index = ui->comboBox->findData(quantityPeriod->period);
+        if (index != -1) {
+            ui->comboBox->setCurrentIndex(index);
+        }
+        delete quantityPeriod;
+        ui->dateTimeEdit->setDateTime(QDateTime::fromTime_t(currentPayment._next_time));
     }
-    delete quantityPeriod;
+    else{
+        std::cout << "Problem with getting rp by id: "<< currentPaymentResponse.get_error() << std::endl;
+    }
 }
 
 void UpdatePaymentMenu::send_delete_dto(){
@@ -120,7 +128,7 @@ void UpdatePaymentMenu::send_update_dto(){
                     ui->amount_input->setText("");
                     ui->card_input->setText("");
                     ui->quantity_input->setText("");
-                    showInfo("Regular payment was successfully created");
+                    showInfo("Regular payment was successfully Updated");
                     emit updated();
                 }
                 else {

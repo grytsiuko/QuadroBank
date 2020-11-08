@@ -61,7 +61,7 @@ void MainWindow::set_mainmenu() {
     disconnect(mainmenu_ui->withdraw_button, SIGNAL(clicked()), this, SLOT(set_withdrawmenu()));
     connect(mainmenu_ui->withdraw_button, SIGNAL(clicked()), this, SLOT(set_withdrawmenu()));
 
-    disconnect(mainmenu_ui->refill_button, SIGNAL(clicked()), this, SLOT(set_depositsmenu()));
+    disconnect(mainmenu_ui->refill_button, SIGNAL(clicked()), this, SLOT(set_refillmenu()));
     connect(mainmenu_ui->refill_button, SIGNAL(clicked()), this, SLOT(set_refillmenu()));
 
     disconnect(mainmenu_ui->deposits_button, SIGNAL(clicked()), this, SLOT(set_depositsmenu()));
@@ -196,10 +196,10 @@ void MainWindow::set_paymentsmenu() {
     connect(&PaymentsMenu::get_instance(), SIGNAL(go_update()), this,
                SLOT(set_updatepaymentmenu()));
 
-    disconnect(&PaymentsMenu::get_instance(), SIGNAL(edit_payment(const RegularPaymentDto*)),
-            &UpdatePaymentMenu::get_instance(), SLOT(update_payment(const RegularPaymentDto*)));
-    connect(&PaymentsMenu::get_instance(), SIGNAL(edit_payment(const RegularPaymentDto*)),
-            &UpdatePaymentMenu::get_instance(), SLOT(update_payment(const RegularPaymentDto*)));
+    disconnect(&PaymentsMenu::get_instance(), SIGNAL(edit_payment(int)),
+            &UpdatePaymentMenu::get_instance(), SLOT(update_payment(int)));
+    connect(&PaymentsMenu::get_instance(), SIGNAL(edit_payment(int)),
+            &UpdatePaymentMenu::get_instance(), SLOT(update_payment(int)));
 
     PaymentsMenu::get_instance().set_token(currentToken);
     // get index of menu, we need to set, and set it

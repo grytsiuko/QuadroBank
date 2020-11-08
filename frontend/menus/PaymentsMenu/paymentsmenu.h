@@ -26,7 +26,7 @@ private slots:
     void edit(const QModelIndex &);
 
 signals:
-    void edit_payment(const RegularPaymentDto*);
+    void edit_payment(int);
     void go_update();
 private:
     explicit PaymentsMenu(QWidget *parent = nullptr) :
