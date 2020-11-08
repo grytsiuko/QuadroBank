@@ -120,7 +120,7 @@ void UpdatePaymentMenu::send_update_dto(){
                     ui->amount_input->setText("");
                     ui->card_input->setText("");
                     ui->quantity_input->setText("");
-                    showInfo("Regular payment was successfully updated");
+                    showInfo("Regular payment was successfully Updated");
                     emit updated();
                 }
                 else {
