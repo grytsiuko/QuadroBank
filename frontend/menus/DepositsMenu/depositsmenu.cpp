@@ -28,8 +28,8 @@ void DepositsMenu::update_deposits_list() {
         for (int i = 0; i < depositVector.capacity(); i++) {;
             currentModel->setData(currentModel->index(i,0), create_date_from_unix(depositVector.at(i)._start_date));
             currentModel->setData(currentModel->index(i,1), create_date_from_unix(depositVector.at(i)._end_date));
-            currentModel->setData(currentModel->index(i,2), depositVector.at(i)._percentage);
-            currentModel->setData(currentModel->index(i,3), depositVector.at(i)._sum);
+            currentModel->setData(currentModel->index(i,2), depositVector.at(i)._percentage*100);
+            currentModel->setData(currentModel->index(i,3), 1.*depositVector.at(i)._sum/100);
 
         }
 

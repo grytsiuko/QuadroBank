@@ -18,7 +18,7 @@ void  PaymentsMenu::edit(const QModelIndex & index){
     currentPayment->_id=currentModel->index(index.row(),3).data().toInt();
     currentPayment->_period_sec=currentModel->index(index.row(),4).data().toInt();
     currentPayment->_target_card=currentModel->index(index.row(),1).data().toString().toStdString();
-    currentPayment->_sum=currentModel->index(index.row(),2).data().toInt();
+    currentPayment->_sum=currentModel->index(index.row(),2).data().toDouble()*100;
     emit go_update();
     emit edit_payment(currentPayment);
 }
@@ -39,7 +39,7 @@ void PaymentsMenu::update_payments_list() {
             currentModel->setData(currentModel->index(i,0), QString("%1 %2").arg(quantityPeriod->quantity)
             .arg(get_name_of_interval(quantityPeriod->period)));
             currentModel->setData(currentModel->index(i,1), QString::fromStdString(paymentsVector.at(i)._target_card));
-            currentModel->setData(currentModel->index(i,2), paymentsVector.at(i)._sum);
+            currentModel->setData(currentModel->index(i,2), 1.*paymentsVector.at(i)._sum/100);
             currentModel->setData(currentModel->index(i,3), paymentsVector.at(i)._id);
             currentModel->setData(currentModel->index(i,4), paymentsVector.at(i)._period_sec);
             delete quantityPeriod;

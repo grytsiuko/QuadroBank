@@ -51,7 +51,7 @@ void UpdatePaymentMenu::update_payment(const RegularPaymentDto *currentPayment) 
     set_up_date_time_edit();
     QuantityPeriod *quantityPeriod = get_quantity_and_period(currentPayment->_period_sec);
 
-    ui->amount_input->setText(QString::number(currentPayment->_sum));
+    ui->amount_input->setText(QString::number(1.*currentPayment->_sum/100));
     ui->card_input->setText(QString::fromStdString(currentPayment->_target_card));
     ui->quantity_input->setText(QString::number(quantityPeriod->quantity));
     payment_id = currentPayment->_id;
@@ -120,7 +120,7 @@ void UpdatePaymentMenu::send_update_dto(){
                     ui->amount_input->setText("");
                     ui->card_input->setText("");
                     ui->quantity_input->setText("");
-                    showInfo("Regular payment was successfully created");
+                    showInfo("Regular payment was successfully updated");
                     emit updated();
                 }
                 else {

@@ -1,8 +1,6 @@
 #include "loginmenu.h"
 #include "QDebug"
-#include "../../../backend/utils/response.h"
-#include "../../../backend/account/dto/session_dto.h"
-#include "../../../backend/account/dto/account_authorize_dto.h"
+#include "../utils/info_message.h"
 
 LoginMenu::~LoginMenu()
 {
@@ -29,6 +27,7 @@ void LoginMenu::login_validation(){
     else{
         ui->card_number_input->setStyleSheet("border: 1px solid red");
         ui->password_input->setStyleSheet("border: 1px solid red");
+        showInfo(QString::fromStdString(authorizeResponse.get_error()));
     }
     ui->password_input->setText("");
 
