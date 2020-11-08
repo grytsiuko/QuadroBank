@@ -3,6 +3,30 @@
 #include "regular_payment_service.h"
 #include "backend/utils/exception.h"
 
+
+RegularPaymentDto RegularPaymentService::get_by_id(const RegularPaymentGetDto &get_dto) const {
+    string card_number = _token_service.get_card_number(get_dto._token);
+    Account account = _auth_service.assert_account(card_number);
+
+    Optional<RegularPayment> optional_rp = _regular_payment_repository.get_by_id(get_dto._id);
+
+    if(optional_rp.is_empty()){
+        throw Exception("Regular payment with this id does not exists");
+    }
+
+    RegularPayment rp = optional_rp.get();
+
+    return RegularPaymentDto{
+        rp._id,
+        rp._period_sec,
+        rp._target_card,
+        rp._sum,
+        rp._next_time
+    };
+
+}
+
+
 vector<RegularPaymentDto> RegularPaymentService::get_all_by_user(const TokenDto &token_dto) const {
     string card_number = _token_service.get_card_number(token_dto._token);
     Account account = _auth_service.assert_account(card_number);
