@@ -10,6 +10,7 @@ struct RegularPaymentDto {
     int _period_sec;
     string _target_card;
     int _sum;
+    time_t _next_time;
 };
 
 #endif //QUADROBANK_REGULAR_PAYMENT_DTO_H
