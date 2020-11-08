@@ -30,7 +30,6 @@ inline QuantityPeriod* get_quantity_and_period(int period_sec) {
             break;
         }
         if (i>0 and period_sec % periods[i] != 0){
-            std:: cout << "osta4a: " << period_sec % periods[i] << std::endl;
             break;
         }
     }
@@ -41,7 +40,7 @@ inline QuantityPeriod* get_quantity_and_period(int period_sec) {
 
 inline const QString get_name_of_interval(int period){
     QString res;
-    if (period == 0){
+    if (period == 1){
         res = QString("Seconds");
     }
     else if (period == 60){
