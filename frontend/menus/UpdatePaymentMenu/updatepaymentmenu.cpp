@@ -63,6 +63,7 @@ void UpdatePaymentMenu::update_payment(int currentPaymentId) {
             ui->comboBox->setCurrentIndex(index);
         }
         delete quantityPeriod;
+        ui->dateTimeEdit->setDateTime(QDateTime::fromTime_t(currentPayment._next_time));
     }
     else{
         std::cout << "Problem with getting rp by id: "<< currentPaymentResponse.get_error() << std::endl;
