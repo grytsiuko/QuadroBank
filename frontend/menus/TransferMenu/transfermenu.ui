@@ -179,7 +179,7 @@
            <string/>
           </property>
           <property name="maxLength">
-           <number>5</number>
+           <number>10</number>
           </property>
           <property name="echoMode">
            <enum>QLineEdit::Normal</enum>

@@ -1,5 +1,5 @@
 #include "newdepositmenu.h"
-
+#include "../utils/info_message.h"
 
 NewDepositMenu::~NewDepositMenu() {
     delete ui;
@@ -8,8 +8,12 @@ NewDepositMenu::~NewDepositMenu() {
 void NewDepositMenu::update_balance_label() {
     Response<AccountBalanceDto> balanceDTO = accountActions.check_balance(currentToken);
     if (balanceDTO.is_success()) {
-        const AccountBalanceDto account_balance = balanceDTO.get_response();
-        QString balanceString = QString("Your Balance: %1 $").arg(account_balance._balance);
+        const AccountBalanceDto& account_balance = balanceDTO.get_response();
+        QString balanceString;
+        if (account_balance._credit_limit > 0)
+            balanceString = QString("Your Balance: %1 $ (Cred Limit: %2)").arg(1.*account_balance._balance/100).arg(1.*account_balance._credit_limit/100);
+        else
+            balanceString = QString("Your Balance: %1 $").arg(1.*account_balance._balance/100);
         ui->LabelName->setText(balanceString);
     }
 }
@@ -35,22 +39,31 @@ void NewDepositMenu::load_deposit_variants() {
         }
 
     }
+    else{
+        showInfo(QString::fromStdString(depositVectorResponse.get_error()));
+    }
 }
 
 void NewDepositMenu::create_deposit() {
-    int amount = ui->amount_input->text().toInt();
-    if (amount < 1) {
+    bool good;
+    double amount = ui->amount_input->text().toDouble(&good);
+    if (!good) {
         ui->amount_input->setStyleSheet("border: 1px solid red");
+        showInfo("Amount should be positive number");
         ui->amount_input->setText("");
     } else {
         QVariant selected_variant = ui->comboBox->currentData();
         const Response<void>& responseTransfer = depositActions.create(
                 DepositCreateDto{currentToken._token,
                                  selected_variant.toDouble(),
-                                 amount});
+                                 static_cast<int>(amount*100)});
         if (responseTransfer.is_success()) {
             ui->amount_input->setText("");
+            showInfo("Deposit successfully created");
             update_balance_label();
+        }
+        else{
+            showInfo(QString::fromStdString(responseTransfer.get_error()));
         }
 
     }

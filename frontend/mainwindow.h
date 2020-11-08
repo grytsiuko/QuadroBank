@@ -35,6 +35,5 @@ private:
     QStackedWidget* menus=nullptr;
     Ui::MainWindow *ui;
     TokenDto currentToken;
-//    const Scheduler& scheduler = Scheduler::get_instance();
 };
 #endif // MAINWINDOW_H

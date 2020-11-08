@@ -2,6 +2,7 @@
 #define TRANSFERMENU_H
 
 #include <QWidget>
+#include "QRegExpValidator"
 #include "backend/utils/singleton.h"
 #include "../utils/object_ui.h"
 #include "ui_transfermenu.h"
@@ -31,6 +32,14 @@ private:
         ui->setupUi(this);
         disconnect( ui->transfer_button,SIGNAL(clicked()),this,SLOT(transfer()));
         connect( ui->transfer_button,SIGNAL(clicked()),this,SLOT(transfer()));
+
+        QRegExp re("^[0-9]+(\\.[0-9]{1,2})?$");
+        QRegExpValidator *validator = new QRegExpValidator(re, this);
+        ui->amount_input->setValidator(validator);
+
+        QRegExp onlyNumber("^[0-9]+$");
+        QRegExpValidator *number_validator = new QRegExpValidator(re, this);
+        ui->card_number_input->setValidator(number_validator);
     };
     friend Singleton;
     friend object_ui<Ui::TransferMenu,TransferMenu>;

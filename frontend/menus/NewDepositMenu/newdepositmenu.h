@@ -30,6 +30,10 @@ private:
         ui->setupUi(this);
         disconnect( ui->new_deposit_button,SIGNAL(clicked()),this,SLOT(create_deposit()));
         connect( ui->new_deposit_button,SIGNAL(clicked()),this,SLOT(create_deposit()));
+        QRegExp re("^[0-9]+(\\.[0-9]{1,2})?$");
+        QRegExpValidator *validator = new QRegExpValidator(re, this);
+        ui->amount_input->setValidator(validator);
+
     };
 
     void load_deposit_variants();

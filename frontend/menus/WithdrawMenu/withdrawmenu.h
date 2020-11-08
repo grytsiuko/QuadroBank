@@ -2,6 +2,7 @@
 #define WITHDRAWMENU_H
 
 #include <QWidget>
+#include "QRegExpValidator"
 #include "backend/utils/singleton.h"
 #include "../utils/object_ui.h"
 #include "ui_withdrawmenu.h"
@@ -31,6 +32,9 @@ private:
         ui->setupUi(this);
         disconnect( ui->withdraw_button,SIGNAL(clicked()),this,SLOT(withdraw()));
         connect( ui->withdraw_button,SIGNAL(clicked()),this,SLOT(withdraw()));
+        QRegExp re("^[0-9]+(\\.[0-9]{1,2})?$");
+        QRegExpValidator *validator = new QRegExpValidator(re, this);
+        ui->amount_input->setValidator(validator);
     }
     void update_balance_label();
     friend Singleton;

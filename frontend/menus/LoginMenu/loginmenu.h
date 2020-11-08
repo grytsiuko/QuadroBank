@@ -2,6 +2,7 @@
 #define LOGINMENU_H
 
 #include <QWidget>
+#include "QRegExpValidator"
 #include "backend/utils/singleton.h"
 #include "../utils/object_ui.h"
 #include "ui_loginmenu.h"
@@ -33,6 +34,10 @@ private:
 
         disconnect(ui->enter_button, SIGNAL(clicked()), this, SLOT(login_validation()));
         connect(ui->enter_button, SIGNAL(clicked()), this, SLOT(login_validation()));
+        QRegExp re("^[0-9]+$");
+        QRegExpValidator *validator = new QRegExpValidator(re, this);
+        ui->card_number_input->setValidator(validator);
+        ui->password_input->setValidator(validator);
     };
 
     friend Singleton;

@@ -7,6 +7,7 @@
 #include "ui_paymentsmenu.h"
 #include "../../actions/regular_payment_actions.h"
 #include "iostream"
+#include "../utils/date_util.h"
 
 namespace Ui {
     class PaymentsMenu;
@@ -22,7 +23,7 @@ public:
 
 private slots:
 
-    void edit(const QModelIndex & index);
+    void edit(const QModelIndex &);
 
 signals:
     void edit_payment(const RegularPaymentDto*);

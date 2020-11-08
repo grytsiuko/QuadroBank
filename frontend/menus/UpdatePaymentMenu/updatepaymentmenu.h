@@ -8,11 +8,7 @@
 #include "../../actions/regular_payment_actions.h"
 #include "../../actions/account_actions.h"
 
-
-struct QuantityPeriod{
-    int quantity;
-    int period;
-};
+#include "../utils/date_util.h"
 
 namespace Ui {
     class UpdatePaymentMenu;
@@ -43,12 +39,18 @@ private:
 
         disconnect(ui->delete_button,SIGNAL(clicked()), this, SLOT(send_delete_dto()));
         connect(ui->delete_button,SIGNAL(clicked()), this, SLOT(send_delete_dto()));
+        QRegExp re("^[0-9]+(\\.[0-9]{1,2})?$");
+        QRegExpValidator *validator = new QRegExpValidator(re, this);
+        ui->amount_input->setValidator(validator);
+        QRegExp onlyNumber("^[0-9]+$");
+        QRegExpValidator *number_validator = new QRegExpValidator(re, this);
+        ui->card_input->setValidator(number_validator);
+        ui->quantity_input->setValidator(number_validator);
     }
 
     void set_payment_date_variants();
     void update_balance_label();
-
-    QuantityPeriod* get_quantity_and_period(int);
+    void set_up_date_time_edit();
     int payment_id = 0;
     friend Singleton;
     friend object_ui<Ui::UpdatePaymentMenu, UpdatePaymentMenu>;
