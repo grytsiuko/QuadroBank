@@ -1,4 +1,6 @@
 .idea/
 cmake-build-debug/
 cmake-build-debug-mingw/
+cmake-build-release-mingw/
+QuadroBank.zip
 CMakeLists.txt.user
