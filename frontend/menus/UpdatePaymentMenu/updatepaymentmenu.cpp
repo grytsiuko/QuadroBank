@@ -45,10 +45,11 @@ void UpdatePaymentMenu::set_payment_date_variants() {
 
 
 
-void UpdatePaymentMenu::update_payment(const RegularPaymentDto *currentPayment) {
+void UpdatePaymentMenu::update_payment(int currentPaymentId) {
     set_payment_date_variants();
     update_balance_label();
     set_up_date_time_edit();
+
     QuantityPeriod *quantityPeriod = get_quantity_and_period(currentPayment->_period_sec);
 
     ui->amount_input->setText(QString::number(1.*currentPayment->_sum/100));

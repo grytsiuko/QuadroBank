@@ -24,7 +24,7 @@ public:
 signals:
     void updated();
 public slots:
-    void update_payment(const RegularPaymentDto*);
+    void update_payment(int);
 private slots:
     void send_update_dto();
     void send_delete_dto();

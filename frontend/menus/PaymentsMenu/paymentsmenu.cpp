@@ -12,16 +12,10 @@ void PaymentsMenu::set_token(const TokenDto &token) {
     update_payments_list();
 }
 
-void  PaymentsMenu::edit(const QModelIndex & index){
-    RegularPaymentDto* currentPayment = new RegularPaymentDto;
+void PaymentsMenu::edit(const QModelIndex & index){
     auto* currentModel = ui->payments_table->model();
-    currentPayment->_id=currentModel->index(index.row(),4).data().toInt();
-    currentPayment->_period_sec=currentModel->index(index.row(),5).data().toInt();
-    currentPayment->_target_card=currentModel->index(index.row(),2).data().toString().toStdString();
-    currentPayment->_sum=currentModel->index(index.row(),3).data().toDouble()*100;
-//    currentPayment->_next_time;
     emit go_update();
-    emit edit_payment(currentPayment);
+    emit edit_payment(currentModel->index(index.row(),4).data().toInt());
 }
 
 void PaymentsMenu::update_payments_list() {
