@@ -47,7 +47,7 @@
       <property name="font">
        <font>
         <family>Playbill</family>
-        <pointsize>36</pointsize>
+        <pointsize>28</pointsize>
        </font>
       </property>
       <property name="text">

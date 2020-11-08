@@ -125,7 +125,7 @@
       <property name="font">
        <font>
         <family>Playbill</family>
-        <pointsize>36</pointsize>
+        <pointsize>28</pointsize>
        </font>
       </property>
       <property name="text">
@@ -135,7 +135,7 @@
        <enum>Qt::PlainText</enum>
       </property>
       <property name="alignment">
-       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>
