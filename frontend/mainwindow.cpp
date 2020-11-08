@@ -70,6 +70,8 @@ void MainWindow::set_mainmenu() {
     disconnect(mainmenu_ui->payments_button, SIGNAL(clicked()), this, SLOT(set_paymentsmenu()));
     connect(mainmenu_ui->payments_button, SIGNAL(clicked()), this, SLOT(set_paymentsmenu()));
 
+    MainMenu::get_instance().set_token(currentToken);
+
     // get index of menu, we need to set, and set it
     menus->setCurrentIndex(menus->indexOf(&MainMenu::get_instance()));
 }
@@ -80,13 +82,14 @@ void MainWindow::set_loginmenu() {
     // retrieve ui object
     Ui::LoginMenu *loginmenu_ui = loginmenu_ui_getter.getUi(LoginMenu::get_instance());
     // connect buttons to slots
+    disconnect(&LoginMenu::get_instance(), SIGNAL(send_token(TokenDto const&)), this,
+               SLOT(set_token_dto(TokenDto const&)));
+    connect(&LoginMenu::get_instance(), SIGNAL(send_token(TokenDto const&)), this,
+            SLOT(set_token_dto(TokenDto const&)));
+
     disconnect(&LoginMenu::get_instance(), SIGNAL(input_validated()), this, SLOT(set_mainmenu()));
     connect(&LoginMenu::get_instance(), SIGNAL(input_validated()), this, SLOT(set_mainmenu()));
 
-    disconnect(&LoginMenu::get_instance(), SIGNAL(send_token(TokenDto const&)), this,
-            SLOT(set_token_dto(TokenDto const&)));
-    connect(&LoginMenu::get_instance(), SIGNAL(send_token(TokenDto const&)), this,
-            SLOT(set_token_dto(TokenDto const&)));
 
     // get index of menu, we need to set, and set it
     menus->setCurrentIndex(menus->indexOf(&LoginMenu::get_instance()));
