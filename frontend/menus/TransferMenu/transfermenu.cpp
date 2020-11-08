@@ -15,7 +15,7 @@ void TransferMenu::update_balance_label() {
     if (balanceDTO.is_success()) {
         const AccountBalanceDto account_balance = balanceDTO.get_response();
         QString balanceString;
-        if (account_balance._is_credit)
+        if (account_balance._credit_limit > 0)
             balanceString = QString("Your Balance: %1 $ (Cred Limit: %2)").arg(account_balance._balance).arg(account_balance._credit_limit);
         else
             balanceString = QString("Your Balance: %1 $").arg(account_balance._balance);
