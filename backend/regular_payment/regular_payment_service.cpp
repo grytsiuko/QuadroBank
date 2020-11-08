@@ -15,7 +15,7 @@ vector<RegularPaymentDto> RegularPaymentService::get_all_by_user(const TokenDto 
 
     regular_payments_dtos.reserve(regular_payments.size());
     for (const RegularPayment& rp : regular_payments) {
-        regular_payments_dtos.push_back(RegularPaymentDto{rp._id, rp._period_sec, rp._target_card, rp._sum});
+        regular_payments_dtos.push_back(RegularPaymentDto{rp._id, rp._period_sec, rp._target_card, rp._sum, rp._next_time});
     }
 
     return regular_payments_dtos;
