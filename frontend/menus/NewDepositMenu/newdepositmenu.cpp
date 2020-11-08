@@ -11,9 +11,9 @@ void NewDepositMenu::update_balance_label() {
         const AccountBalanceDto& account_balance = balanceDTO.get_response();
         QString balanceString;
         if (account_balance._credit_limit > 0)
-            balanceString = QString("Your Balance: %1 $ (Cred Limit: %2)").arg(account_balance._balance).arg(account_balance._credit_limit);
+            balanceString = QString("Your Balance: %1 $ (Cred Limit: %2)").arg(1.*account_balance._balance/100).arg(1.*account_balance._credit_limit/100);
         else
-            balanceString = QString("Your Balance: %1 $").arg(account_balance._balance);
+            balanceString = QString("Your Balance: %1 $").arg(1.*account_balance._balance/100);
         ui->LabelName->setText(balanceString);
     }
 }
