@@ -45,8 +45,9 @@ void NewDepositMenu::load_deposit_variants() {
 }
 
 void NewDepositMenu::create_deposit() {
-    int amount = ui->amount_input->text().toInt();
-    if (amount < 1) {
+    bool good;
+    double amount = ui->amount_input->text().toDouble(&good);
+    if (!good) {
         ui->amount_input->setStyleSheet("border: 1px solid red");
         showInfo("Amount should be positive number");
         ui->amount_input->setText("");
@@ -55,7 +56,7 @@ void NewDepositMenu::create_deposit() {
         const Response<void>& responseTransfer = depositActions.create(
                 DepositCreateDto{currentToken._token,
                                  selected_variant.toDouble(),
-                                 amount});
+                                 static_cast<int>(amount*100)});
         if (responseTransfer.is_success()) {
             ui->amount_input->setText("");
             showInfo("Deposit successfully created");

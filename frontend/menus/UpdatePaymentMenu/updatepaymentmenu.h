@@ -39,6 +39,9 @@ private:
 
         disconnect(ui->delete_button,SIGNAL(clicked()), this, SLOT(send_delete_dto()));
         connect(ui->delete_button,SIGNAL(clicked()), this, SLOT(send_delete_dto()));
+        QRegExp re("^[0-9]+(\\.[0-9]{1,2})?$");
+        QRegExpValidator *validator = new QRegExpValidator(re, this);
+        ui->amount_input->setValidator(validator);
     }
 
     void set_payment_date_variants();

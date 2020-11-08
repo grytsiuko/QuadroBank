@@ -2,6 +2,7 @@
 #define REFILLMENU_H
 
 #include <QWidget>
+#include "QRegExpValidator"
 #include "backend/utils/singleton.h"
 #include "../utils/object_ui.h"
 #include "ui_refillmenu.h"
@@ -33,6 +34,9 @@ private:
 
         disconnect( ui->refill_button,SIGNAL(clicked()),this,SLOT(refill()));
         connect( ui->refill_button,SIGNAL(clicked()),this,SLOT(refill()));
+        QRegExp re("^[0-9]+(\\.[0-9]{1,2})?$");
+        QRegExpValidator *validator = new QRegExpValidator(re, this);
+        ui->amount_input->setValidator(validator);
     }
     friend Singleton;
     friend object_ui<Ui::RefillMenu,RefillMenu>;

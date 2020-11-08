@@ -82,8 +82,9 @@ void UpdatePaymentMenu::send_delete_dto(){
 
 
 void UpdatePaymentMenu::send_update_dto(){
-    int amount = ui->amount_input->text().toInt();
-    if (amount < 1) {
+    bool good;
+    double amount = ui->amount_input->text().toDouble(&good);
+    if (!good) {
         ui->amount_input->setStyleSheet("border: 1px solid red");
         showInfo("Amount should be positive number");
         ui->amount_input->setText("");
@@ -112,7 +113,7 @@ void UpdatePaymentMenu::send_update_dto(){
                                 period,
                                 next_time,
                                 card.toStdString(),
-                                amount
+                                static_cast<int>(amount*100)
                         });
                 if (responseUpdatePayment.is_success()) {
                     ui->amount_input->setText("");

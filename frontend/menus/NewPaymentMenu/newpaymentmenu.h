@@ -29,7 +29,9 @@ private:
         ui->setupUi(this);
         disconnect( ui->new_payment_button,SIGNAL(clicked()),this,SLOT(create_payment()));
         connect( ui->new_payment_button,SIGNAL(clicked()),this,SLOT(create_payment()));
-
+        QRegExp re("^[0-9]+(\\.[0-9]{1,2})?$");
+        QRegExpValidator *validator = new QRegExpValidator(re, this);
+        ui->amount_input->setValidator(validator);
     };
     void set_payment_date_variants();
     void update_balance_label();

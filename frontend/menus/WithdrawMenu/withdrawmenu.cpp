@@ -26,13 +26,16 @@ void WithdrawMenu::update_balance_label(){
 }
 
 void WithdrawMenu::withdraw(){
-    int amount = ui->amount_input->text().toInt();
-    if (amount == 0) {
+    bool good;
+    double amount = ui->amount_input->text().toDouble(&good);
+    if (!good) {
         showInfo("Amount should be positive number");
         ui->amount_input->setStyleSheet("border: 1px solid red");
     }
     else{
-        const Response<void>& responseWithdraw = accountActions.withdraw(AccountUpdateDto{currentToken._token, amount});
+        const Response<void>& responseWithdraw = accountActions.withdraw(
+                AccountUpdateDto{currentToken._token,
+                                 static_cast<int>(amount*100)});
         if (responseWithdraw.is_success()){
             ui->amount_input->setStyleSheet("border: 1px solid green");
             showInfo("Withdraw successfully processed");

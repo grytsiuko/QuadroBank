@@ -46,8 +46,9 @@ void NewPaymentMenu::set_payment_date_variants() {
 };
 
 void NewPaymentMenu::create_payment() {
-    int amount = ui->amount_input->text().toInt();
-    if (amount < 1) {
+    bool good;
+    double amount = ui->amount_input->text().toDouble(&good);
+    if (!good) {
         ui->amount_input->setStyleSheet("border: 1px solid red");
         showInfo("Amount should be positive number");
         ui->amount_input->setText("");
@@ -78,7 +79,7 @@ void NewPaymentMenu::create_payment() {
                                 next_time,
                                 period,
                                 card.toStdString(),
-                                amount
+                                static_cast<int>(amount*100)
                         });
                 if (responsePaymentCreation.is_success()) {
                     showInfo("Regular payment successfully created");

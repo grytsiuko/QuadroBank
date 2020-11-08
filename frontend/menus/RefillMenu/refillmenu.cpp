@@ -25,13 +25,14 @@ void RefillMenu::update_balance_label() {
 }
 
 void RefillMenu::refill(){
-    int amount = ui->amount_input->text().toInt();
-    if (amount < 1) {
+    bool good;
+    double amount = ui->amount_input->text().toDouble(&good);
+    if (!good) {
         showInfo("Amount should be positive number");
         ui->amount_input->setStyleSheet("border: 1px solid red");
     } else {
         const Response<void>& responseTransfer = accountActions.top_up(
-                AccountUpdateDto{currentToken._token, amount});
+                AccountUpdateDto{currentToken._token, static_cast<int>(amount*100)});
         if (responseTransfer.is_success()){
             showInfo("Successfully refilled");
             update_balance_label();
