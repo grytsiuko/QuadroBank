@@ -131,7 +131,7 @@ add_executable(QuadroBank
         backend/deposit/deposit_controller.cpp
         backend/regular_payment/regular_payment_controller.cpp
         backend/scheduler/scheduler.cpp
-        backend/user/user_repository_in_memory.cpp)
+        backend/user/user_repository_in_memory.cpp frontend/menus/utils/info_message.h)
 
 
 target_link_libraries(${PROJECT_NAME} Qt${QT_VERSION_MAJOR}::Widgets)

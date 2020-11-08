@@ -1,6 +1,6 @@
 #include "updatepaymentmenu.h"
-#include "../../../backend/utils/time_intervals.h"
 #include <iostream>
+
 
 UpdatePaymentMenu::~UpdatePaymentMenu() {
     delete ui;
@@ -38,6 +38,7 @@ void UpdatePaymentMenu::update_payment(const RegularPaymentDto *currentPayment) 
     set_payment_date_variants();
     update_balance_label();
     QuantityPeriod *quantityPeriod = get_quantity_and_period(currentPayment->_period_sec);
+
     ui->amount_input->setText(QString::number(currentPayment->_sum));
     ui->card_input->setText(QString::fromStdString(currentPayment->_target_card));
     ui->quantity_input->setText(QString::number(quantityPeriod->quantity));
@@ -46,6 +47,7 @@ void UpdatePaymentMenu::update_payment(const RegularPaymentDto *currentPayment) 
     if (index != -1) {
         ui->comboBox->setCurrentIndex(index);
     }
+    delete quantityPeriod;
 }
 
 void UpdatePaymentMenu::send_delete_dto(){

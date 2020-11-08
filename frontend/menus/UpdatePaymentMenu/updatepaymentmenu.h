@@ -7,6 +7,7 @@
 #include "ui_updatepaymentmenu.h"
 #include "../../actions/regular_payment_actions.h"
 #include "../../actions/account_actions.h"
+
 #include "../utils/date_util.h"
 
 namespace Ui {

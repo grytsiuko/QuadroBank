@@ -23,7 +23,7 @@ public:
 
 private slots:
 
-    void edit(const QModelIndex & index);
+    void edit(const QModelIndex &);
 
 signals:
     void edit_payment(const RegularPaymentDto*);
