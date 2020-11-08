@@ -32,6 +32,10 @@ private:
         QRegExp re("^[0-9]+(\\.[0-9]{1,2})?$");
         QRegExpValidator *validator = new QRegExpValidator(re, this);
         ui->amount_input->setValidator(validator);
+        QRegExp onlyNumber("^[0-9]+$");
+        QRegExpValidator *number_validator = new QRegExpValidator(re, this);
+        ui->card_input->setValidator(number_validator);
+        ui->quantity_input->setValidator(number_validator);
     };
     void set_payment_date_variants();
     void update_balance_label();

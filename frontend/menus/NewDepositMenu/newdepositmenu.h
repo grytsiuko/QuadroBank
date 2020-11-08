@@ -33,6 +33,7 @@ private:
         QRegExp re("^[0-9]+(\\.[0-9]{1,2})?$");
         QRegExpValidator *validator = new QRegExpValidator(re, this);
         ui->amount_input->setValidator(validator);
+
     };
 
     void load_deposit_variants();
