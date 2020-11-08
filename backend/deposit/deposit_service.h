@@ -3,6 +3,8 @@
 
 
 #include <cmath>
+#include <backend/auth/auth_service.h>
+#include <backend/notification/notification_service.h>
 #include "backend/account/dto/token_dto.h"
 #include "deposit_repository_interface.h"
 #include "deposit_repository_in_memory.h"
@@ -26,11 +28,15 @@ private:
     const AccountRepositoryInterface<AccountRepositoryInMemory> &_account_repository;
     const DepositVariantRepositoryInterface &_deposit_variant_repository;
     const TokenService &_token_service;
+    const NotificationService &_notification_service;
+    const AuthService &_auth_service;
 
     DepositService() : _deposit_repository(DepositRepositoryInMemory::get_instance()),
                        _account_repository(AccountRepositoryInMemory::get_instance()),
                        _deposit_variant_repository(DepositVariantRepositoryInMemory::get_instance()),
-                       _token_service(TokenService::get_instance()) {}
+                       _token_service(TokenService::get_instance()),
+                       _notification_service(NotificationService::get_instance()),
+                       _auth_service(AuthService::get_instance()){}
 
 public:
     vector<DepositDto> get_all_by_user(const TokenDto &token_dto) const;

@@ -3,6 +3,9 @@
 
 #include <cmath>
 #include <ctime>
+#include <map>
+#include <backend/notification/notification_service.h>
+#include <backend/auth/auth_service.h>
 #include "dto/account_authorize_dto.h"
 #include "dto/token_dto.h"
 #include "account_repository_interface.h"
@@ -18,151 +21,58 @@
 #include "../user/user_repository_in_memory.h"
 #include "dto/session_dto.h"
 
+using std::map;
+
 class AccountService : public Singleton<AccountService> {
+
+    friend Singleton;
 
 private:
 
-    const static int CREDIT_SECONDS = 1;
-    constexpr const static double CREDIT_PERCENTAGE = 1.2;
+    const static int CREDIT_SECONDS = 10;
+    constexpr const static double CREDIT_COEFFICIENT = 1.2;
 
-    friend Singleton;
+    const int MAX_INCORRECT_PINS = 3;
+    mutable map<string, int> _incorrect_pins;
 
     const AccountRepositoryInterface<AccountRepositoryInMemory> &_account_repository;
     const UserRepositoryInterface<UserRepositoryInMemory> &_user_repository;
     const TokenService &_token_service;
+    const NotificationService &_notification_service;
+    const AuthService &_auth_service;
+
+
 
     AccountService() :
             _account_repository(AccountRepositoryInterface<AccountRepositoryInMemory>::get_instance()),
             _user_repository(UserRepositoryInterface<UserRepositoryInMemory>::get_instance()),
-            _token_service(TokenService::get_instance()) {}
+            _token_service(TokenService::get_instance()),
+            _notification_service(NotificationService::get_instance()),
+            _auth_service(AuthService::get_instance()){}
 
 public:
 
-    SessionDto authorize(const AccountAuthorizeDto &account_authorize_dto) const {
-        Account account = _assert_account_by_card_number(account_authorize_dto._card_number);
-        User user = _assert_user_by_id(account._user_id);
+    SessionDto authorize(const AccountAuthorizeDto &account_authorize_dto) const;
 
-        if (account._pin != account_authorize_dto._pin) {
-            throw Exception("Illegal pin");
-        }
+    AccountBalanceDto check_balance(const TokenDto &token_dto) const;
 
-        return SessionDto{_token_service.generate_token(account), user._name};
-    }
+    void top_up(const AccountUpdateDto &account_update_dto) const;
 
-    AccountBalanceDto check_balance(const TokenDto &token_dto) const {
-        Account account = _assert_account_by_token(token_dto._token);
+    void withdraw(const AccountUpdateDto &account_update_dto) const;
 
-        return AccountBalanceDto(account);
-    }
+    void transfer(const AccountTransferDto &account_transfer_dto) const;
 
-    void top_up(const AccountUpdateDto &account_update_dto) const {
-        _assert_positive_sum(account_update_dto._sum);
+    vector<Account> get_debtors() const;
 
-        Account account = _assert_account_by_token(account_update_dto._token);
-        account._balance += account_update_dto._sum;
-        _update_credit_start(account);
-
-        _account_repository.update(account);
-    }
-
-    void withdraw(const AccountUpdateDto &account_update_dto) const {
-        _assert_positive_sum(account_update_dto._sum);
-
-        Account account = _assert_account_by_token(account_update_dto._token);
-        account._balance -= account_update_dto._sum;
-
-        _assert_correct_balance(account);
-        _update_credit_start(account);
-
-        _account_repository.update(account);
-    }
-
-    void transfer(const AccountTransferDto &account_transfer_dto) const {
-        _assert_positive_sum(account_transfer_dto._sum);
-
-        Account account = _assert_account_by_token(account_transfer_dto._token);
-        Account target_account = _assert_account_by_card_number(account_transfer_dto._target_card);
-
-        if (account._card_number == target_account._card_number) {
-            throw Exception("Unable to transfer to the same account");
-        }
-
-        account._balance -= account_transfer_dto._sum;
-        target_account._balance += account_transfer_dto._sum;
-
-        _assert_correct_balance(account);
-        _update_credit_start(account);
-
-        _account_repository.update(account);
-        _account_repository.update(target_account);
-    }
-
-    vector<Account> get_debtors() const {
-        function<bool(const Account&)> debtors_filter = [](auto &a) {
-            return a._credit_start != 0 && a._credit_start + CREDIT_SECONDS < time(nullptr);
-        };
-        return _account_repository.get_list(Specification<Account>(debtors_filter));
-    }
-
-    void punish_debtor(Account account) const {
-        account._balance = floor(account._balance * CREDIT_PERCENTAGE);
-        _account_repository.update(account);
-    }
+    void punish_debtor(Account account) const;
 
 private:
 
-    void _assert_positive_sum(int sum) const {
-        if (sum < 0) {
-            throw Exception("Sum should be positive");
-        }
-    }
+    void _assert_positive_sum(int sum) const;
 
-    void _assert_correct_balance(const Account &account) const {
-        if (!account._is_credit && account._balance < 0) {
-            throw Exception("You have simple card, you cannot have negative balance");
-        }
-        if (account._is_credit && account._balance < -account._credit_limit) {
-            throw Exception("You cannot exceed your credit limit");
-        }
-    }
+    void _assert_correct_balance(const Account &account) const;
 
-    void _update_credit_start(Account &account) const {
-        if (account._credit_start != 0 && account._balance >= 0) {
-            account._credit_start = 0;
-            return;
-        }
-        if (account._credit_start == 0 && account._balance < 0) {
-            account._credit_start = time(nullptr);
-        }
-    }
-
-    Account _assert_account_by_token(const string &token) const {
-        string card_number = _token_service.get_card_number(token);
-        Optional<Account> account = _account_repository.get_by_card_number(card_number);
-
-        if (account.is_empty()) {
-            throw Exception("Illegal token");
-        }
-        return account.get();
-    }
-
-    Account _assert_account_by_card_number(const string &card_number) const {
-        Optional<Account> account = _account_repository.get_by_card_number(card_number);
-
-        if (account.is_empty()) {
-            throw Exception("No such card number");
-        }
-        return account.get();
-    }
-
-    User _assert_user_by_id(const int id) const {
-        Optional<User> user = _user_repository.get_by_id(id);
-
-        if (user.is_empty()) {
-            throw Exception("Internal error, no such user");
-        }
-        return user.get();
-    }
+    void _update_credit_start(Account &account) const;
 };
 
 #endif

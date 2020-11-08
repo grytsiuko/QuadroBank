@@ -4,7 +4,8 @@
 #include "backend/utils/exception.h"
 
 vector<RegularPaymentDto> RegularPaymentService::get_all_by_user(const TokenDto &token_dto) const {
-    const Account account = _get_account(token_dto._token);
+    string card_number = _token_service.get_card_number(token_dto._token);
+    Account account = _auth_service.assert_account(card_number);
 
     const vector<RegularPayment> regular_payments = _regular_payment_repository.get_list(Specification<RegularPayment>([&](const RegularPayment &rp) {
         return account._card_number == rp._account_card;
@@ -21,7 +22,10 @@ vector<RegularPaymentDto> RegularPaymentService::get_all_by_user(const TokenDto 
 }
 
 void RegularPaymentService::add(const RegularPaymentCreateDto &regular_payment_create_dto) const {
-    const Account account = _get_account(regular_payment_create_dto._token);
+    string card_number = _token_service.get_card_number(regular_payment_create_dto._token);
+    Account account = _auth_service.assert_account(card_number);
+    User user = _auth_service.assert_user(account._user_id);
+
     time_t current_time = time(nullptr);
 
     if(regular_payment_create_dto._target_card == account._card_number){
@@ -51,11 +55,14 @@ void RegularPaymentService::add(const RegularPaymentCreateDto &regular_payment_c
                                                    regular_payment_create_dto._target_card,
                                                    regular_payment_create_dto._next_time,
                                                    regular_payment_create_dto._sum});
-
+    _notification_service.notify(user, account, "You have created regular payment");
 }
 
 void RegularPaymentService::update(const RegularPaymentUpdateDto &regular_payment_update_dto) const {
-    const Account account = _get_account(regular_payment_update_dto._token);
+    string card_number = _token_service.get_card_number(regular_payment_update_dto._token);
+    Account account = _auth_service.assert_account(card_number);
+    User user = _auth_service.assert_user(account._user_id);
+
     time_t current_time = time(nullptr);
 
     Optional<RegularPayment> optional_payment = _regular_payment_repository.get_by_id(regular_payment_update_dto._payment_id);
@@ -91,10 +98,14 @@ void RegularPaymentService::update(const RegularPaymentUpdateDto &regular_paymen
                                                       regular_payment_update_dto._next_time,
                                                       regular_payment_update_dto._sum
                                                       });
+    _notification_service.notify(user, account, "You have updated regular payment");
 }
 
 void RegularPaymentService::remove(const RegularPaymentDeleteDto &regular_payment_delete_dto) const {
-    const Account account = _get_account(regular_payment_delete_dto._token);
+    string card_number = _token_service.get_card_number(regular_payment_delete_dto._token);
+    Account account = _auth_service.assert_account(card_number);
+    User user = _auth_service.assert_user(account._user_id);
+
     Optional<RegularPayment> optional_payment = _regular_payment_repository.get_by_id(regular_payment_delete_dto._payment_id);
     if(optional_payment.is_empty()){
         throw Exception("Regular payment does not exists");
@@ -105,6 +116,7 @@ void RegularPaymentService::remove(const RegularPaymentDeleteDto &regular_paymen
     }
 
     _regular_payment_repository.remove(regular_payment_delete_dto._payment_id);
+    _notification_service.notify(user, account, "You have deleted regular payment");
 }
 
 
@@ -115,28 +127,14 @@ vector<RegularPayment> RegularPaymentService::get_to_be_paid() const {
             ));
 }
 
-Account RegularPaymentService::_get_account(const string &token) const {
-    const string card_number = _token_service.get_card_number(token);
-    const Optional<Account> optional_account = _account_repository.get_by_card_number(card_number);
-    if (optional_account.is_empty()) {
-        throw Exception("Illegal token");
-    }
-
-    return optional_account.get();
-}
-
 void RegularPaymentService::pay(RegularPayment regular_payment) const {
-    Optional<Account> optional_from = _account_repository.get_by_card_number(regular_payment._account_card);
-    Optional<Account> optional_to = _account_repository.get_by_card_number(regular_payment._target_card);
-    if(optional_from.is_empty() || optional_to.is_empty()){
-        throw Exception("Internal error");
-    }
-
-    Account from_account = optional_from.get();
-    Account to_account = optional_to.get();
+    Account from_account = _auth_service.assert_account(regular_payment._account_card);
+    User from_user = _auth_service.assert_user(from_account._user_id);
+    Account to_account = _auth_service.assert_account(regular_payment._target_card);
+    User to_user = _auth_service.assert_user(to_account._user_id);
 
     if(from_account._balance + from_account._credit_limit < regular_payment._sum){
-        //todo notify
+        _notification_service.notify(from_user, from_account, "Not enough money, deleting regular payment");
         int removed = _regular_payment_repository.remove(regular_payment._id);
         if(removed == 0){
             throw Exception("Internal error");
@@ -154,5 +152,12 @@ void RegularPaymentService::pay(RegularPayment regular_payment) const {
     int updated = _regular_payment_repository.update(regular_payment);
     if(updated == 0){
         throw Exception("Internal error");
+    }
+
+    _notification_service.notify(from_user, from_account, "Regular payment from your account performed");
+    _notification_service.notify(to_user, to_account, "Regular payment to your account performed");
+
+    if (regular_payment._next_time <= time(nullptr)) {
+        pay(regular_payment);
     }
 }

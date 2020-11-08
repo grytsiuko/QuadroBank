@@ -5,12 +5,7 @@
 
 vector<DepositDto> DepositService::get_all_by_user(const TokenDto &token_dto) const {
     const string card_number = _token_service.get_card_number(token_dto._token);
-    const Optional<Account> optional_account = _account_repository.get_by_card_number(card_number);
-    if (optional_account.is_empty()) {
-        throw Exception("Illegal token");
-    }
-
-    const Account& account = optional_account.get();
+    Account account = _auth_service.assert_account(card_number);
 
     const vector<Deposit> deposits = _deposit_repository.get_list(Specification<Deposit>([&](const Deposit &d) {
         return account._card_number == d._account_card_number;
@@ -41,12 +36,10 @@ vector<DepositVariantDto> DepositService::get_possible_variants(const TokenDto &
 
 void DepositService::add(const DepositCreateDto &deposit_create_dto) const {
     const string card_number = _token_service.get_card_number(deposit_create_dto._token);
-    Optional<Account> account_optional = _account_repository.get_by_card_number(card_number);
-    if (account_optional.is_empty()) {
-        throw Exception("Illegal token");
-    }
-    Account account = account_optional.get();
-    if (account._is_credit) {
+    Account account = _auth_service.assert_account(card_number);
+    User user = _auth_service.assert_user(account._user_id);
+
+    if (account._credit_limit != 0) {
         throw Exception("Unable to create deposits for credit cards");
     }
     const Optional<DepositVariant> optional_deposit_variant = _deposit_variant_repository.get_by_percentage(deposit_create_dto._percentage);
@@ -57,6 +50,9 @@ void DepositService::add(const DepositCreateDto &deposit_create_dto) const {
     if (deposit_create_dto._sum <= 0) {
         throw Exception("Unable to create deposit with negative sum");
     }
+    if (account._balance < deposit_create_dto._sum) {
+        throw Exception("Not enough money");
+    }
 
     const DepositVariant& deposit_variant = optional_deposit_variant.get();
     const time_t currDate = time(nullptr);
@@ -64,6 +60,7 @@ void DepositService::add(const DepositCreateDto &deposit_create_dto) const {
     account._balance -= deposit_create_dto._sum;
     _deposit_repository.add(deposit);
     _account_repository.update(account);
+    _notification_service.notify(user, account, "You have created deposit");
 }
 
 vector<Deposit> DepositService::get_to_be_paid() const {
@@ -74,17 +71,15 @@ vector<Deposit> DepositService::get_to_be_paid() const {
 
 
 void DepositService::return_finished(const Deposit &deposit) const {
-    Optional<Account> account_optional = _account_repository.get_by_card_number(deposit._account_card_number);
-
-    if (account_optional.is_empty()) {
-        throw Exception("Internal error");
-    }
-    Account account = account_optional.get();
+    Account account = _auth_service.assert_account(deposit._account_card_number);
+    User user = _auth_service.assert_user(account._user_id);
 
     account._balance += deposit._sum;
     account._balance += floor(deposit._sum * deposit._percentage / TimeIntervals::YEAR * deposit._period_sec);
     _account_repository.update(account);
     _deposit_repository.remove(deposit._id);
+
+    _notification_service.notify(user, account, "Your deposit has been returned");
 }
 
 
