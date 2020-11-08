@@ -1,6 +1,16 @@
 
 #include "regular_payment_controller.h"
 
+Response<RegularPaymentDto> RegularPaymentController::get_by_id(const RegularPaymentGetDto &get_dto) const {
+    log("get_by_id");
+    try{
+        RegularPaymentDto regular_payment_dto = _regular_payment_service.get_by_id(get_dto);
+        return Response<RegularPaymentDto>::success(regular_payment_dto);
+    } catch (const Exception &exception) {
+        return Response<RegularPaymentDto>::error(exception.get_message());
+    }
+}
+
 Response<vector<RegularPaymentDto>> RegularPaymentController::get_all_by_user(const TokenDto &token_dto) const {
     log("get_all_by_user");
     try{
@@ -40,3 +50,4 @@ Response<void> RegularPaymentController::remove(const RegularPaymentDeleteDto &r
         return Response<void>::error(exception.get_message());
     }
 }
+
