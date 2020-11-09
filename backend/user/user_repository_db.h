@@ -31,7 +31,21 @@ private:
     }
 
     Optional<User> _get_by_id(const int id) const override {
-        return Optional<User>::empty();
+        Optional<map<string, QVariant>> res_optional = _db_service.select_one(
+                TABLE,
+                {"id", "name"},
+                "id=%0",
+                {std::to_string(id)}
+        );
+        if (res_optional.is_empty()) {
+            return Optional<User>::empty();
+        }
+
+        map<string, QVariant> res = res_optional.get();
+        return Optional<User>::of(User{
+            res["id"].toInt(),
+            res["name"].toString().toStdString()
+        });
     }
 
     void _seed_data() const {

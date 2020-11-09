@@ -11,6 +11,7 @@
 #include "../utils/exception.h"
 
 using std::cout;
+using std::map;
 
 class DBService : public Singleton<DBService> {
 
@@ -82,7 +83,7 @@ public:
         if (!fields.empty()) {
             sql += "%0";
         }
-        for(size_t i = 1; i < fields.size(); i++) {
+        for (size_t i = 1; i < fields.size(); i++) {
             std::stringstream ss;
             ss << ",%" << i;
             sql += ss.str();
@@ -90,13 +91,45 @@ public:
         sql += ");";
 
         QString q_string = sql.c_str();
-        for(const auto & field : fields) {
+        for (const auto &field : fields) {
             q_string = q_string.arg(field.c_str());
         }
 
         QSqlQuery query;
         query.prepare(q_string);
         assert_done(query.exec());
+    }
+
+    Optional<map<string, QVariant>> select_one(
+            const string &table,
+            const vector<string> &fields,
+            const string &where = "",
+            const vector<string> &params = {}
+    ) const {
+        string sql = "SELECT " + generate_list(fields) + " FROM " + table;
+        if (!where.empty()) {
+            sql += " WHERE " + where;
+        }
+        sql += ";";
+
+        QString q_string = sql.c_str();
+        for (const auto &param : params) {
+            q_string = q_string.arg(param.c_str());
+        }
+
+        QSqlQuery query;
+        query.prepare(q_string);
+        assert_done(query.exec());
+        QSqlRecord record = query.record();
+
+        while (query.next()) {
+            map<string, QVariant> res;
+            for (const auto &field:fields) {
+                res[field] = query.value(record.indexOf(field.c_str()));
+            }
+            return Optional<map<string, QVariant>>::of(res);
+        }
+        return Optional<map<string, QVariant>>::empty();
     }
 };
 
