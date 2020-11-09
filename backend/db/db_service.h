@@ -38,19 +38,23 @@ private:
         return QSqlQuery().exec(sql.c_str());
     }
 
+    string generate_list(const vector<string> &values) const {
+        string res;
+        if (!values.empty()) {
+            res += values[0];
+        }
+        for (size_t i = 1; i < values.size(); i++) {
+            res += "," + values[i];
+        }
+        return res;
+    }
+
     ~DBService() override = default;
 
 public:
 
     void create_table_if_not_exists(const string &name, const vector<string> &fields) const {
-        string sql = "CREATE TABLE IF NOT EXISTS " + name + " (";
-        if (!fields.empty()) {
-            sql += fields[0];
-        }
-        for (size_t i = 1; i < fields.size(); i++) {
-            sql += "," + fields[i];
-        }
-        sql += ")";
+        string sql = "CREATE TABLE IF NOT EXISTS " + name + " (" + generate_list(fields) + ")";
 
         QSqlQuery query;
         assert_done(exec(sql));
@@ -73,8 +77,8 @@ public:
         throw_db_exception();
     }
 
-    void insert(const string &table, const string &columns, const vector<string> &fields) const {
-        string sql = "INSERT INTO " + table + " (" + columns + ") VALUES (";
+    void insert(const string &table, const vector<string> &columns, const vector<string> &fields) const {
+        string sql = "INSERT INTO " + table + " (" + generate_list(columns) + ") VALUES (";
         if (!fields.empty()) {
             sql += "%0";
         }

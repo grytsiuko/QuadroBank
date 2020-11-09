@@ -39,8 +39,8 @@ private:
         if (count > 0) {
             return;
         }
-        _db_service.insert(TABLE, "id, name", vector<string>{"15", "'Petrov Petrov'"});
-        _db_service.insert(TABLE, "id, name", vector<string>{"20", "'Stepan Stepanenko'"});
+        _db_service.insert(TABLE, vector<string>{"id", "name"}, vector<string>{"15", "'Petrov Petrov'"});
+        _db_service.insert(TABLE, vector<string>{"id", "name"}, vector<string>{"20", "'Stepan Stepanenko'"});
     }
 };
 
