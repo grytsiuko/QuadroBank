@@ -61,15 +61,21 @@ public:
         assert_done(exec(sql));
     }
 
-    int count(const string &table, const string &where = "") const {
+    int count(const string &table, const string &where = "", const vector<string> &params = {}) const {
         string sql = "SELECT COUNT(*) AS val FROM " + table;
         if (!where.empty()) {
             sql += " WHERE " + where;
         }
         sql += ";";
 
+        QString q_string = sql.c_str();
+        for (const auto &param : params) {
+            q_string = q_string.arg(param.c_str());
+        }
+
         QSqlQuery query;
-        assert_done(query.exec(sql.c_str()));
+        query.prepare(q_string);
+        assert_done(query.exec());
         QSqlRecord record = query.record();
 
         while (query.next()) {
