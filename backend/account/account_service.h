@@ -21,6 +21,7 @@
 #include "../user/user_repository_interface.h"
 #include "../user/user_repository_in_memory.h"
 #include "dto/session_dto.h"
+#include "account_repository_db.h"
 
 using std::map;
 
@@ -36,7 +37,7 @@ private:
     const int MAX_INCORRECT_PINS = 3;
     mutable map<string, int> _incorrect_pins;
 
-    const AccountRepositoryInterface<AccountRepositoryInMemory> &_account_repository;
+    const AccountRepositoryInterface<AccountRepositoryDb> &_account_repository;
     const UserRepositoryInterface<UserRepositoryDb> &_user_repository;
     const TokenService &_token_service;
     const NotificationService &_notification_service;
@@ -45,7 +46,7 @@ private:
 
 
     AccountService() :
-            _account_repository(AccountRepositoryInterface<AccountRepositoryInMemory>::get_instance()),
+            _account_repository(AccountRepositoryInterface<AccountRepositoryDb>::get_instance()),
             _user_repository(UserRepositoryInterface<UserRepositoryDb>::get_instance()),
             _token_service(TokenService::get_instance()),
             _notification_service(NotificationService::get_instance()),

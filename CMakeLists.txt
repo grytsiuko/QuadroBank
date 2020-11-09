@@ -138,7 +138,9 @@ add_executable(QuadroBank
         backend/regular_payment/dto/regular_payment_get_dto.h
 
         backend/db/db_service.h
-        backend/user/user_repository_db.h)
+        backend/user/user_repository_db.h
+        backend/account/account_repository_db.h
+        )
 
 
 target_link_libraries(${PROJECT_NAME} Qt${QT_VERSION_MAJOR}::Widgets)
