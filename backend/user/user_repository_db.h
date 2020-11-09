@@ -16,36 +16,30 @@ class UserRepositoryDb : public UserRepositoryInterface<UserRepositoryDb> {
 private:
 
     const string TABLE = "users";
+    const vector<string> COLUMNS{"id", "name"};
+    const vector<string> COLUMNS_EXTENDED{
+            "id INTEGER PRIMARY KEY AUTOINCREMENT",
+            "name VARCHAR(255) NOT NULL"
+    };
 
     friend Singleton;
 
     const DBService &_db_service;
 
     UserRepositoryDb() : _db_service(DBService::get_instance()) {
-        vector<string> fields{
-                "id INTEGER PRIMARY KEY AUTOINCREMENT",
-                "name VARCHAR(255) NOT NULL"
-        };
-        _db_service.create_table_if_not_exists(TABLE, fields);
+        _db_service.create_table_if_not_exists(TABLE, COLUMNS_EXTENDED);
         _seed_data();
     }
 
     Optional<User> _get_by_id(const int id) const override {
         Optional<map<string, QVariant>> res_optional = _db_service.select_one(
-                TABLE,
-                {"id", "name"},
-                "id=%0",
-                {std::to_string(id)}
+                TABLE, COLUMNS, "id=%0", {std::to_string(id)}
         );
         if (res_optional.is_empty()) {
             return Optional<User>::empty();
         }
 
-        map<string, QVariant> res = res_optional.get();
-        return Optional<User>::of(User{
-            res["id"].toInt(),
-            res["name"].toString().toStdString()
-        });
+        return Optional<User>::of(_get_entity_from_map(res_optional.get()));
     }
 
     void _seed_data() const {
@@ -53,8 +47,15 @@ private:
         if (count > 0) {
             return;
         }
-        _db_service.insert(TABLE, vector<string>{"id", "name"}, vector<string>{"15", "'Petrov Petrov'"});
-        _db_service.insert(TABLE, vector<string>{"id", "name"}, vector<string>{"20", "'Stepan Stepanenko'"});
+        _db_service.insert(TABLE, COLUMNS, {"15", "'Petrov Petrov'"});
+        _db_service.insert(TABLE, COLUMNS, {"20", "'Stepan Stepanenko'"});
+    }
+
+    User _get_entity_from_map(const map<string, QVariant> &data) const {
+        return User{
+                data.at("id").toInt(),
+                data.at("name").toString().toStdString()
+        };
     }
 };
 
