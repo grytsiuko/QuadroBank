@@ -26,13 +26,13 @@ class RegularPaymentService : public Singleton<RegularPaymentService> {
 
 private:
     const RegularPaymentRepositoryInterface &_regular_payment_repository;
-    const AccountRepositoryInterface<AccountRepositoryInMemory> &_account_repository;
+    const AccountRepositoryInterface<AccountRepositoryDb> &_account_repository;
     const TokenService &_token_service;
     const NotificationService &_notification_service;
     const AuthService &_auth_service;
 
     RegularPaymentService() : _regular_payment_repository(RegularPaymentRepositoryInMemory::get_instance()),
-                       _account_repository(AccountRepositoryInMemory::get_instance()),
+                       _account_repository(AccountRepositoryDb::get_instance()),
                        _token_service(TokenService::get_instance()),
                               _notification_service(NotificationService::get_instance()),
                               _auth_service(AuthService::get_instance()){}

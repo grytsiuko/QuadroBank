@@ -40,7 +40,26 @@ private:
     }
 
     Optional<Account> _get_by_card_number(const string &card_number) const override {
-        return Optional<Account>::empty();
+        Optional<map<string, QVariant>> res_optional = _db_service.select_one(
+                TABLE,
+                {"card_number", "user_id", "pin", "is_blocked", "balance", "credit_limit", "credit_start"},
+                "card_number=%0",
+                {card_number}
+        );
+        if (res_optional.is_empty()) {
+            return Optional<Account>::empty();
+        }
+
+        map<string, QVariant> res = res_optional.get();
+        return Optional<Account>::of(Account{
+                res["card_number"].toString().toStdString(),
+                res["user_id"].toInt(),
+                res["pin"].toString().toStdString(),
+                res["is_blocked"].toBool(),
+                res["balance"].toInt(),
+                res["credit_limit"].toInt(),
+                res["credit_start"].toInt()
+        });
     }
 
     void _update(const Account &account) const override {

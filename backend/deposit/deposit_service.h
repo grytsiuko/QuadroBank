@@ -25,14 +25,14 @@ class DepositService : public Singleton<DepositService> {
 
 private:
     const DepositRepositoryInterface &_deposit_repository;
-    const AccountRepositoryInterface<AccountRepositoryInMemory> &_account_repository;
+    const AccountRepositoryInterface<AccountRepositoryDb> &_account_repository;
     const DepositVariantRepositoryInterface &_deposit_variant_repository;
     const TokenService &_token_service;
     const NotificationService &_notification_service;
     const AuthService &_auth_service;
 
     DepositService() : _deposit_repository(DepositRepositoryInMemory::get_instance()),
-                       _account_repository(AccountRepositoryInMemory::get_instance()),
+                       _account_repository(AccountRepositoryDb::get_instance()),
                        _deposit_variant_repository(DepositVariantRepositoryInMemory::get_instance()),
                        _token_service(TokenService::get_instance()),
                        _notification_service(NotificationService::get_instance()),
