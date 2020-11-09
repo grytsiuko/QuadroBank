@@ -15,18 +15,10 @@ private:
 
     friend Singleton;
 
-    const string CREATE_USERS_TABLE_SQL = "CREATE TABLE IF NOT EXISTS users ("
-                                          "  id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                                          "  name VARCHAR(255) NOT NULL"
-                                          ");";
-
     DBService() {
         QSqlDatabase sdb = QSqlDatabase::addDatabase("QSQLITE");
         sdb.setDatabaseName("db.sqlite");
         assert_done(sdb.open());
-
-        QSqlQuery a_query;
-        assert_done(a_query.exec(CREATE_USERS_TABLE_SQL.c_str()));
     }
 
     void assert_done(bool flag) const {
@@ -35,9 +27,27 @@ private:
         }
     }
 
+    bool exec(const string &sql) const {
+        return QSqlQuery().exec(sql.c_str());
+    }
+
     ~DBService() override = default;
 
 public:
+
+    void create_table_if_not_exists(const string &name, const vector<string> &fields) const {
+        string sql = "CREATE TABLE IF NOT EXISTS " + name + " (";
+        if (!fields.empty()) {
+            sql += fields[0];
+        }
+        for (size_t i = 1; i < fields.size(); i++) {
+            sql += "," + fields[i];
+        }
+        sql += ")";
+
+        QSqlQuery query;
+        assert_done(exec(sql));
+    }
 };
 
 #endif //QUADROBANK_DB_SERVICE_H

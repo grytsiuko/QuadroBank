@@ -19,7 +19,12 @@ private:
 
     const  DBService &_db_service;
 
-    UserRepositoryDb(): _db_service(DBService::get_instance()) {}
+    UserRepositoryDb(): _db_service(DBService::get_instance()) {
+        vector<string> fields;
+        fields.emplace_back("id INTEGER PRIMARY KEY AUTOINCREMENT");
+        fields.emplace_back("name VARCHAR(255) NOT NULL");
+        _db_service.create_table_if_not_exists("users", fields);
+    }
 
     Optional<User> _get_by_id(const int id) const override {
         return Optional<User>::empty();
