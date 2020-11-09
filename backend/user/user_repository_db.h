@@ -15,19 +15,32 @@ class UserRepositoryDb : public UserRepositoryInterface<UserRepositoryDb> {
 
 private:
 
+    const string TABLE = "users";
+
     friend Singleton;
 
-    const  DBService &_db_service;
+    const DBService &_db_service;
 
-    UserRepositoryDb(): _db_service(DBService::get_instance()) {
-        vector<string> fields;
-        fields.emplace_back("id INTEGER PRIMARY KEY AUTOINCREMENT");
-        fields.emplace_back("name VARCHAR(255) NOT NULL");
-        _db_service.create_table_if_not_exists("users", fields);
+    UserRepositoryDb() : _db_service(DBService::get_instance()) {
+        vector<string> fields{
+                "id INTEGER PRIMARY KEY AUTOINCREMENT",
+                "name VARCHAR(255) NOT NULL"
+        };
+        _db_service.create_table_if_not_exists(TABLE, fields);
+        _seed_data();
     }
 
     Optional<User> _get_by_id(const int id) const override {
         return Optional<User>::empty();
+    }
+
+    void _seed_data() const {
+        int count = _db_service.count(TABLE);
+        if (count > 0) {
+            return;
+        }
+        _db_service.insert(TABLE, "id, name", vector<string>{"15", "'Petrov Petrov'"});
+        _db_service.insert(TABLE, "id, name", vector<string>{"20", "'Stepan Stepanenko'"});
     }
 };
 
