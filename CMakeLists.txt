@@ -7,6 +7,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR}Sql REQUIRED)
 
 
 set(CMAKE_AUTOUIC ON)
@@ -134,7 +135,11 @@ add_executable(QuadroBank
         backend/user/user_repository_in_memory.cpp
         frontend/menus/utils/info_message.h
         frontend/menus/utils/info_message.cpp
-        backend/regular_payment/dto/regular_payment_get_dto.h)
+        backend/regular_payment/dto/regular_payment_get_dto.h
+
+        backend/db/db_service.h
+        backend/user/user_repository_db.h)
 
 
 target_link_libraries(${PROJECT_NAME} Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(${PROJECT_NAME} Qt${QT_VERSION_MAJOR}::Sql)
