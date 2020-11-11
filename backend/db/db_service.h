@@ -157,6 +157,39 @@ public:
         }
         return Optional<map<string, QVariant>>::empty();
     }
+
+    vector<map<string, QVariant>> select_many(
+            const string &table,
+            const vector<string> &fields,
+            const string &where = "",
+            const vector<string> &params = {}
+    ) const {
+        string sql = "SELECT " + generate_list(fields) + " FROM " + table;
+        if (!where.empty()) {
+            sql += " WHERE " + where;
+        }
+        sql += ";";
+
+        QString q_string = sql.c_str();
+        for (const auto &param : params) {
+            q_string = q_string.arg(param.c_str());
+        }
+
+        QSqlQuery query;
+        query.prepare(q_string);
+        assert_done(query.exec());
+        QSqlRecord record = query.record();
+
+        vector<map<string, QVariant>> res;
+        while (query.next()) {
+            map<string, QVariant> curr;
+            for (const auto &field:fields) {
+                curr[field] = query.value(record.indexOf(field.c_str()));
+            }
+            res.emplace_back(curr);
+        }
+        return res;
+    }
 };
 
 #endif //QUADROBANK_DB_SERVICE_H

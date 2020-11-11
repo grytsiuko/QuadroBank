@@ -39,7 +39,14 @@ private:
     }
 
     vector<Account> _get_list(const Specification<Account> &account_specification) const override {
-        return vector<Account>();
+        vector<map<string, QVariant>> account_maps = _db_service.select_many(
+                TABLE, COLUMNS, account_specification.get_where(), account_specification.get_params()
+        );
+        vector<Account> res;
+        for(const auto & account_map : account_maps) {
+            res.emplace_back(_get_entity_from_map(account_map));
+        }
+        return res;
     }
 
     Optional<Account> _get_by_card_number(const string &card_number) const override {
