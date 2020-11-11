@@ -7,11 +7,12 @@
 #include <iostream>
 #include <QtSql/QSqlRecord>
 #include <QtCore/QVariant>
-#include <sstream>
 #include "../utils/exception.h"
+#include "../utils/optional.h"
 
 using std::cout;
 using std::map;
+using std::vector;
 
 class DBService : public Singleton<DBService> {
 
