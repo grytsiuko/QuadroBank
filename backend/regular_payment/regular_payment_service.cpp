@@ -145,10 +145,11 @@ void RegularPaymentService::remove(const RegularPaymentDeleteDto &regular_paymen
 
 
 vector<RegularPayment> RegularPaymentService::get_to_be_paid() const {
-    time_t current_time = time(nullptr);
-    return _regular_payment_repository.get_list(Specification<RegularPayment>(
-            [&](const RegularPayment& rp){return rp._next_time <= current_time;}
-            ));
+//    time_t current_time = time(nullptr);
+//    return _regular_payment_repository.get_list(Specification<RegularPayment>(
+//            [&](const RegularPayment& rp){return rp._next_time <= current_time;}
+//            ));
+    return vector<RegularPayment>();
 }
 
 void RegularPaymentService::pay(RegularPayment regular_payment) const {

@@ -90,10 +90,12 @@ void AccountService::transfer(const AccountTransferDto &account_transfer_dto) co
 }
 
 vector<Account> AccountService::get_debtors() const {
-    function<bool(const Account&)> debtors_filter = [](auto &a) {
-        return a._credit_start != 0 && a._credit_start + CREDIT_SECONDS < time(nullptr);
-    };
-    return _account_repository.get_list(Specification<Account>(debtors_filter));
+    time_t curr_time = time(nullptr);
+    return _account_repository.get_list(Specification<Account>(
+            nullptr,
+            "credit_start <> 0 AND credit_start + %0 < %1",
+            {std::to_string(CREDIT_SECONDS), std::to_string(curr_time)}
+    ));
 }
 
 void AccountService::punish_debtor(Account account) const {
