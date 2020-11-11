@@ -46,7 +46,7 @@
       <property name="font">
        <font>
         <family>Arial</family>
-        <pointsize>96</pointsize>
+        <pointsize>48</pointsize>
        </font>
       </property>
       <property name="text">
