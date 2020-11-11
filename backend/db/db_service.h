@@ -63,12 +63,6 @@ private:
 
 public:
 
-    void add_connection() const {
-        QSqlDatabase sdb = QSqlDatabase::addDatabase("QSQLITE");
-        sdb.setDatabaseName("db.sqlite");
-        _assert_done(sdb.open());
-    }
-
     void create_table_if_not_exists(const string &name, const vector<string> &fields) const {
         string sql = "CREATE TABLE IF NOT EXISTS " + name + " (" + _generate_list(fields) + ")";
 
