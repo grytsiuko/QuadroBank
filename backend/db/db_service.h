@@ -64,7 +64,7 @@ private:
 public:
 
     void add_connection() const {
-        QSqlDatabase sdb = QSqlDatabase::addDatabase("QSQLITE", "additional");
+        QSqlDatabase sdb = QSqlDatabase::addDatabase("QSQLITE");
         sdb.setDatabaseName("db.sqlite");
         _assert_done(sdb.open());
     }
