@@ -90,15 +90,35 @@ public:
             sql += "%0";
         }
         for (size_t i = 1; i < fields.size(); i++) {
-            std::stringstream ss;
-            ss << ",%" << i;
-            sql += ss.str();
+            sql += ",%" + std::to_string(i);
         }
         sql += ");";
 
         QString q_string = sql.c_str();
         for (const auto &field : fields) {
             q_string = q_string.arg(field.c_str());
+        }
+
+        QSqlQuery query;
+        query.prepare(q_string);
+        assert_done(query.exec());
+    }
+
+    void update(
+            const string &table,
+            const vector<string> &expressions,
+            const string &where,
+            const vector<string> &params
+    ) const {
+        string sql = "UPDATE " + table + " SET " + generate_list(expressions);
+        if (!where.empty()) {
+            sql += " WHERE " + where;
+        }
+        sql += ";";
+
+        QString q_string = sql.c_str();
+        for (const auto &param : params) {
+            q_string = q_string.arg(param.c_str());
         }
 
         QSqlQuery query;

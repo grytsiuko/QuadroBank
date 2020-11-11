@@ -53,6 +53,27 @@ private:
     }
 
     void _update(const Account &account) const override {
+        _db_service.update(
+                TABLE,
+                {
+                        "user_id=%0",
+                        "pin=%1",
+                        "is_blocked=%2",
+                        "balance=%3",
+                        "credit_limit=%4",
+                        "credit_start=%5",
+                },
+                "card_number=%6",
+                {
+                        std::to_string(account._user_id),
+                        "'" + account._pin + "'",
+                        account._is_blocked ? "1" : "0",
+                        std::to_string(account._balance),
+                        std::to_string(account._credit_limit),
+                        std::to_string(account._credit_start),
+                        "'" + account._card_number + "'"
+                }
+        );
     }
 
     void _seed_data() const {
