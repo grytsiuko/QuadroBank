@@ -9,6 +9,8 @@
 #include <QtCore/QVariant>
 #include "../utils/exception.h"
 #include "../utils/optional.h"
+#include <QStandardPaths>
+#include <QDebug>
 
 using std::cout;
 using std::map;
@@ -19,16 +21,18 @@ class DBService : public Singleton<DBService> {
 private:
 
     friend Singleton;
+    QSqlDatabase sdb;
 
     DBService() {
-        QSqlDatabase sdb = QSqlDatabase::addDatabase("QSQLITE");
-        sdb.setDatabaseName("db.sqlite");
+
+        sdb = QSqlDatabase::addDatabase("QSQLITE", "main_connection");
+        sdb.setDatabaseName(R"(C:\moop\QuadroBank\test.sqlite)");
         _assert_done(sdb.open());
     }
 
     void _assert_done(bool flag) const {
         if (!flag) {
-            _throw_db_exception();
+//            _throw_db_exception();
         }
     }
 
@@ -37,7 +41,7 @@ private:
     }
 
     bool _exec(const string &sql) const {
-        return QSqlQuery().exec(sql.c_str());
+        return QSqlQuery(sdb).exec(sql.c_str());
     }
 
     string _generate_list(const vector<string> &values) const {
@@ -63,10 +67,17 @@ private:
 
 public:
 
+    void add_connection() const {
+        QSqlDatabase sdb = QSqlDatabase::addDatabase("QSQLITE", "additional");
+        sdb.setDatabaseName("db.sqlite");
+        _assert_done(sdb.open());
+    }
+
+
     void create_table_if_not_exists(const string &name, const vector<string> &fields) const {
         string sql = "CREATE TABLE IF NOT EXISTS " + name + " (" + _generate_list(fields) + ")";
 
-        QSqlQuery query;
+        QSqlQuery query(sdb);
         _assert_done(_exec(sql));
     }
 
@@ -77,7 +88,7 @@ public:
         }
         sql += ";";
 
-        QSqlQuery query;
+        QSqlQuery query(sdb);
         query.prepare(_set_params(sql, params));
         _assert_done(query.exec());
         QSqlRecord record = query.record();
@@ -98,7 +109,7 @@ public:
         }
         sql += ");";
 
-        QSqlQuery query;
+        QSqlQuery query(sdb);
         query.prepare(_set_params(sql, fields));
         _assert_done(query.exec());
     }
@@ -115,7 +126,7 @@ public:
         }
         sql += ";";
 
-        QSqlQuery query;
+        QSqlQuery query(sdb);
         query.prepare(_set_params(sql, params));
         _assert_done(query.exec());
     }
@@ -132,7 +143,7 @@ public:
         }
         sql += ";";
 
-        QSqlQuery query;
+        QSqlQuery query(sdb);
         query.prepare(_set_params(sql, params));
         _assert_done(query.exec());
         QSqlRecord record = query.record();
@@ -159,7 +170,7 @@ public:
         }
         sql += ";";
 
-        QSqlQuery query;
+        QSqlQuery query(sdb);
         query.prepare(_set_params(sql, params));
         _assert_done(query.exec());
         QSqlRecord record = query.record();
