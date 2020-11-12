@@ -64,8 +64,9 @@ void DepositService::add(const DepositCreateDto &deposit_create_dto) const {
 }
 
 vector<Deposit> DepositService::get_to_be_paid() const {
-    time_t current_time = time(nullptr);
-    return _deposit_repository.get_list(Specification<Deposit>([&](const Deposit& d){return d._end_date <= current_time;}));
+//    time_t current_time = time(nullptr);
+//    return _deposit_repository.get_list(Specification<Deposit>([&](const Deposit& d){return d._end_date <= current_time;}));
+    return vector<Deposit>();
 }
 
 

@@ -2,6 +2,7 @@
 #include "scheduler.h"
 
 void Scheduler::loop() const {
+    std::this_thread::sleep_for(std::chrono::milliseconds(3000));
     while (_looping) {
         log("looping Scheduler");
         check_credits();
