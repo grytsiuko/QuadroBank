@@ -26,13 +26,13 @@ private:
     DBService() {
 
         sdb = QSqlDatabase::addDatabase("QSQLITE", "main_connection");
-        sdb.setDatabaseName(R"(C:\moop\QuadroBank\test.sqlite)");
+        sdb.setDatabaseName("test.sqlite");
         _assert_done(sdb.open());
     }
 
     void _assert_done(bool flag) const {
         if (!flag) {
-//            _throw_db_exception();
+            _throw_db_exception();
         }
     }
 
@@ -67,12 +67,6 @@ private:
 
 public:
 
-    void add_connection() const {
-        QSqlDatabase sdb = QSqlDatabase::addDatabase("QSQLITE", "additional");
-        sdb.setDatabaseName("db.sqlite");
-        _assert_done(sdb.open());
-    }
-
 
     void create_table_if_not_exists(const string &name, const vector<string> &fields) const {
         string sql = "CREATE TABLE IF NOT EXISTS " + name + " (" + _generate_list(fields) + ")";
@@ -97,6 +91,7 @@ public:
             return query.value(record.indexOf("val")).toInt();
         }
         _throw_db_exception();
+        return 0;
     }
 
     void insert(const string &table, const vector<string> &columns, const vector<string> &fields) const {

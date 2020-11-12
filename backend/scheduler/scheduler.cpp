@@ -3,7 +3,6 @@
 
 void Scheduler::loop() const {
     std::this_thread::sleep_for(std::chrono::milliseconds(3000));
-//    DBService::get_instance().add_connection();
     while (_looping) {
         log("looping Scheduler");
         check_credits();
