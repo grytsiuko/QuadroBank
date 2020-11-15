@@ -17,6 +17,7 @@ private:
 
     const static string TABLE;
     const static vector<string> COLUMNS;
+    const static vector<string> COLUMNS_NO_ID;
     const static vector<string> COLUMNS_EXTENDED;
 
     friend Singleton;
@@ -25,15 +26,15 @@ private:
 
     RegularPaymentRepositoryDb();
 
-//    Optional<RegularPayment> _get_by_id(int id) const override;
-//
-//    void _add(const RegularPayment& regular_payment) const override;
-//
-//    int _update(const RegularPayment& regular_payment) const override;
-//
-//    int _remove(int id) const override;
-//
-//    vector<RegularPayment> _get_list(const Specification<RegularPayment> &regular_payment_specification) const override;
+    Optional<RegularPayment> _get_by_id(int id) const override;
+
+    void _add(const RegularPayment& regular_payment) const override;
+
+    int _update(const RegularPayment& regular_payment) const override;
+
+    int _remove(int id) const override;
+
+    vector<RegularPayment> _get_list(const Specification<RegularPayment> &regular_payment_specification) const override;
 
     void _seed_data() const;
 
