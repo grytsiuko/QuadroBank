@@ -3,6 +3,7 @@
 #include <vector>
 #include <backend/utils/time_intervals.h>
 #include <sstream>
+#include <backend/utils/string_convert.h>
 #include "deposit_variant_repository_db.h"
 
 using std::string;
@@ -33,14 +34,7 @@ void DepositVariantRepositoryDb::_seed_data() const {
     _db_service.insert(TABLE, COLUMNS, {std::to_string(2 * TimeIntervals::MINUTE), std::to_string(0.3)});
 }
 
-string double_string(const double a) {
-    stringstream ss;
-    ss << a;
-    return ss.str();
-}
-
 Optional<DepositVariant> DepositVariantRepositoryDb::_get_by_percentage(double percentage) const {
-    string tes = double_string(percentage);
     Optional<map<string, QVariant>> res_optional = _db_service.select_one(
             TABLE, COLUMNS, "percentage=%0", {double_string(percentage)}
     );

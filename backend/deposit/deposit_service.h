@@ -7,7 +7,7 @@
 #include <backend/notification/notification_service.h>
 #include "backend/account/dto/token_dto.h"
 #include "deposit_repository_interface.h"
-#include "deposit_repository_in_memory.h"
+#include "deposit_repository_db.h"
 #include "../token/token_service.h"
 #include "../account/dto/session_dto.h"
 #include "dto/deposit_dto.h"
@@ -31,7 +31,7 @@ private:
     const NotificationService &_notification_service;
     const AuthService &_auth_service;
 
-    DepositService() : _deposit_repository(DepositRepositoryInMemory::get_instance()),
+    DepositService() : _deposit_repository(DepositRepositoryDb::get_instance()),
                        _account_repository(AccountRepositoryDb::get_instance()),
                        _deposit_variant_repository(DepositVariantRepositoryDb::get_instance()),
                        _token_service(TokenService::get_instance()),

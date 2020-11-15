@@ -126,6 +126,22 @@ public:
         _assert_done(query.exec());
     }
 
+    void remove(
+            const string &table,
+            const string &where,
+            const vector<string> &params
+    ) const {
+        string sql = "DELETE FROM " + table;
+        if (!where.empty()) {
+            sql += " WHERE " + where;
+        }
+        sql += ";";
+
+        QSqlQuery query(sdb);
+        query.prepare(_set_params(sql, params));
+        _assert_done(query.exec());
+    }
+
     Optional<map<string, QVariant>> select_one(
             const string &table,
             const vector<string> &fields,

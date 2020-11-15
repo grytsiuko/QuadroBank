@@ -148,6 +148,7 @@ add_executable(QuadroBank
         backend/deposit/deposit_repository_db.cpp
         backend/deposit/deposit_variant_repository_db.h
         backend/deposit/deposit_variant_repository_db.cpp
+        backend/utils/string_convert.h
         )
 
 

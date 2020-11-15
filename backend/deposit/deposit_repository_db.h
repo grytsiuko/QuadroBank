@@ -17,6 +17,7 @@ private:
 
     const static string TABLE;
     const static vector<string> COLUMNS;
+    const static vector<string> COLUMNS_NO_ID;
     const static vector<string> COLUMNS_EXTENDED;
 
     friend Singleton;
@@ -25,11 +26,11 @@ private:
 
     DepositRepositoryDb();
 
-//    void _add(const Deposit& deposit) const override;
-//
-//    void _remove(int id) const override;
-//
-//    vector<Deposit> _get_list(const Specification<Deposit> &deposit_specification) const override;
+    void _add(const Deposit& deposit) const override;
+
+    void _remove(int id) const override;
+
+    vector<Deposit> _get_list(const Specification<Deposit> &deposit_specification) const override;
 
     void _seed_data() const;
 
