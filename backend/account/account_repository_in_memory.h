@@ -9,7 +9,9 @@
 using std::string;
 using std::vector;
 
-class AccountRepositoryInMemory : public AccountRepositoryInterface<AccountRepositoryInMemory> {
+class AccountRepositoryInMemory :
+        public AccountRepositoryInterface<AccountRepositoryInMemory>,
+        public Singleton<AccountRepositoryInMemory> {
 
 private:
 

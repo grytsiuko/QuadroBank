@@ -5,7 +5,9 @@
 #include "deposit_variant_repsitory_interface.h"
 #include "../utils/singleton.h"
 
-class DepositVariantRepositoryInMemory : public DepositVariantRepositoryInterface, public Singleton<DepositVariantRepositoryInMemory> {
+class DepositVariantRepositoryInMemory :
+        public DepositVariantRepositoryInterface,
+        public Singleton<DepositVariantRepositoryInMemory> {
 
     friend Singleton;
 

@@ -11,7 +11,9 @@
 using std::string;
 using std::vector;
 
-class AccountRepositoryDb : public AccountRepositoryInterface<AccountRepositoryDb> {
+class AccountRepositoryDb :
+        public AccountRepositoryInterface<AccountRepositoryDb>,
+        public Singleton<AccountRepositoryDb> {
 
 private:
 

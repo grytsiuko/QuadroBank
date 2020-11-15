@@ -9,7 +9,9 @@
 using std::string;
 using std::vector;
 
-class UserRepositoryInMemory : public UserRepositoryInterface<UserRepositoryInMemory> {
+class UserRepositoryInMemory :
+        public UserRepositoryInterface<UserRepositoryInMemory>,
+        public Singleton<UserRepositoryInMemory> {
 
 private:
 

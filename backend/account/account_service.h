@@ -46,8 +46,8 @@ private:
 
 
     AccountService() :
-            _account_repository(AccountRepositoryInterface<AccountRepositoryDb>::get_instance()),
-            _user_repository(UserRepositoryInterface<UserRepositoryDb>::get_instance()),
+            _account_repository(AccountRepositoryDb::get_instance()),
+            _user_repository(UserRepositoryDb::get_instance()),
             _token_service(TokenService::get_instance()),
             _notification_service(NotificationService::get_instance()),
             _auth_service(AuthService::get_instance()){}

@@ -6,7 +6,7 @@
 #include "model/user.h"
 
 template <class T>
-class UserRepositoryInterface: public Singleton<T> {
+class UserRepositoryInterface {
 
 public:
 

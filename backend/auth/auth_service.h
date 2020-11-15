@@ -27,8 +27,8 @@ private:
     const UserRepositoryInterface<UserRepositoryDb> &_user_repository;
 
     AuthService():
-            _account_repository(AccountRepositoryInterface<AccountRepositoryDb>::get_instance()),
-            _user_repository(UserRepositoryInterface<UserRepositoryDb>::get_instance()) {}
+            _account_repository(AccountRepositoryDb::get_instance()),
+            _user_repository(UserRepositoryDb::get_instance()) {}
 
 public:
 

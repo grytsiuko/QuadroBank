@@ -32,10 +32,10 @@ private:
     const AuthService &_auth_service;
 
     RegularPaymentService() : _regular_payment_repository(RegularPaymentRepositoryInMemory::get_instance()),
-                       _account_repository(AccountRepositoryDb::get_instance()),
-                       _token_service(TokenService::get_instance()),
+                              _account_repository(AccountRepositoryDb::get_instance()),
+                              _token_service(TokenService::get_instance()),
                               _notification_service(NotificationService::get_instance()),
-                              _auth_service(AuthService::get_instance()){}
+                              _auth_service(AuthService::get_instance()) {}
 
 public:
 
