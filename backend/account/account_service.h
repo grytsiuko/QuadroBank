@@ -37,8 +37,8 @@ private:
     const int MAX_INCORRECT_PINS = 3;
     mutable map<string, int> _incorrect_pins;
 
-    const AccountRepositoryInterface<AccountRepositoryDb> &_account_repository;
-    const UserRepositoryInterface<UserRepositoryDb> &_user_repository;
+    const AccountRepositoryInterface &_account_repository;
+    const UserRepositoryInterface &_user_repository;
     const TokenService &_token_service;
     const NotificationService &_notification_service;
     const AuthService &_auth_service;

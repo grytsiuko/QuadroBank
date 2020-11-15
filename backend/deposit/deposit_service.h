@@ -25,7 +25,7 @@ class DepositService : public Singleton<DepositService> {
 
 private:
     const DepositRepositoryInterface &_deposit_repository;
-    const AccountRepositoryInterface<AccountRepositoryDb> &_account_repository;
+    const AccountRepositoryInterface &_account_repository;
     const DepositVariantRepositoryInterface &_deposit_variant_repository;
     const TokenService &_token_service;
     const NotificationService &_notification_service;

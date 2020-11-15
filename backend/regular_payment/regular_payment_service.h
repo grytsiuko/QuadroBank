@@ -26,7 +26,7 @@ class RegularPaymentService : public Singleton<RegularPaymentService> {
 
 private:
     const RegularPaymentRepositoryInterface &_regular_payment_repository;
-    const AccountRepositoryInterface<AccountRepositoryDb> &_account_repository;
+    const AccountRepositoryInterface &_account_repository;
     const TokenService &_token_service;
     const NotificationService &_notification_service;
     const AuthService &_auth_service;

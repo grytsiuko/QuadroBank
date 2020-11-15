@@ -23,8 +23,8 @@ private:
 
     friend Singleton;
 
-    const AccountRepositoryInterface<AccountRepositoryDb> &_account_repository;
-    const UserRepositoryInterface<UserRepositoryDb> &_user_repository;
+    const AccountRepositoryInterface &_account_repository;
+    const UserRepositoryInterface &_user_repository;
 
     AuthService():
             _account_repository(AccountRepositoryDb::get_instance()),

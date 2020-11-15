@@ -10,7 +10,7 @@ using std::string;
 using std::vector;
 
 class UserRepositoryInMemory :
-        public UserRepositoryInterface<UserRepositoryInMemory>,
+        public UserRepositoryInterface,
         public Singleton<UserRepositoryInMemory> {
 
 private:

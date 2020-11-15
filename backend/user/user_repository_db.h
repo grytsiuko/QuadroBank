@@ -12,7 +12,7 @@ using std::string;
 using std::vector;
 
 class UserRepositoryDb :
-        public UserRepositoryInterface<UserRepositoryDb>,
+        public UserRepositoryInterface,
         public Singleton<UserRepositoryDb> {
 
 private:

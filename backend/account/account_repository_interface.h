@@ -10,7 +10,6 @@
 using std::string;
 using std::vector;
 
-template <class T>
 class AccountRepositoryInterface {
 
 public:

@@ -10,7 +10,7 @@ using std::string;
 using std::vector;
 
 class AccountRepositoryInMemory :
-        public AccountRepositoryInterface<AccountRepositoryInMemory>,
+        public AccountRepositoryInterface,
         public Singleton<AccountRepositoryInMemory> {
 
 private:
