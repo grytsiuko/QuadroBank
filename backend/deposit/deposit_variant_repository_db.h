@@ -25,11 +25,9 @@ private:
 
     DepositVariantRepositoryDb();
 
-//    void _add(const Deposit& deposit) const override;
-//
-//    void _remove(int id) const override;
-//
-//    vector<Deposit> _get_list(const Specification<Deposit> &deposit_specification) const override;
+    Optional<DepositVariant> _get_by_percentage(double percentage) const override;
+
+    vector<DepositVariant> _get_list(const Specification<DepositVariant> &deposit_variant_specification) const override;
 
     void _seed_data() const;
 
