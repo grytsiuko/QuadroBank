@@ -78,10 +78,12 @@ int RegularPaymentRepositoryDb::_update(const RegularPayment& regular_payment) c
                     std::to_string(regular_payment._id)
             }
     );
+    return 1;
 }
 
 int RegularPaymentRepositoryDb::_remove(int id) const {
     _db_service.remove(TABLE, "id=%0", {std::to_string(id)});
+    return 1;
 }
 
 vector<RegularPayment> RegularPaymentRepositoryDb::_get_list(const Specification<RegularPayment> &regular_payment_specification) const {
