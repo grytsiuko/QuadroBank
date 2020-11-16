@@ -32,6 +32,10 @@ void WithdrawMenu::withdraw(){
         showInfo("Amount should be positive number");
         ui->amount_input->setStyleSheet("border: 1px solid red");
     }
+    else if (amount <= 0.001){
+        showInfo("Amount cannot be 0 or less");
+        ui->amount_input->setStyleSheet("border: 1px solid red");
+    }
     else{
         const Response<void>& responseWithdraw = accountActions.withdraw(
                 AccountUpdateDto{currentToken._token,

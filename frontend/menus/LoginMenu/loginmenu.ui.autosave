@@ -34,6 +34,7 @@ QPushButton#enter_button:hover:!pressed {
 	border: 2px solid white;
 	color: white
 }
+
 QPushButton#enter_button:presesd {
 	background-color: rgb(102, 75, 255);
 	border: 2px solid white;
