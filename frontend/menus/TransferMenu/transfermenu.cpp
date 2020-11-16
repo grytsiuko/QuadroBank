@@ -34,9 +34,8 @@ void TransferMenu::transfer() {
 
     }
     else if (amount <= 0.001){
-        showInfo("Amount cannot be 0 or less");
+        showInfo("Amount cannot be 0");
         ui->amount_input->setStyleSheet("border: 1px solid red");
-        ui->amount_input->setText("");
     }
     else {
         const Response<void> &responseTransfer = accountActions.transfer(

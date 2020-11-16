@@ -32,7 +32,7 @@ void RefillMenu::refill(){
         ui->amount_input->setStyleSheet("border: 1px solid red");
     }
     else if (amount <= 0.001){
-        showInfo("Amount cannot be 0 or less");
+        showInfo("Amount cannot be 0");
         ui->amount_input->setStyleSheet("border: 1px solid red");
     }
     else {

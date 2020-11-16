@@ -53,9 +53,10 @@ void NewDepositMenu::create_deposit() {
         ui->amount_input->setText("");
     }
     else if (amount <= 0.001){
-        showInfo("Amount cannot be 0 or less");
+        showInfo("Amount cannot be 0");
         ui->amount_input->setStyleSheet("border: 1px solid red");
-    }else {
+    }
+    else {
         QVariant selected_variant = ui->comboBox->currentData();
         const Response<void>& responseTransfer = depositActions.create(
                 DepositCreateDto{currentToken._token,
