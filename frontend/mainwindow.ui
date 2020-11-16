@@ -22,12 +22,18 @@
     <height>600</height>
    </size>
   </property>
+  <property name="font">
+   <font>
+    <family>Comic Sans MS</family>
+    <pointsize>12</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>QuadroBank</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QMainWindow#MainWindow{
-	background-color: white
+	background-color: white;
 }
 QLabel#LabelName{
 	font-weight:bold;
@@ -39,6 +45,14 @@ QLineEdit{
 	border-radius: 10px;
 }
 
+QDateTimeEdit{
+	border: 2px solid rgb(162, 194, 207);
+	border-radius: 10px;
+}
+
+QTableView{
+font { family: &quot;Comic Sans MS&quot;; pixelSize: 14;L}
+}
 
 QWidget{
 	background-color:white
@@ -62,6 +76,40 @@ QPushButton:hover:!pressed {
 	border-radius: 13px;
 	color: white
 }
+QComboBox{
+	border: 2px solid rgb(162, 194, 207);
+	border-radius: 10px;
+}
+
+QComboBox:on {
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,stop: 0 #D5D5D5, stop: 1 #EEEEEE);
+ }
+
+QComboBox QAbstractItemView::item {
+       border: none;
+	   color:black;
+}
+
+QComboBox QListView
+{
+	border: 2px solid rgb(162, 194, 207);
+	border-radius: 10px;
+  	background: white;
+	color:black;
+}
+QComboBox QAbstractItemView {
+       outline: none;
+}
+QComboBox QAbstractItemView::item:selected {
+       background: rgba(211, 182, 149, 150);
+}
+
+QComboBox::drop-down{
+    width: 15px;
+	border: 1px solid #D3D3D3;
+	border-radius: 8px;
+}
+
 
 
 

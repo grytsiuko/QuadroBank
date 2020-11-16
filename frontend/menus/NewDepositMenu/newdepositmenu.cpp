@@ -70,7 +70,7 @@ void NewDepositMenu::create_deposit() {
         else{
             showInfo(QString::fromStdString(responseTransfer.get_error()));
         }
-
+        ui->amount_input->setStyleSheet("");
     }
 
 };

@@ -19,6 +19,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
@@ -175,6 +178,21 @@
             <height>40</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <family>Comic Sans MS</family>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="placeholderText">
+           <string>Choose deposit variant</string>
+          </property>
+          <property name="frame">
+           <bool>true</bool>
+          </property>
          </widget>
         </item>
         <item>
@@ -211,6 +229,12 @@
      <layout class="QHBoxLayout" name="ButtonsLayout">
       <item>
        <widget class="QPushButton" name="back_button">
+        <property name="font">
+         <font>
+          <family>Comic Sans MS</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>Back</string>
         </property>
@@ -234,6 +258,12 @@
       </item>
       <item>
        <widget class="QPushButton" name="new_deposit_button">
+        <property name="font">
+         <font>
+          <family>Comic Sans MS</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>Deposit</string>
         </property>
