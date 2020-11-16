@@ -49,8 +49,13 @@ void NewPaymentMenu::create_payment() {
     bool good;
     double amount = ui->amount_input->text().toDouble(&good);
     if (!good) {
-        ui->amount_input->setStyleSheet("border: 1px solid red");
         showInfo("Amount should be positive number");
+        ui->amount_input->setStyleSheet("border: 1px solid red");
+        ui->amount_input->setText("");
+    }
+    else if (amount <= 0.001){
+        showInfo("Amount cannot be 0 or less");
+        ui->amount_input->setStyleSheet("border: 1px solid red");
         ui->amount_input->setText("");
     }
     else {

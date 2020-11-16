@@ -19,13 +19,28 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color:white;
+   <string notr="true">QWidget#LoginMenu{
+	background-color:white
+}
 
-QPushButton#enter_button:hover {
+QPushButton#enter_button {
+	background-color:white;
+	border: 2px solid rgb(182, 93, 255);
+	color: black
+}
+
+QPushButton#enter_button:hover:!pressed {
+	background-color: rgb(182, 93, 255);
 	border: 2px solid white;
-	background-color:green;
 	color: white
-}</string>
+}
+QPushButton#enter_button:presesd {
+	background-color: rgb(102, 75, 255);
+	border: 2px solid white;
+	color: white
+}
+
+</string>
   </property>
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
@@ -253,10 +268,7 @@ QPushButton#enter_button:hover {
          </font>
         </property>
         <property name="styleSheet">
-         <string notr="true">border: 2px solid green;
-background-color:white;
-	
-</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>Enter</string>

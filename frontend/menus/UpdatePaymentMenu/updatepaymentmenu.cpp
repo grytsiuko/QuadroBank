@@ -94,10 +94,15 @@ void UpdatePaymentMenu::send_update_dto(){
     bool good;
     double amount = ui->amount_input->text().toDouble(&good);
     if (!good) {
-        ui->amount_input->setStyleSheet("border: 1px solid red");
         showInfo("Amount should be positive number");
+        ui->amount_input->setStyleSheet("border: 1px solid red");
         ui->amount_input->setText("");
-    } else {
+    }
+    else if (amount <= 0.001){
+        showInfo("Amount cannot be 0 or less");
+        ui->amount_input->setStyleSheet("border: 1px solid red");
+    }
+    else {
         QString card = ui->card_input->text();
         if (card.length() < 1) {
             showInfo("Card input should not be empty");

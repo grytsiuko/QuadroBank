@@ -30,7 +30,12 @@ void RefillMenu::refill(){
     if (!good) {
         showInfo("Amount should be positive number");
         ui->amount_input->setStyleSheet("border: 1px solid red");
-    } else {
+    }
+    else if (amount <= 0.001){
+        showInfo("Amount cannot be 0 or less");
+        ui->amount_input->setStyleSheet("border: 1px solid red");
+    }
+    else {
         const Response<void>& responseTransfer = accountActions.top_up(
                 AccountUpdateDto{currentToken._token, static_cast<int>(amount*100)});
         if (responseTransfer.is_success()){
