@@ -21,8 +21,9 @@ void LoginMenu::login_validation(){
         TokenDto tokenDto = TokenDto{authorizeResponse.get_response()._token};
         emit send_token(tokenDto);
         emit input_validated();
+        ui->card_number_input->setStyleSheet("");
+        ui->password_input->setStyleSheet("");
         ui->card_number_input->setText("");
-
     }
     else{
         ui->card_number_input->setStyleSheet("border: 1px solid red");

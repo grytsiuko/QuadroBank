@@ -9,8 +9,7 @@
 #include <QtCore/QVariant>
 #include "../utils/exception.h"
 #include "../utils/optional.h"
-#include <QStandardPaths>
-#include <QDebug>
+
 
 using std::cout;
 using std::map;
