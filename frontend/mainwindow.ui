@@ -28,7 +28,44 @@
   <property name="styleSheet">
    <string notr="true">QMainWindow#MainWindow{
 	background-color: white
-}</string>
+}
+QLabel#LabelName{
+	font-weight:bold;
+
+}
+
+QLineEdit{
+	border: 2px solid rgb(162, 194, 207);
+	border-radius: 10px;
+}
+
+
+QWidget{
+	background-color:white
+}
+
+QPushButton{
+	background-color:white;
+	border: 2px solid rgb(162, 194, 207);
+	border-radius: 13px;
+	color: black
+}
+QPushButton:hover:pressed {
+	background-color:rgb(145, 155, 207);
+	border: 2px solid rgb(211, 182, 149);
+	border-radius: 13px;
+	color: white
+}
+QPushButton:hover:!pressed {
+	background-color:rgb(162, 194, 207);
+	border: 2px solid rgb(211, 182, 149);
+	border-radius: 13px;
+	color: white
+}
+
+
+
+</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">

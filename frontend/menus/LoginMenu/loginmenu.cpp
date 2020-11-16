@@ -6,6 +6,11 @@ LoginMenu::~LoginMenu()
 {
     delete ui;
 }
+
+void LoginMenu::clear_stylesheet(){
+    ui->card_number_input->setStyleSheet("");
+    ui->password_input->setStyleSheet("");
+};
 void LoginMenu::login_validation(){
     //getting input data
     QString card_data = ui->card_number_input->text();
@@ -21,8 +26,7 @@ void LoginMenu::login_validation(){
         TokenDto tokenDto = TokenDto{authorizeResponse.get_response()._token};
         emit send_token(tokenDto);
         emit input_validated();
-        ui->card_number_input->setStyleSheet("");
-        ui->password_input->setStyleSheet("");
+        clear_stylesheet();
         ui->card_number_input->setText("");
     }
     else{
@@ -31,9 +35,4 @@ void LoginMenu::login_validation(){
         showInfo(QString::fromStdString(authorizeResponse.get_error()));
     }
     ui->password_input->setText("");
-
-
-
-
-
 };

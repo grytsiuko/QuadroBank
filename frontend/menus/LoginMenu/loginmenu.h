@@ -24,7 +24,7 @@ signals:
 
 private slots:
     void login_validation();
-
+    void clear_stylesheet();
 
 private:
     explicit LoginMenu(QWidget *parent = nullptr) :
@@ -34,6 +34,8 @@ private:
 
         disconnect(ui->enter_button, SIGNAL(clicked()), this, SLOT(login_validation()));
         connect(ui->enter_button, SIGNAL(clicked()), this, SLOT(login_validation()));
+        connect(ui->card_number_input, SIGNAL(textChanged(const QString&)), this, SLOT(clear_stylesheet()));
+        connect(ui->password_input, SIGNAL(textChanged(const QString&)), this, SLOT(clear_stylesheet()));
         QRegExp re("^[0-9]+$");
         QRegExpValidator *validator = new QRegExpValidator(re, this);
         ui->card_number_input->setValidator(validator);
