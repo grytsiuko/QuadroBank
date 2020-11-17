@@ -6,7 +6,7 @@
 #define QUADROBANK_DATE_UTIL_H
 
 #include <QtCore/QString>
-#include "../backend/utils/time_intervals.h"
+#include "backend/utils/time_intervals.h"
 
 
 inline QString create_date_from_unix(const time_t& date){
