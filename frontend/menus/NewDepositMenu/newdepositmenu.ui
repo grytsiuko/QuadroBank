@@ -187,9 +187,6 @@
           <property name="cursor">
            <cursorShape>PointingHandCursor</cursorShape>
           </property>
-          <property name="placeholderText">
-           <string/>
-          </property>
           <property name="frame">
            <bool>true</bool>
           </property>
