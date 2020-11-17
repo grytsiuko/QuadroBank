@@ -44,7 +44,8 @@ void PaymentsMenu::update_payments_list() {
             delete quantityPeriod;
         }
         ui->payments_table->setModel(currentModel);
-
+        QFont comic("Comic Sans MS", 14);
+        ui->payments_table->setFont(comic);
         for (int i = 0; i < paymentsVector.capacity(); ++i) {
             ui->payments_table->setRowHeight(i,75);
         }
@@ -56,6 +57,7 @@ void PaymentsMenu::update_payments_list() {
         {
             ui->payments_table->horizontalHeader()->setSectionResizeMode(
                     c, QHeaderView::Stretch);
+            ui->payments_table->horizontalHeader()->setFont(comic);
         }
 
     }

@@ -168,13 +168,13 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>69</width>
+        <width>70</width>
         <height>6</height>
        </size>
       </property>
       <property name="baseSize">
        <size>
-        <width>26</width>
+        <width>32</width>
         <height>24</height>
        </size>
       </property>

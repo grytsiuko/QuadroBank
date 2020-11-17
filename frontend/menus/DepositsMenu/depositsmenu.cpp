@@ -34,15 +34,18 @@ void DepositsMenu::update_deposits_list() {
         }
 
         ui->deposits_table->setModel(currentModel);
+
         for (int i = 0; i < depositVector.capacity(); ++i) {
             ui->deposits_table->setRowHeight(i,75);
         }
-
+        QFont comic("Comic Sans MS", 14);
+        ui->deposits_table->setFont(comic);
 //      stretch table to fit all space
         for (int c = 0; c < (ui->deposits_table->horizontalHeader()->count()); ++c)
         {
             ui->deposits_table->horizontalHeader()->setSectionResizeMode(
                     c, QHeaderView::Stretch);
+            ui->deposits_table->horizontalHeader()->setFont(comic);
         }
 
     }

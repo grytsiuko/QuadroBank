@@ -116,6 +116,12 @@
      <layout class="QHBoxLayout" name="ButtonsLayout">
       <item>
        <widget class="QPushButton" name="back_button">
+        <property name="font">
+         <font>
+          <family>Comic Sans MS</family>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>Back</string>
         </property>

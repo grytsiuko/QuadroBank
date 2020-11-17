@@ -118,7 +118,7 @@
            <string/>
           </property>
           <property name="maxLength">
-           <number>10</number>
+           <number>7</number>
           </property>
           <property name="placeholderText">
            <string>Enter amount to withdraw</string>
