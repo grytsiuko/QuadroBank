@@ -188,7 +188,7 @@
            <cursorShape>PointingHandCursor</cursorShape>
           </property>
           <property name="placeholderText">
-           <string>Choose deposit variant</string>
+           <string/>
           </property>
           <property name="frame">
            <bool>true</bool>
