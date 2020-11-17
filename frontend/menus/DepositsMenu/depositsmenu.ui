@@ -122,6 +122,9 @@
           <pointsize>14</pointsize>
          </font>
         </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>Back</string>
         </property>
@@ -145,6 +148,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="new_deposit_button">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>New Deposit</string>
         </property>

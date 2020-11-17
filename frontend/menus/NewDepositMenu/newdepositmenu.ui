@@ -232,6 +232,9 @@
           <pointsize>14</pointsize>
          </font>
         </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>Back</string>
         </property>
@@ -260,6 +263,9 @@
           <family>Comic Sans MS</family>
           <pointsize>14</pointsize>
          </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="text">
          <string>Deposit</string>

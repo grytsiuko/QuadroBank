@@ -107,6 +107,9 @@
      <layout class="QHBoxLayout" name="ButtonsLayout">
       <item>
        <widget class="QPushButton" name="back_button">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>Back</string>
         </property>
@@ -130,6 +133,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="new_payment_button">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>New Payment</string>
         </property>
