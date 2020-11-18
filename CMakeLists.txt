@@ -149,7 +149,7 @@ add_executable(QuadroBank
         backend/deposit/deposit_variant_repository_db.h
         backend/deposit/deposit_variant_repository_db.cpp
         backend/utils/string_convert.h
-        )
+        backend/db/specifications/specification.h backend/db/specifications/deposits_by_card_number_specification.h backend/db/specifications/deposit_variants_all_specification.h backend/db/specifications/deposits_before_time_specification.h backend/db/specifications/deposits_all_except_this_specification.h)
 
 
 target_link_libraries(${PROJECT_NAME} Qt${QT_VERSION_MAJOR}::Widgets)
