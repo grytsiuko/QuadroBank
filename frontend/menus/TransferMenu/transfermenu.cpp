@@ -29,9 +29,7 @@ void TransferMenu::transfer() {
     bool good;
     double amount = ui->amount_input->text().toDouble(&good);
     if (!good) {
-        showInfo("Amount should be positive number");
-
-
+        showInfo("Amount should not be empty");
     }
     else if (amount <= 0.001){
         showInfo("Amount cannot be 0");

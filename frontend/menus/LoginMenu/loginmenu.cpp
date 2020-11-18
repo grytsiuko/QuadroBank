@@ -10,18 +10,16 @@ LoginMenu::~LoginMenu()
 void LoginMenu::clear_stylesheet(){
     ui->card_number_input->setStyleSheet("");
     ui->password_input->setStyleSheet("");
-};
+}
+
 void LoginMenu::login_validation(){
     //getting input data
     QString card_data = ui->card_number_input->text();
     QString pin_data = ui->password_input->text();
-    // debug info
-    qInfo() << "Card Number input: "<< card_data;
-    qInfo() << "Pin input: "<< pin_data;
+
     const Response<SessionDto>& authorizeResponse = accountActions.authorize(
             AccountAuthorizeDto{card_data.toStdString(), pin_data.toStdString()}
     );
-    // if input is correct, then emit signal to MainWindow, to provide MainMenu
     if (authorizeResponse.is_success()){
         TokenDto tokenDto = TokenDto{authorizeResponse.get_response()._token};
         emit send_token(tokenDto);

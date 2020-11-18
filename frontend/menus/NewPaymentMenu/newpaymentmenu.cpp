@@ -49,7 +49,7 @@ void NewPaymentMenu::create_payment() {
     bool good;
     double amount = ui->amount_input->text().toDouble(&good);
     if (!good) {
-        showInfo("Amount should be positive number");
+        showInfo("Amount should not be empty");
         ui->amount_input->setStyleSheet("border: 1px solid red");
         ui->amount_input->setText("");
     }
@@ -66,17 +66,13 @@ void NewPaymentMenu::create_payment() {
         else {
             int quantity = ui->quantity_input->text().toInt();
             if (quantity < 1) {
-                showInfo("Quantity should be positive number");
+                showInfo("Quantity should not be empty");
                 ui->quantity_input->setStyleSheet("border: 1px solid red");
             }
             else {
-                if (ui->dateTimeEdit->dateTime() < QDateTime::currentDateTime()){
-                    ui->dateTimeEdit->setDateTime(QDateTime::currentDateTime());
-                }
                 QVariant selected_variant = ui->comboBox->currentData();
                 int period = selected_variant.toInt() * quantity;
                 time_t next_time = ui->dateTimeEdit->dateTime().toSecsSinceEpoch() + 1;
-
                 const Response<void> &responsePaymentCreation = paymentActions.create(
                         RegularPaymentCreateDto{
                                 currentToken._token,

@@ -29,7 +29,6 @@ private:
         ui(new Ui::NewDepositMenu)
     {
         ui->setupUi(this);
-        disconnect( ui->new_deposit_button,SIGNAL(clicked()),this,SLOT(create_deposit()));
         connect( ui->new_deposit_button,SIGNAL(clicked()),this,SLOT(create_deposit()));
         ui->comboBox->setItemDelegate(new QStyledItemDelegate(ui->comboBox));
         QRegExp re("^[0-9]+(\\.[0-9]{1,2})?$");

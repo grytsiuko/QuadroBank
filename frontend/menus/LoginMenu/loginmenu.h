@@ -32,7 +32,6 @@ private:
             ui(new Ui::LoginMenu) {
         ui->setupUi(this);
 
-        disconnect(ui->enter_button, SIGNAL(clicked()), this, SLOT(login_validation()));
         connect(ui->enter_button, SIGNAL(clicked()), this, SLOT(login_validation()));
         connect(ui->card_number_input, SIGNAL(textChanged(const QString&)), this, SLOT(clear_stylesheet()));
         connect(ui->password_input, SIGNAL(textChanged(const QString&)), this, SLOT(clear_stylesheet()));
