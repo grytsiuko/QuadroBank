@@ -12,8 +12,8 @@ class DepositsAllExceptThisSpecification: public Specification<Deposit> {
 
 private:
     const int _id;
-    const string _where = "id!=%0";
-    const vector<string> _params = {int_param(_id)};
+    const string _where = "id <> %0";
+    const vector<string> _params = {to_param(_id)};
 
 public:
     explicit DepositsAllExceptThisSpecification(const int id): _id(id){}

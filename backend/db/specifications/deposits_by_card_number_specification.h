@@ -13,11 +13,11 @@ class DepositsByCardNumberSpecification: public Specification<Deposit> {
 
 private:
     const string _card_number;
-    const string _where = "account_card_number=%0";
-    const vector<string> _params = {string_param(_card_number)};
+    const string _where = "account_card_number = %0";
+    const vector<string> _params = {to_param(_card_number)};
 
 public:
-    explicit DepositsByCardNumberSpecification(string card_number): _card_number(std::move(card_number)){}
+    explicit DepositsByCardNumberSpecification(const string& card_number): _card_number(card_number){}
 
 private:
     bool _filter(const Deposit &d) const override {

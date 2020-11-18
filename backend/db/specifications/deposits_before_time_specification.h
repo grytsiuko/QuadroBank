@@ -11,11 +11,11 @@ class DepositsBeforeTimeSpecification: public Specification<Deposit> {
 
 private:
     const time_t _time;
-    const string _where = "end_date<%0";
-    const vector<string> _params = {time_param(_time)};
+    const string _where = "end_date < %0";
+    const vector<string> _params = {to_param(_time)};
 
 public:
-    explicit DepositsBeforeTimeSpecification(const time_t& time): _time(time){}
+    explicit DepositsBeforeTimeSpecification(const time_t time): _time(time){}
 
 private:
     bool _filter(const Deposit &d) const override {

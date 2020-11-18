@@ -1,5 +1,7 @@
 
 #include <ctime>
+#include <backend/db/specifications/rps_by_card_number_specification.h>
+#include <backend/db/specifications/rps_time_passed_specification.h>
 #include "regular_payment_service.h"
 #include "backend/utils/exception.h"
 
@@ -31,13 +33,8 @@ vector<RegularPaymentDto> RegularPaymentService::get_all_by_user(const TokenDto 
     string card_number = _token_service.get_card_number(token_dto._token);
     Account account = _auth_service.assert_account(card_number);
 
-    const vector<RegularPayment> regular_payments = _regular_payment_repository.get_list(Specification<RegularPayment>(
-            [&](const RegularPayment &rp) {
-                return account._card_number == rp._account_card;
-            },
-            "account_card=%0",
-            {"'" + account._card_number + "'"}
-    ));
+    const vector<RegularPayment> regular_payments =
+            _regular_payment_repository.get_list(RPsByCardNumberSpecification(account._card_number));
 
     vector<RegularPaymentDto> regular_payments_dtos;
 
@@ -150,11 +147,7 @@ void RegularPaymentService::remove(const RegularPaymentDeleteDto &regular_paymen
 
 vector<RegularPayment> RegularPaymentService::get_to_be_paid() const {
     time_t current_time = time(nullptr);
-    return _regular_payment_repository.get_list(Specification<RegularPayment>(
-            [&](const RegularPayment& rp){return rp._next_time <= current_time;},
-            "next_time<%0",
-            {std::to_string(current_time)}
-    ));
+    return _regular_payment_repository.get_list(RPsTimePassedSpecification(current_time));
 }
 
 void RegularPaymentService::pay(RegularPayment regular_payment) const {

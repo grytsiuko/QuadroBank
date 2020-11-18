@@ -45,7 +45,7 @@ void DepositRepositoryDb::_seed_data() const {
 void DepositRepositoryDb::_add(const Deposit& deposit) const {
     _db_service.insert(TABLE, COLUMNS_NO_ID, {
         "'" + deposit._account_card_number + "'",
-        double_param(deposit._percentage),
+        to_param(deposit._percentage),
         std::to_string(deposit._period_sec),
         std::to_string(deposit._start_date),
         std::to_string(deposit._end_date),

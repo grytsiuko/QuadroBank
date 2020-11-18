@@ -36,7 +36,7 @@ void DepositVariantRepositoryDb::_seed_data() const {
 
 Optional<DepositVariant> DepositVariantRepositoryDb::_get_by_percentage(double percentage) const {
     Optional<map<string, QVariant>> res_optional = _db_service.select_one(
-            TABLE, COLUMNS, "percentage=%0", {double_param(percentage)}
+            TABLE, COLUMNS, "percentage=%0", {to_param(percentage)}
     );
     if (res_optional.is_empty()) {
         return Optional<DepositVariant>::empty();

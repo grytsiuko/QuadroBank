@@ -51,8 +51,7 @@ add_executable(QuadroBank
         backend/log/log_service.h
         frontend/demo_account.h
         frontend/demo_credit_scheduler.h
-        backend/db/specification.h 
-        backend/deposit/deposit_controller.h 
+        backend/deposit/deposit_controller.h
         backend/deposit/deposit_repository_in_memory.h 
         backend/deposit/deposit_repository_interface.h 
         backend/deposit/model/deposit.h 
@@ -149,7 +148,7 @@ add_executable(QuadroBank
         backend/deposit/deposit_variant_repository_db.h
         backend/deposit/deposit_variant_repository_db.cpp
         backend/utils/string_convert.h
-        backend/db/specifications/specification.h backend/db/specifications/deposits_by_card_number_specification.h backend/db/specifications/deposit_variants_all_specification.h backend/db/specifications/deposits_before_time_specification.h backend/db/specifications/deposits_all_except_this_specification.h)
+        backend/db/specifications/specification.h backend/db/specifications/deposits_by_card_number_specification.h backend/db/specifications/deposit_variants_all_specification.h backend/db/specifications/deposits_before_time_specification.h backend/db/specifications/deposits_all_except_this_specification.h backend/db/specifications/accounts_debtor_at_time_specification.h backend/db/specifications/rps_by_card_number_specification.h backend/db/specifications/rps_time_passed_specification.h backend/db/specifications/rps_all_except_this_specification.h)
 
 
 target_link_libraries(${PROJECT_NAME} Qt${QT_VERSION_MAJOR}::Widgets)
