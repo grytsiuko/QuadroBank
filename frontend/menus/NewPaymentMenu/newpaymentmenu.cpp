@@ -30,7 +30,7 @@ void NewPaymentMenu::set_up_date_time_edit() {
 };
 
 void NewPaymentMenu::set_token(const TokenDto &token) {
-    currentToken = token;
+    TokenInterface::set_token(token);
     update_balance_label();
     set_payment_date_variants();
     set_up_date_time_edit();

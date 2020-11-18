@@ -46,7 +46,6 @@ private:
     friend Singleton;
     friend object_ui<Ui::LoginMenu, LoginMenu>;
     AccountActions &accountActions = AccountActions::get_instance();
-    TokenDto currentToken;
     Ui::LoginMenu *ui;
 };
 

@@ -8,7 +8,7 @@ UpdatePaymentMenu::~UpdatePaymentMenu() {
 }
 
 void UpdatePaymentMenu::set_token(const TokenDto &token) {
-    currentToken = token;
+    TokenInterface::set_token(token);
 }
 
 void UpdatePaymentMenu::update_balance_label(){

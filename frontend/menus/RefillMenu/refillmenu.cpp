@@ -7,7 +7,7 @@ RefillMenu::~RefillMenu()
     delete ui;
 }
 void RefillMenu::set_token(const TokenDto &token) {
-    currentToken = token;
+    TokenInterface::set_token(token);
     update_balance_label();
 }
 

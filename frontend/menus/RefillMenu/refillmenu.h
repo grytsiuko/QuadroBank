@@ -7,12 +7,12 @@
 #include "../utils/object_ui.h"
 #include "ui_refillmenu.h"
 #include "../../actions/account_actions.h"
-
+#include "../utils/token_menu_interface.h"
 namespace Ui {
 class RefillMenu;
 }
 
-class RefillMenu : public QWidget, public Singleton<RefillMenu>
+class RefillMenu : public QWidget, public Singleton<RefillMenu>, TokenInterface
 {
     Q_OBJECT
 
@@ -41,7 +41,6 @@ private:
     friend Singleton;
     friend object_ui<Ui::RefillMenu,RefillMenu>;
     AccountActions &accountActions = AccountActions::get_instance();
-    TokenDto currentToken;
     Ui::RefillMenu *ui;
 };
 

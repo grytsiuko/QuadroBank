@@ -9,11 +9,9 @@ DepositsMenu::~DepositsMenu() {
 }
 
 void DepositsMenu::set_token(const TokenDto &token) {
-    currentToken = token;
+    TokenInterface::set_token(token);
     update_deposits_list();
 }
-
-
 
 void DepositsMenu::update_deposits_list() {
     Response<vector<DepositDto>> depositVectorResponse = depositActions.get_all_by_user(currentToken);

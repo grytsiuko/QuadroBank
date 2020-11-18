@@ -7,12 +7,13 @@
 #include "../utils/object_ui.h"
 #include "ui_transfermenu.h"
 #include "../../actions/account_actions.h"
+#include "../utils/token_menu_interface.h"
 
 namespace Ui {
 class TransferMenu;
 }
 
-class TransferMenu : public QWidget, public Singleton<TransferMenu>
+class TransferMenu : public QWidget, public Singleton<TransferMenu>,  TokenInterface
 {
     Q_OBJECT
 
@@ -44,7 +45,6 @@ private:
     friend Singleton;
     friend object_ui<Ui::TransferMenu,TransferMenu>;
     AccountActions &accountActions = AccountActions::get_instance();
-    TokenDto currentToken;
     Ui::TransferMenu *ui;
 };
 

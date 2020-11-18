@@ -8,13 +8,13 @@
 #include "ui_newdepositmenu.h"
 #include "../../actions/deposit_actions.h"
 #include "../../actions/account_actions.h"
-
+#include "../utils/token_menu_interface.h"
 
 namespace Ui {
 class NewDepositMenu;
 }
 
-class NewDepositMenu :  public QWidget, public Singleton<NewDepositMenu>
+class NewDepositMenu :  public QWidget, public Singleton<NewDepositMenu>, TokenInterface
 {
     Q_OBJECT
 
@@ -40,11 +40,12 @@ private:
 
     void load_deposit_variants();
     void update_balance_label();
+
     friend Singleton;
     friend object_ui<Ui::NewDepositMenu,NewDepositMenu>;
+
     DepositActions &depositActions = DepositActions::get_instance();
     AccountActions &accountActions = AccountActions::get_instance();
-    TokenDto currentToken;
     Ui::NewDepositMenu *ui;
 };
 
