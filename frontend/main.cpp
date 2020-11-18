@@ -9,8 +9,7 @@ int main(int argc, char *argv[]) {
     Scheduler::get_instance();
     QApplication a(argc, argv);
     MainWindow w;
-//    demo_deposit_scheduler();
-//    demo_regular_payment_scheduler();
     w.show();
-    return a.exec();
+    a.exec();
+    return 0;
 }

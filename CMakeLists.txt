@@ -149,7 +149,7 @@ add_executable(QuadroBank
         backend/deposit/deposit_variant_repository_db.h
         backend/deposit/deposit_variant_repository_db.cpp
         backend/utils/string_convert.h
-        )
+        frontend/menus/utils/token_menu_interface.h frontend/menus/utils/token_menu_interface.cpp)
 
 
 target_link_libraries(${PROJECT_NAME} Qt${QT_VERSION_MAJOR}::Widgets)

@@ -7,12 +7,13 @@
 #include "../utils/object_ui.h"
 #include "ui_withdrawmenu.h"
 #include "../../actions/account_actions.h"
+#include "../utils/token_menu_interface.h"
 
 namespace Ui {
 class WithdrawMenu;
 }
 
-class WithdrawMenu : public QWidget, public Singleton<WithdrawMenu>
+class WithdrawMenu : public QWidget, public Singleton<WithdrawMenu>, TokenInterface
 {
     Q_OBJECT
 
@@ -40,7 +41,6 @@ private:
     friend Singleton;
     friend object_ui<Ui::WithdrawMenu,WithdrawMenu>;
     AccountActions &accountActions = AccountActions::get_instance();
-    TokenDto currentToken;
     Ui::WithdrawMenu *ui;
 };
 
