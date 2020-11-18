@@ -7,9 +7,13 @@ vector<DepositDto> DepositService::get_all_by_user(const TokenDto &token_dto) co
     const string card_number = _token_service.get_card_number(token_dto._token);
     Account account = _auth_service.assert_account(card_number);
 
-    const vector<Deposit> deposits = _deposit_repository.get_list(Specification<Deposit>([&](const Deposit &d) {
-        return account._card_number == d._account_card_number;
-    }));
+    const vector<Deposit> deposits = _deposit_repository.get_list(Specification<Deposit>(
+            [&](const Deposit &d) {
+                return account._card_number == d._account_card_number;
+            },
+            "account_card_number=%0",
+            {account._card_number}
+    ));
 
     vector<DepositDto> deposit_dtos;
 
@@ -64,9 +68,12 @@ void DepositService::add(const DepositCreateDto &deposit_create_dto) const {
 }
 
 vector<Deposit> DepositService::get_to_be_paid() const {
-//    time_t current_time = time(nullptr);
-//    return _deposit_repository.get_list(Specification<Deposit>([&](const Deposit& d){return d._end_date <= current_time;}));
-    return vector<Deposit>();
+    time_t current_time = time(nullptr);
+    return _deposit_repository.get_list(Specification<Deposit>(
+            [&](const Deposit& d){return d._end_date <= current_time;},
+            "end_date<%0",
+            {std::to_string(current_time)}
+    ));
 }
 
 

@@ -140,7 +140,16 @@ add_executable(QuadroBank
         backend/db/db_service.h
         backend/user/user_repository_db.h
         backend/account/account_repository_db.h
-        backend/account/account_repository_db.cpp backend/user/user_repository_db.cpp)
+        backend/account/account_repository_db.cpp
+        backend/user/user_repository_db.cpp
+        backend/regular_payment/regular_payment_repository_db.h
+        backend/regular_payment/regular_payment_repository_db.cpp
+        backend/deposit/deposit_repository_db.h
+        backend/deposit/deposit_repository_db.cpp
+        backend/deposit/deposit_variant_repository_db.h
+        backend/deposit/deposit_variant_repository_db.cpp
+        backend/utils/string_convert.h
+        )
 
 
 target_link_libraries(${PROJECT_NAME} Qt${QT_VERSION_MAJOR}::Widgets)

@@ -5,7 +5,9 @@
 #include "regular_payment_repository_interface.h"
 #include "backend/utils/singleton.h"
 
-class RegularPaymentRepositoryInMemory : public RegularPaymentRepositoryInterface, public Singleton<RegularPaymentRepositoryInMemory> {
+class RegularPaymentRepositoryInMemory :
+        public RegularPaymentRepositoryInterface,
+        public Singleton<RegularPaymentRepositoryInMemory> {
 
     friend Singleton;
 
