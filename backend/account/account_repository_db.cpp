@@ -36,7 +36,7 @@ vector<Account> AccountRepositoryDb::_get_list(const Specification<Account> &acc
 
 Optional<Account> AccountRepositoryDb::_get_by_card_number(const string &card_number) const {
     Optional<map<string, QVariant>> res_optional = _db_service.select_one(
-            TABLE, COLUMNS, "card_number=%0", {card_number}
+            TABLE, COLUMNS, "card_number=%0", {to_param(card_number)}
     );
     if (res_optional.is_empty()) {
         return Optional<Account>::empty();
