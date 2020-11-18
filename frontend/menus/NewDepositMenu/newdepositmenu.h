@@ -8,7 +8,7 @@
 #include "ui_newdepositmenu.h"
 #include "../../actions/deposit_actions.h"
 #include "../../actions/account_actions.h"
-#include "../utils/token_menu_interface.h"
+#include "frontend/menus/utils/token_menu_interface/token_menu_interface.h"
 
 namespace Ui {
 class NewDepositMenu;

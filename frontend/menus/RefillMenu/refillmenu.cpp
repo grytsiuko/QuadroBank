@@ -1,6 +1,6 @@
 #include "refillmenu.h"
 #include "ui_refillmenu.h"
-#include "../utils/info_message.h"
+#include "frontend/menus/utils/info_message/info_message.h"
 
 RefillMenu::~RefillMenu()
 {

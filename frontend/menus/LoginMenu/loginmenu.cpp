@@ -1,6 +1,6 @@
 #include "loginmenu.h"
 #include "QDebug"
-#include "../utils/info_message.h"
+#include "frontend/menus/utils/info_message/info_message.h"
 
 LoginMenu::~LoginMenu()
 {

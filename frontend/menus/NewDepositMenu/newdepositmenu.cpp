@@ -1,5 +1,5 @@
 #include "newdepositmenu.h"
-#include "../utils/info_message.h"
+#include "frontend/menus/utils/info_message/info_message.h"
 
 NewDepositMenu::~NewDepositMenu() {
     delete ui;

@@ -6,7 +6,7 @@
 #include "../utils/object_ui.h"
 #include "ui_mainmenu.h"
 #include "../../actions/account_actions.h"
-#include "../utils/token_menu_interface.h"
+#include "frontend/menus/utils/token_menu_interface/token_menu_interface.h"
 
 namespace Ui {
 class MainMenu;

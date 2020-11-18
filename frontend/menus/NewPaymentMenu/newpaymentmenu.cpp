@@ -1,7 +1,7 @@
 #include "newpaymentmenu.h"
 #include "../../../backend/utils/time_intervals.h"
 #include "QDate"
-#include "../utils/info_message.h"
+#include "frontend/menus/utils/info_message/info_message.h"
 
 NewPaymentMenu::~NewPaymentMenu() {
     delete ui;

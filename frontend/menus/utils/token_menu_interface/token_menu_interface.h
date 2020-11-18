@@ -5,7 +5,7 @@
 #ifndef QUADROBANK_TOKEN_MENU_INTERFACE_H
 #define QUADROBANK_TOKEN_MENU_INTERFACE_H
 
-#include "../backend/account/dto/token_dto.h"
+#include "backend/account/dto/token_dto.h"
 
 class TokenInterface{
 public:

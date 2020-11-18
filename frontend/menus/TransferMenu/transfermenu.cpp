@@ -1,6 +1,6 @@
 #include "transfermenu.h"
 #include "ui_transfermenu.h"
-#include "../utils/info_message.h"
+#include "frontend/menus/utils/info_message/info_message.h"
 
 TransferMenu::~TransferMenu() {
     delete ui;

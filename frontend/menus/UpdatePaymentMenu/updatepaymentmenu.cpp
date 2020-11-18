@@ -1,7 +1,7 @@
 #include "updatepaymentmenu.h"
 #include <iostream>
 #include <QtCore/QDate>
-#include "../utils/info_message.h"
+#include "frontend/menus/utils/info_message/info_message.h"
 
 UpdatePaymentMenu::~UpdatePaymentMenu() {
     delete ui;
@@ -53,7 +53,7 @@ void UpdatePaymentMenu::update_payment(int currentPaymentId) {
             paymentActions.get_by_id(RegularPaymentGetDto{currentToken._token, currentPaymentId});
     if (currentPaymentResponse.is_success()){
         const RegularPaymentDto& currentPayment = currentPaymentResponse.get_response();
-        QuantityPeriod *quantityPeriod = get_quantity_and_period(currentPayment._period_sec);
+        const QuantityPeriod *quantityPeriod = get_quantity_and_period(currentPayment._period_sec);
         ui->amount_input->setText(QString::number(1.*currentPayment._sum/100));
         ui->card_input->setText(QString::fromStdString(currentPayment._target_card));
         ui->quantity_input->setText(QString::number(quantityPeriod->quantity));

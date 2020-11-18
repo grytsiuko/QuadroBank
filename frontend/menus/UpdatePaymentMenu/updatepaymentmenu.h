@@ -7,8 +7,8 @@
 #include "ui_updatepaymentmenu.h"
 #include "../../actions/regular_payment_actions.h"
 #include "../../actions/account_actions.h"
-#include "../utils/token_menu_interface.h"
-#include "../utils/date_util.h"
+#include "frontend/menus/utils/token_menu_interface/token_menu_interface.h"
+#include "frontend/menus/utils/date_utils/date_util.h"
 
 namespace Ui {
     class UpdatePaymentMenu;

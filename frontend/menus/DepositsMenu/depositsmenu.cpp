@@ -2,7 +2,7 @@
 #include "ui_depositsmenu.h"
 #include <QStandardItemModel>
 
-#include "../utils/date_util.h"
+#include "frontend/menus/utils/date_utils/date_util.h"
 #include "QDateTime"
 DepositsMenu::~DepositsMenu() {
     delete ui;
