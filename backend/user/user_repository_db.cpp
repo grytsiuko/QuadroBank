@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include "user_repository_db.h"
+#include <backend/utils/string_convert.h>
 
 using std::string;
 using std::vector;
@@ -22,7 +23,7 @@ UserRepositoryDb::UserRepositoryDb() : _db_service(DBService::get_instance()) {
 
 Optional<User> UserRepositoryDb::_get_by_id(const int id) const {
     Optional<map<string, QVariant>> res_optional = _db_service.select_one(
-            TABLE, COLUMNS, "id=%0", {std::to_string(id)}
+            TABLE, COLUMNS, "id=%0", {to_param(id)}
     );
     if (res_optional.is_empty()) {
         return Optional<User>::empty();
