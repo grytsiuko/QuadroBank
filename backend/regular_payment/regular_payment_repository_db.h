@@ -30,9 +30,9 @@ private:
 
     void _add(const RegularPayment& regular_payment) const override;
 
-    int _update(const RegularPayment& regular_payment) const override;
+    void _update(const RegularPayment& regular_payment) const override;
 
-    int _remove(int id) const override;
+    void _remove(int id) const override;
 
     vector<RegularPayment> _get_list(const Specification<RegularPayment> &regular_payment_specification) const override;
 

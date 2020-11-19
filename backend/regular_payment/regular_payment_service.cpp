@@ -165,21 +165,14 @@ void RegularPaymentService::pay(RegularPayment regular_payment) const {
 
     if(from_account._balance + from_account._credit_limit < regular_payment._sum){
         _notification_service.notify(from_user, from_account, "Not enough money, deleting regular payment");
-        int removed = _regular_payment_repository.remove(regular_payment._id);
-        if(removed == 0){
-            throw InternalError();
-        }
-        return;
+        _regular_payment_repository.remove(regular_payment._id);
     }
 
     _account_service.change_balance(from_account, - regular_payment._sum);
     _account_service.change_balance(to_account, regular_payment._sum);
 
     regular_payment._next_time += regular_payment._period_sec;
-    int updated = _regular_payment_repository.update(regular_payment);
-    if(updated == 0){
-        throw InternalError();
-    }
+    _regular_payment_repository.update(regular_payment);
 
     _notification_service.notify(from_user, from_account, "Regular payment from your account performed");
     _notification_service.notify(to_user, to_account, "Regular payment to your account performed");
