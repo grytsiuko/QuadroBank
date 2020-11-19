@@ -43,7 +43,7 @@ add_executable(QuadroBank
         backend/token/token_service.h
         backend/account/dto/account_update_dto.h
         backend/account/dto/account_transfer_dto.h
-        backend/utils/exception.h
+        backend/utils/exceptions/exception.h
         backend/user/user_repository_interface.h
         backend/user/model/user.h
         backend/user/user_repository_in_memory.h
@@ -161,7 +161,25 @@ add_executable(QuadroBank
         backend/db/specifications/accounts_debtor_at_time_specification.h
         backend/db/specifications/rps_by_card_number_specification.h
         backend/db/specifications/rps_time_passed_specification.h
-        backend/db/specifications/rps_all_except_this_specification.h)
+        backend/db/specifications/rps_all_except_this_specification.h
+        backend/utils/exceptions/blocked_card_exception.h
+        backend/utils/exceptions/illegal_pin_exception.h
+        backend/utils/exceptions/same_account_exception.h
+        backend/utils/exceptions/non_positive_number_exception.h
+        backend/utils/exceptions/simple_card_balance_exception.h
+        backend/utils/exceptions/credit_card_balance_exception.h
+        backend/utils/exceptions/unauthorized_exception.h
+        backend/utils/exceptions/not_enough_money_exception.h
+        backend/utils/exceptions/deposit_for_credit_exception.h
+        backend/utils/exceptions/illegal_percentage_exception.h
+        backend/utils/exceptions/no_such_card_exception.h
+        backend/utils/exceptions/no_such_user_exception.h
+        backend/utils/exceptions/internal_error.h
+        backend/utils/exceptions/no_such_rp_exception.h
+        backend/utils/exceptions/another_account_rp_deletion_exception.h
+        backend/utils/exceptions/no_such_target_account_exception.h
+        backend/utils/exceptions/past_date_exception.h
+        backend/utils/exceptions/internal_db_error.h)
 
 
 target_link_libraries(${PROJECT_NAME} Qt${QT_VERSION_MAJOR}::Widgets)

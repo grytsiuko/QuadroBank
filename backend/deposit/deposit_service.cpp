@@ -4,6 +4,11 @@
 #include <backend/db/specifications/deposits_by_card_number_specification.h>
 #include <backend/db/specifications/deposit_variants_all_specification.h>
 #include <backend/db/specifications/deposits_before_time_specification.h>
+#include <backend/utils/exceptions/unauthorized_exception.h>
+#include <backend/utils/exceptions/not_enough_money_exception.h>
+#include <backend/utils/exceptions/deposit_for_credit_exception.h>
+#include <backend/utils/exceptions/illegal_percentage_exception.h>
+#include <backend/utils/exceptions/non_positive_number_exception.h>
 #include "deposit_service.h"
 
 vector<DepositDto> DepositService::get_all_by_user(const TokenDto &token_dto) const {
@@ -26,7 +31,7 @@ vector<DepositDto> DepositService::get_all_by_user(const TokenDto &token_dto) co
 
 vector<DepositVariantDto> DepositService::get_possible_variants(const TokenDto &token_dto) const {
     if (_account_repository.get_by_card_number(_token_service.get_card_number(token_dto._token)).is_empty()) {
-        throw Exception("Unauthorized");
+        throw UnauthorizedException();
     }
     vector<DepositVariant> deposit_variants = _deposit_variant_repository.get_list(
             DepositVariantsAllSpecification());
@@ -44,19 +49,19 @@ void DepositService::add(const DepositCreateDto &deposit_create_dto) const {
     User user = _auth_service.assert_user(account._user_id);
 
     if (account._credit_limit != 0) {
-        throw Exception("Unable to create deposits for credit cards");
+        throw DepositForCreditException();
     }
     const Optional<DepositVariant> optional_deposit_variant = _deposit_variant_repository.get_by_percentage(
             deposit_create_dto._percentage);
 
     if (optional_deposit_variant.is_empty()) {
-        throw Exception("Illegal percentage");
+        throw IllegalPercentageException();
     }
     if (deposit_create_dto._sum <= 0) {
-        throw Exception("Unable to create deposit with negative sum");
+        throw NonPositiveNumberException();
     }
     if (account._balance < deposit_create_dto._sum) {
-        throw Exception("Not enough money");
+        throw NotEnoughMoneyException();
     }
 
     const DepositVariant &deposit_variant = optional_deposit_variant.get();
