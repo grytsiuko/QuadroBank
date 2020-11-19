@@ -59,7 +59,7 @@ void RegularPaymentRepositoryDb::_add(const RegularPayment& regular_payment) con
     });
 }
 
-int RegularPaymentRepositoryDb::_update(const RegularPayment& regular_payment) const {
+void RegularPaymentRepositoryDb::_update(const RegularPayment& regular_payment) const {
     _db_service.update(
             TABLE,
             {
@@ -79,12 +79,10 @@ int RegularPaymentRepositoryDb::_update(const RegularPayment& regular_payment) c
                     to_param(regular_payment._id)
             }
     );
-    return 1;
 }
 
-int RegularPaymentRepositoryDb::_remove(int id) const {
+void RegularPaymentRepositoryDb::_remove(int id) const {
     _db_service.remove(TABLE, "id=%0", {to_param(id)});
-    return 1;
 }
 
 vector<RegularPayment> RegularPaymentRepositoryDb::_get_list(const Specification<RegularPayment> &regular_payment_specification) const {
