@@ -4,7 +4,8 @@
 #include <vector>
 #include "model/deposit.h"
 #include "../utils/singleton.h"
-#include "../db/specification.h"
+#include "backend/db/specifications/specification.h"
+
 
 using std::vector;
 

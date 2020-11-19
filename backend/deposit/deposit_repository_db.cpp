@@ -4,6 +4,7 @@
 #include <sstream>
 #include <backend/utils/string_convert.h>
 #include "deposit_repository_db.h"
+#include <backend/utils/string_convert.h>
 
 using std::string;
 using std::vector;
@@ -44,17 +45,17 @@ void DepositRepositoryDb::_seed_data() const {
 
 void DepositRepositoryDb::_add(const Deposit& deposit) const {
     _db_service.insert(TABLE, COLUMNS_NO_ID, {
-        "'" + deposit._account_card_number + "'",
-        double_string(deposit._percentage),
-        std::to_string(deposit._period_sec),
-        std::to_string(deposit._start_date),
-        std::to_string(deposit._end_date),
-        std::to_string(deposit._sum)
+        to_param(deposit._account_card_number),
+        to_param(deposit._percentage),
+        to_param(deposit._period_sec),
+        to_param(deposit._start_date),
+        to_param(deposit._end_date),
+        to_param(deposit._sum)
     });
 }
 
 void DepositRepositoryDb::_remove(int id) const {
-    _db_service.remove(TABLE, "id=%0", {std::to_string(id)});
+    _db_service.remove(TABLE, "id=%0", {to_param(id)});
 }
 
 vector<Deposit> DepositRepositoryDb::_get_list(const Specification<Deposit> &deposit_specification) const {

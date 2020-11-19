@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include "regular_payment_repository_db.h"
+#include <backend/utils/string_convert.h>
 
 using std::string;
 using std::vector;
@@ -40,7 +41,7 @@ void RegularPaymentRepositoryDb::_seed_data() const {
 
 Optional<RegularPayment> RegularPaymentRepositoryDb::_get_by_id(int id) const {
     Optional<map<string, QVariant>> res_optional = _db_service.select_one(
-            TABLE, COLUMNS, "id=%0", {std::to_string(id)}
+            TABLE, COLUMNS, "id=%0", {to_param(id)}
     );
     if (res_optional.is_empty()) {
         return Optional<RegularPayment>::empty();
@@ -50,11 +51,11 @@ Optional<RegularPayment> RegularPaymentRepositoryDb::_get_by_id(int id) const {
 
 void RegularPaymentRepositoryDb::_add(const RegularPayment& regular_payment) const {
     _db_service.insert(TABLE, COLUMNS_NO_ID, {
-            "'" + regular_payment._account_card + "'",
-            std::to_string(regular_payment._period_sec),
-            "'" + regular_payment._target_card + "'",
-            std::to_string(regular_payment._next_time),
-            std::to_string(regular_payment._sum)
+            to_param(regular_payment._account_card),
+            to_param(regular_payment._period_sec),
+            to_param(regular_payment._target_card),
+            to_param(regular_payment._next_time),
+            to_param(regular_payment._sum)
     });
 }
 
@@ -70,19 +71,19 @@ int RegularPaymentRepositoryDb::_update(const RegularPayment& regular_payment) c
             },
             "id=%5",
             {
-                    "'" + regular_payment._account_card + "'",
-                    std::to_string(regular_payment._period_sec),
-                    "'" + regular_payment._target_card + "'",
-                    std::to_string(regular_payment._next_time),
-                    std::to_string(regular_payment._sum),
-                    std::to_string(regular_payment._id)
+                    to_param(regular_payment._account_card),
+                    to_param(regular_payment._period_sec),
+                    to_param(regular_payment._target_card),
+                    to_param(regular_payment._next_time),
+                    to_param(regular_payment._sum),
+                    to_param(regular_payment._id)
             }
     );
     return 1;
 }
 
 int RegularPaymentRepositoryDb::_remove(int id) const {
-    _db_service.remove(TABLE, "id=%0", {std::to_string(id)});
+    _db_service.remove(TABLE, "id=%0", {to_param(id)});
     return 1;
 }
 

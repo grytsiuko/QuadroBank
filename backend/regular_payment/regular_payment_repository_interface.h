@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <backend/utils/optional.h>
-#include "backend/db/specification.h"
+#include "backend/db/specifications/specification.h"
 #include "model/regular_payment.h"
 
 using std::vector;

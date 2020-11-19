@@ -1,4 +1,5 @@
 
+#include <backend/db/specifications/accounts_debtor_at_time_specification.h>
 #include "account_service.h"
 
 SessionDto AccountService::authorize(const AccountAuthorizeDto &account_authorize_dto) const {
@@ -91,11 +92,7 @@ void AccountService::transfer(const AccountTransferDto &account_transfer_dto) co
 
 vector<Account> AccountService::get_debtors() const {
     time_t curr_time = time(nullptr);
-    return _account_repository.get_list(Specification<Account>(
-            nullptr,
-            "credit_start <> 0 AND credit_start + %0 < %1",
-            {std::to_string(CREDIT_SECONDS), std::to_string(curr_time)}
-    ));
+    return _account_repository.get_list(AccountsDebtorAtTimeSpecification(CREDIT_SECONDS, curr_time));
 }
 
 void AccountService::punish_debtor(Account account) const {
