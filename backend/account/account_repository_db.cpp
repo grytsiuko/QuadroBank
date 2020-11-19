@@ -1,5 +1,6 @@
 #include <string>
 #include <backend/account/account_repository_db.h>
+#include <backend/utils/string_convert.h>
 
 using std::string;
 
@@ -35,7 +36,7 @@ vector<Account> AccountRepositoryDb::_get_list(const Specification<Account> &acc
 
 Optional<Account> AccountRepositoryDb::_get_by_card_number(const string &card_number) const {
     Optional<map<string, QVariant>> res_optional = _db_service.select_one(
-            TABLE, COLUMNS, "card_number=%0", {card_number}
+            TABLE, COLUMNS, "card_number=%0", {to_param(card_number)}
     );
     if (res_optional.is_empty()) {
         return Optional<Account>::empty();
@@ -56,13 +57,13 @@ void AccountRepositoryDb::_update(const Account &account) const {
             },
             "card_number=%6",
             {
-                    std::to_string(account._user_id),
-                    "'" + account._pin + "'",
-                    account._is_blocked ? "1" : "0",
-                    std::to_string(account._balance),
-                    std::to_string(account._credit_limit),
-                    std::to_string(account._credit_start),
-                    "'" + account._card_number + "'"
+                    to_param(account._user_id),
+                    to_param(account._pin),
+                    to_param(account._is_blocked),
+                    to_param(account._balance),
+                    to_param(account._credit_limit),
+                    to_param(account._credit_start),
+                    to_param(account._card_number)
             }
     );
 }

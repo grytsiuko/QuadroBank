@@ -1,4 +1,5 @@
 
+#include <backend/db/specifications/rps_all_except_this_specification.h>
 #include "regular_payment_repository_in_memory.h"
 #include "backend/utils/exception.h"
 
@@ -37,8 +38,7 @@ int RegularPaymentRepositoryInMemory::_update(const RegularPayment &regular_paym
 
 int RegularPaymentRepositoryInMemory::_remove(int id) const {
     int old_size = _regular_payments.size();
-    _regular_payments = _get_list(
-            Specification<RegularPayment>([=](const RegularPayment &rp) { return rp._id != id; }));
+    _regular_payments = _get_list(RPsAllExceptThisSpecification(id));
     return old_size - _regular_payments.size();
 }
 

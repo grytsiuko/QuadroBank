@@ -1,4 +1,5 @@
 #include <backend/utils/exception.h>
+#include <backend/db/specifications/deposits_all_except_this_specification.h>
 #include "deposit_repository_in_memory.h"
 #include "backend/utils/time_intervals.h"
 
@@ -20,7 +21,7 @@ void DepositRepositoryInMemory::_add(const Deposit &deposit) const {
 }
 
 void DepositRepositoryInMemory::_remove(const int id) const {
-    _deposits = _get_list(Specification<Deposit>([=] (const Deposit& d) { return d._id != id;}));
+    _deposits = _get_list(DepositsAllExceptThisSpecification(id));
 }
 
 vector<Deposit> DepositRepositoryInMemory::_get_list(const Specification<Deposit> &deposit_specification) const {

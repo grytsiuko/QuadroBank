@@ -2,7 +2,7 @@
 #define QUADROBANK_DEPOSIT_VARIANT_REPSITORY_INTERFACE_H
 
 #include <vector>
-#include "backend/db/specification.h"
+#include "backend/db/specifications/specification.h"
 #include "backend/deposit/model/deposit_variant.h"
 
 using std::vector;
