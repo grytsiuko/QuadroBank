@@ -40,8 +40,7 @@ void AccountService::top_up(const AccountUpdateDto &account_update_dto) const {
     Account account = _auth_service.assert_account(card_number);
     User user = _auth_service.assert_user(account._user_id);
 
-    account._balance += account_update_dto._sum;
-    update(account);
+    change_balance(account, account_update_dto._sum);
 
     _notification_service.notify(user, account, "Top up performed");
 }
@@ -53,11 +52,8 @@ void AccountService::withdraw(const AccountUpdateDto &account_update_dto) const 
     Account account = _auth_service.assert_account(card_number);
     User user = _auth_service.assert_user(account._user_id);
 
-    account._balance -= account_update_dto._sum;
+    change_balance(account, - account_update_dto._sum);
 
-    _assert_correct_balance(account);
-
-    update(account);
     _notification_service.notify(user, account, "Withdraw performed");
 }
 
@@ -75,13 +71,8 @@ void AccountService::transfer(const AccountTransferDto &account_transfer_dto) co
         throw Exception("Unable to transfer to the same account");
     }
 
-    account._balance -= account_transfer_dto._sum;
-    target_account._balance += account_transfer_dto._sum;
-
-    _assert_correct_balance(account);
-
-    update(account);
-    update(target_account);
+    change_balance(account, - account_transfer_dto._sum);
+    change_balance(target_account, account_transfer_dto._sum);
 
     _notification_service.notify(user, account, "Transfer performed from your card");
     _notification_service.notify(target_user, target_account, "Transfer performed to your card");
@@ -128,7 +119,12 @@ void AccountService::_update_credit_start(Account &account) const {
     }
 }
 
-void AccountService::update(Account account) const {
+
+void AccountService::change_balance(Account account, const int balance_change) const {
+    account._balance += balance_change;
+
+    _assert_correct_balance(account);
+
     _update_credit_start(account);
     _account_repository.update(account);
 }
