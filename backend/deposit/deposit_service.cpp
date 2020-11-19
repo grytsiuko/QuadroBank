@@ -63,9 +63,10 @@ void DepositService::add(const DepositCreateDto &deposit_create_dto) const {
     const time_t currDate = time(nullptr);
     Deposit deposit{0, card_number, deposit_create_dto._percentage, deposit_variant._period_sec, currDate,
                     currDate + deposit_variant._period_sec, deposit_create_dto._sum};
-    account._balance -= deposit_create_dto._sum;
+
+    _account_service.change_balance(account, - deposit_create_dto._sum);
+
     _deposit_repository.add(deposit);
-    _account_repository.update(account);
     _notification_service.notify(user, account, "You have created deposit");
 }
 
@@ -79,9 +80,7 @@ void DepositService::return_finished(const Deposit &deposit) const {
     Account account = _auth_service.assert_account(deposit._account_card_number);
     User user = _auth_service.assert_user(account._user_id);
 
-    account._balance += deposit._sum;
-    account._balance += floor(deposit._sum * deposit._percentage);
-    _account_repository.update(account);
+    _account_service.change_balance(account, deposit._sum + floor(deposit._sum * deposit._percentage));
     _deposit_repository.remove(deposit._id);
 
     _notification_service.notify(user, account, "Your deposit has been returned");
