@@ -13,10 +13,11 @@ class RPsByCardNumberSpecification: public Specification<RegularPayment> {
 private:
     const string _card_number;
     const string _where = "account_card = %0";
-    const vector<string> _params = {to_param(_card_number)};
+    const vector<string> _params;
 
 public:
-    explicit RPsByCardNumberSpecification(const string& card_number): _card_number(card_number){}
+    explicit RPsByCardNumberSpecification(const string& card_number):
+        _card_number(card_number), _params({to_param(_card_number)}){}
 
 private:
     bool _filter(const RegularPayment &rp) const override {

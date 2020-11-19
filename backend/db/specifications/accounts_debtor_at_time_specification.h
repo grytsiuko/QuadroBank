@@ -12,11 +12,12 @@ private:
     const time_t _time;
     const time_t _non_credit_seconds;
     const string _where = "credit_start <> 0 AND credit_start + %0 < %1";
-    const vector<string> _params = {to_param(_non_credit_seconds), to_param(_time)};
+    const vector<string> _params;
 
 public:
     explicit AccountsDebtorAtTimeSpecification(const time_t non_credit_seconds, const time_t time) :
-            _non_credit_seconds(non_credit_seconds), _time(time) {}
+            _non_credit_seconds(non_credit_seconds), _time(time),
+            _params({to_param(_non_credit_seconds), to_param(_time)}) {}
 
 private:
     bool _filter(const Account &a) const override {
