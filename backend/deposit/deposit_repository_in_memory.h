@@ -6,7 +6,9 @@
 #include "../utils/singleton.h"
 #include <ctime>
 
-class DepositRepositoryInMemory : public DepositRepositoryInterface, public Singleton<DepositRepositoryInMemory> {
+class DepositRepositoryInMemory :
+        public DepositRepositoryInterface,
+        public Singleton<DepositRepositoryInMemory> {
 
     friend Singleton;
 

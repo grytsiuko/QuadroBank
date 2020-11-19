@@ -1,4 +1,6 @@
-#include <backend/utils/exception.h>
+#include <backend/utils/exceptions/exception.h>
+#include <backend/db/specifications/deposits_all_except_this_specification.h>
+#include <backend/utils/exceptions/internal_error.h>
 #include "deposit_repository_in_memory.h"
 #include "backend/utils/time_intervals.h"
 
@@ -15,12 +17,12 @@ void DepositRepositoryInMemory::_add(const Deposit &deposit) const {
         copy._id = _get_free_id();
         _deposits.push_back(copy);
     } else {
-        throw Exception("An attempt to create deposit with possibly wrong id");
+        throw InternalError();
     }
 }
 
 void DepositRepositoryInMemory::_remove(const int id) const {
-    _deposits = _get_list(Specification<Deposit>([=] (const Deposit& d) { return d._id != id;}));
+    _deposits = _get_list(DepositsAllExceptThisSpecification(id));
 }
 
 vector<Deposit> DepositRepositoryInMemory::_get_list(const Specification<Deposit> &deposit_specification) const {

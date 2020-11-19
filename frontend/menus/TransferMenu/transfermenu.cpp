@@ -1,13 +1,13 @@
 #include "transfermenu.h"
 #include "ui_transfermenu.h"
-#include "../utils/info_message.h"
+#include "frontend/menus/utils/info_message/info_message.h"
 
 TransferMenu::~TransferMenu() {
     delete ui;
 }
 
 void TransferMenu::set_token(const TokenDto &token) {
-    currentToken = token;
+    TokenInterface::set_token(token);
     update_balance_label();
 }
 
@@ -29,10 +29,13 @@ void TransferMenu::transfer() {
     bool good;
     double amount = ui->amount_input->text().toDouble(&good);
     if (!good) {
-        showInfo("Amount should be positive number");
+        showInfo("Amount should not be empty");
+    }
+    else if (amount <= 0.001){
+        showInfo("Amount cannot be 0");
         ui->amount_input->setStyleSheet("border: 1px solid red");
-        ui->amount_input->setText("");
-    } else {
+    }
+    else {
         const Response<void> &responseTransfer = accountActions.transfer(
                 AccountTransferDto{currentToken._token,
                                    ui->card_number_input->text().toStdString(),

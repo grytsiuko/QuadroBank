@@ -7,9 +7,11 @@
 #include <backend/user/model/user.h>
 #include <backend/account/account_repository_interface.h>
 #include <backend/account/account_repository_in_memory.h>
-#include <backend/utils/exception.h>
+#include <backend/utils/exceptions/exception.h>
 #include <backend/user/user_repository_interface.h>
 #include <backend/user/user_repository_in_memory.h>
+#include <backend/user/user_repository_db.h>
+#include <backend/account/account_repository_db.h>
 #include "../utils/singleton.h"
 
 using std::string;
@@ -21,12 +23,12 @@ private:
 
     friend Singleton;
 
-    const AccountRepositoryInterface<AccountRepositoryInMemory> &_account_repository;
-    const UserRepositoryInterface<UserRepositoryInMemory> &_user_repository;
+    const AccountRepositoryInterface &_account_repository;
+    const UserRepositoryInterface &_user_repository;
 
     AuthService():
-            _account_repository(AccountRepositoryInterface<AccountRepositoryInMemory>::get_instance()),
-            _user_repository(UserRepositoryInterface<UserRepositoryInMemory>::get_instance()) {}
+            _account_repository(AccountRepositoryDb::get_instance()),
+            _user_repository(UserRepositoryDb::get_instance()) {}
 
 public:
 

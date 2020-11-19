@@ -1,14 +1,14 @@
 #include "updatepaymentmenu.h"
 #include <iostream>
 #include <QtCore/QDate>
-#include "../utils/info_message.h"
+#include "frontend/menus/utils/info_message/info_message.h"
 
 UpdatePaymentMenu::~UpdatePaymentMenu() {
     delete ui;
 }
 
 void UpdatePaymentMenu::set_token(const TokenDto &token) {
-    currentToken = token;
+    TokenInterface::set_token(token);
 }
 
 void UpdatePaymentMenu::update_balance_label(){
@@ -53,7 +53,7 @@ void UpdatePaymentMenu::update_payment(int currentPaymentId) {
             paymentActions.get_by_id(RegularPaymentGetDto{currentToken._token, currentPaymentId});
     if (currentPaymentResponse.is_success()){
         const RegularPaymentDto& currentPayment = currentPaymentResponse.get_response();
-        QuantityPeriod *quantityPeriod = get_quantity_and_period(currentPayment._period_sec);
+        const QuantityPeriod *quantityPeriod = get_quantity_and_period(currentPayment._period_sec);
         ui->amount_input->setText(QString::number(1.*currentPayment._sum/100));
         ui->card_input->setText(QString::fromStdString(currentPayment._target_card));
         ui->quantity_input->setText(QString::number(quantityPeriod->quantity));
@@ -94,10 +94,15 @@ void UpdatePaymentMenu::send_update_dto(){
     bool good;
     double amount = ui->amount_input->text().toDouble(&good);
     if (!good) {
+        showInfo("Amount should not be empty");
         ui->amount_input->setStyleSheet("border: 1px solid red");
-        showInfo("Amount should be positive number");
         ui->amount_input->setText("");
-    } else {
+    }
+    else if (amount <= 0.001){
+        showInfo("Amount cannot be 0");
+        ui->amount_input->setStyleSheet("border: 1px solid red");
+    }
+    else {
         QString card = ui->card_input->text();
         if (card.length() < 1) {
             showInfo("Card input should not be empty");
@@ -108,9 +113,6 @@ void UpdatePaymentMenu::send_update_dto(){
                 showInfo("Quantity should be positive number");
                 ui->quantity_input->setStyleSheet("border: 1px solid red");
             } else {
-                if (ui->dateTimeEdit->dateTime() < QDateTime::currentDateTime()){
-                    ui->dateTimeEdit->setDateTime(QDateTime::currentDateTime());
-                }
                 QVariant selected_variant = ui->comboBox->currentData();
                 int period = selected_variant.toInt() * quantity;
                 time_t next_time = ui->dateTimeEdit->dateTime().toSecsSinceEpoch() + period;

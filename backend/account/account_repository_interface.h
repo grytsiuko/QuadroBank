@@ -5,13 +5,12 @@
 #include "../utils/optional.h"
 #include "model/account.h"
 #include "../utils/singleton.h"
-#include "../db/specification.h"
+#include "../db/specifications/specification.h"
 
 using std::string;
 using std::vector;
 
-template <class T>
-class AccountRepositoryInterface: public Singleton<T> {
+class AccountRepositoryInterface {
 
 public:
 

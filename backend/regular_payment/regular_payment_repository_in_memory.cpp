@@ -1,6 +1,8 @@
 
+#include <backend/db/specifications/rps_all_except_this_specification.h>
+#include <backend/utils/exceptions/internal_error.h>
 #include "regular_payment_repository_in_memory.h"
-#include "backend/utils/exception.h"
+#include "backend/utils/exceptions/exception.h"
 
 int RegularPaymentRepositoryInMemory::_freeId = 1;
 
@@ -21,25 +23,21 @@ void RegularPaymentRepositoryInMemory::_add(const RegularPayment &regular_paymen
         copy._id = _get_free_id();
         _regular_payments.push_back(copy);
     } else {
-        throw Exception("Internal error: an attempt to create regular payment with possibly wrong id");
+        throw InternalError();
     }
 }
 
-int RegularPaymentRepositoryInMemory::_update(const RegularPayment &regular_payment) const {
+void RegularPaymentRepositoryInMemory::_update(const RegularPayment &regular_payment) const {
     for (RegularPayment &rp : _regular_payments) {
         if (rp._id == regular_payment._id) {
             rp = regular_payment;
-            return 1;
+            return;
         }
     }
-    return 0;
 }
 
-int RegularPaymentRepositoryInMemory::_remove(int id) const {
-    int old_size = _regular_payments.size();
-    _regular_payments = _get_list(
-            Specification<RegularPayment>([=](const RegularPayment &rp) { return rp._id != id; }));
-    return old_size - _regular_payments.size();
+void RegularPaymentRepositoryInMemory::_remove(int id) const {
+    _regular_payments = _get_list(RPsAllExceptThisSpecification(id));
 }
 
 vector<RegularPayment>

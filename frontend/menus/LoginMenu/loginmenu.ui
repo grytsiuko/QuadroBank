@@ -18,6 +18,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
@@ -46,7 +49,7 @@
       <property name="font">
        <font>
         <family>Arial</family>
-        <pointsize>96</pointsize>
+        <pointsize>48</pointsize>
        </font>
       </property>
       <property name="text">
@@ -242,6 +245,12 @@
           <family>Comic Sans MS</family>
           <pointsize>12</pointsize>
          </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>Enter</string>

@@ -7,12 +7,12 @@
 #include "../utils/object_ui.h"
 #include "ui_refillmenu.h"
 #include "../../actions/account_actions.h"
-
+#include "frontend/menus/utils/token_menu_interface/token_menu_interface.h"
 namespace Ui {
 class RefillMenu;
 }
 
-class RefillMenu : public QWidget, public Singleton<RefillMenu>
+class RefillMenu : public QWidget, public Singleton<RefillMenu>, TokenInterface
 {
     Q_OBJECT
 
@@ -25,14 +25,11 @@ public slots:
     void refill();
 
 private:
-    RefillMenu(QWidget *parent = nullptr) :
+    explicit RefillMenu(QWidget *parent = nullptr) :
         QWidget(parent),
         ui(new Ui::RefillMenu)
     {
-
         ui->setupUi(this);
-
-        disconnect( ui->refill_button,SIGNAL(clicked()),this,SLOT(refill()));
         connect( ui->refill_button,SIGNAL(clicked()),this,SLOT(refill()));
         QRegExp re("^[0-9]+(\\.[0-9]{1,2})?$");
         QRegExpValidator *validator = new QRegExpValidator(re, this);
@@ -41,7 +38,6 @@ private:
     friend Singleton;
     friend object_ui<Ui::RefillMenu,RefillMenu>;
     AccountActions &accountActions = AccountActions::get_instance();
-    TokenDto currentToken;
     Ui::RefillMenu *ui;
 };
 

@@ -8,7 +8,8 @@
 #include <backend/notification/notification_service.h>
 #include <backend/auth/auth_service.h>
 #include <backend/regular_payment/dto/regular_payment_get_dto.h>
-#include "regular_payment_repository_in_memory.h"
+#include <backend/account/account_service.h>
+#include "regular_payment_repository_db.h"
 #include "backend/regular_payment/dto/regular_payment_delete_dto.h"
 #include "backend/regular_payment/dto/regular_payment_create_dto.h"
 #include "backend/regular_payment/dto/regular_payment_update_dto.h"
@@ -26,16 +27,18 @@ class RegularPaymentService : public Singleton<RegularPaymentService> {
 
 private:
     const RegularPaymentRepositoryInterface &_regular_payment_repository;
-    const AccountRepositoryInterface<AccountRepositoryInMemory> &_account_repository;
+    const AccountRepositoryInterface &_account_repository;
+    const AccountService &_account_service;
     const TokenService &_token_service;
     const NotificationService &_notification_service;
     const AuthService &_auth_service;
 
-    RegularPaymentService() : _regular_payment_repository(RegularPaymentRepositoryInMemory::get_instance()),
-                       _account_repository(AccountRepositoryInMemory::get_instance()),
-                       _token_service(TokenService::get_instance()),
+    RegularPaymentService() : _regular_payment_repository(RegularPaymentRepositoryDb::get_instance()),
+                              _account_repository(AccountRepositoryDb::get_instance()),
+                              _account_service(AccountService::get_instance()),
+                              _token_service(TokenService::get_instance()),
                               _notification_service(NotificationService::get_instance()),
-                              _auth_service(AuthService::get_instance()){}
+                              _auth_service(AuthService::get_instance()) {}
 
 public:
 

@@ -8,7 +8,7 @@ MainMenu::~MainMenu()
 }
 
 void MainMenu::set_token(const TokenDto &token) {
-    currentToken = token;
+    TokenInterface::set_token(token);
     update_balance_label();
 }
 

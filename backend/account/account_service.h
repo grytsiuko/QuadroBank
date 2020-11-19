@@ -6,6 +6,7 @@
 #include <map>
 #include <backend/notification/notification_service.h>
 #include <backend/auth/auth_service.h>
+#include <backend/user/user_repository_db.h>
 #include "dto/account_authorize_dto.h"
 #include "dto/token_dto.h"
 #include "account_repository_interface.h"
@@ -16,10 +17,11 @@
 #include "../token/token_service.h"
 #include "dto/account_update_dto.h"
 #include "dto/account_transfer_dto.h"
-#include "../utils/exception.h"
+#include "backend/utils/exceptions/exception.h"
 #include "../user/user_repository_interface.h"
 #include "../user/user_repository_in_memory.h"
 #include "dto/session_dto.h"
+#include "account_repository_db.h"
 
 using std::map;
 
@@ -35,8 +37,8 @@ private:
     const int MAX_INCORRECT_PINS = 3;
     mutable map<string, int> _incorrect_pins;
 
-    const AccountRepositoryInterface<AccountRepositoryInMemory> &_account_repository;
-    const UserRepositoryInterface<UserRepositoryInMemory> &_user_repository;
+    const AccountRepositoryInterface &_account_repository;
+    const UserRepositoryInterface &_user_repository;
     const TokenService &_token_service;
     const NotificationService &_notification_service;
     const AuthService &_auth_service;
@@ -44,8 +46,8 @@ private:
 
 
     AccountService() :
-            _account_repository(AccountRepositoryInterface<AccountRepositoryInMemory>::get_instance()),
-            _user_repository(UserRepositoryInterface<UserRepositoryInMemory>::get_instance()),
+            _account_repository(AccountRepositoryDb::get_instance()),
+            _user_repository(UserRepositoryDb::get_instance()),
             _token_service(TokenService::get_instance()),
             _notification_service(NotificationService::get_instance()),
             _auth_service(AuthService::get_instance()){}
@@ -65,6 +67,8 @@ public:
     vector<Account> get_debtors() const;
 
     void punish_debtor(Account account) const;
+
+    void change_balance(Account account, int balance_change) const;
 
 private:
 

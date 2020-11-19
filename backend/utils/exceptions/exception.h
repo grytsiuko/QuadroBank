@@ -10,17 +10,15 @@ using std::string;
 
 class Exception : public exception {
 
-private:
-
-    const string _message;
-
 public:
 
-    explicit Exception(string message) : _message(std::move(message)) {}
-
     const string &get_message() const {
-        return _message;
+        return _get_message();
     }
+
+private:
+    virtual const string &_get_message() const = 0;
+
 };
 
 #endif //QUADROBANK_EXCEPTION_H

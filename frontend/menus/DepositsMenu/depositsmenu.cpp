@@ -2,18 +2,16 @@
 #include "ui_depositsmenu.h"
 #include <QStandardItemModel>
 
-#include "../utils/date_util.h"
+#include "frontend/menus/utils/date_utils/date_util.h"
 #include "QDateTime"
 DepositsMenu::~DepositsMenu() {
     delete ui;
 }
 
 void DepositsMenu::set_token(const TokenDto &token) {
-    currentToken = token;
+    TokenInterface::set_token(token);
     update_deposits_list();
 }
-
-
 
 void DepositsMenu::update_deposits_list() {
     Response<vector<DepositDto>> depositVectorResponse = depositActions.get_all_by_user(currentToken);
@@ -34,15 +32,18 @@ void DepositsMenu::update_deposits_list() {
         }
 
         ui->deposits_table->setModel(currentModel);
+
         for (int i = 0; i < depositVector.capacity(); ++i) {
             ui->deposits_table->setRowHeight(i,75);
         }
-
+        QFont comic("Comic Sans MS", 14);
+        ui->deposits_table->setFont(comic);
 //      stretch table to fit all space
         for (int c = 0; c < (ui->deposits_table->horizontalHeader()->count()); ++c)
         {
             ui->deposits_table->horizontalHeader()->setSectionResizeMode(
                     c, QHeaderView::Stretch);
+            ui->deposits_table->horizontalHeader()->setFont(comic);
         }
 
     }

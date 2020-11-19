@@ -1,4 +1,11 @@
 
+#include <backend/db/specifications/accounts_debtor_at_time_specification.h>
+#include <backend/utils/exceptions/blocked_card_exception.h>
+#include <backend/utils/exceptions/illegal_pin_exception.h>
+#include <backend/utils/exceptions/same_account_exception.h>
+#include <backend/utils/exceptions/non_positive_number_exception.h>
+#include <backend/utils/exceptions/simple_card_balance_exception.h>
+#include <backend/utils/exceptions/credit_card_balance_exception.h>
 #include "account_service.h"
 
 SessionDto AccountService::authorize(const AccountAuthorizeDto &account_authorize_dto) const {
@@ -6,7 +13,7 @@ SessionDto AccountService::authorize(const AccountAuthorizeDto &account_authoriz
     User user = _auth_service.assert_user(account._user_id);
 
     if(account._is_blocked){
-        throw Exception("This card is blocked, contact the nearest bank branch to fix it");
+        throw BlockedCardException();
     }
 
     if (account._pin != account_authorize_dto._pin) {
@@ -17,7 +24,7 @@ SessionDto AccountService::authorize(const AccountAuthorizeDto &account_authoriz
             _account_repository.update(account);
         }
 
-        throw Exception("Illegal pin");
+        throw IllegalPinException();
     }
 
     _incorrect_pins.erase(account_authorize_dto._card_number);
@@ -39,10 +46,8 @@ void AccountService::top_up(const AccountUpdateDto &account_update_dto) const {
     Account account = _auth_service.assert_account(card_number);
     User user = _auth_service.assert_user(account._user_id);
 
-    account._balance += account_update_dto._sum;
-    _update_credit_start(account);
+    change_balance(account, account_update_dto._sum);
 
-    _account_repository.update(account);
     _notification_service.notify(user, account, "Top up performed");
 }
 
@@ -53,12 +58,8 @@ void AccountService::withdraw(const AccountUpdateDto &account_update_dto) const 
     Account account = _auth_service.assert_account(card_number);
     User user = _auth_service.assert_user(account._user_id);
 
-    account._balance -= account_update_dto._sum;
+    change_balance(account, - account_update_dto._sum);
 
-    _assert_correct_balance(account);
-    _update_credit_start(account);
-
-    _account_repository.update(account);
     _notification_service.notify(user, account, "Withdraw performed");
 }
 
@@ -73,27 +74,19 @@ void AccountService::transfer(const AccountTransferDto &account_transfer_dto) co
     User target_user = _auth_service.assert_user(target_account._user_id);
 
     if (account._card_number == target_account._card_number) {
-        throw Exception("Unable to transfer to the same account");
+        throw SameAccountException();
     }
 
-    account._balance -= account_transfer_dto._sum;
-    target_account._balance += account_transfer_dto._sum;
-
-    _assert_correct_balance(account);
-    _update_credit_start(account);
-
-    _account_repository.update(account);
-    _account_repository.update(target_account);
+    change_balance(account, - account_transfer_dto._sum);
+    change_balance(target_account, account_transfer_dto._sum);
 
     _notification_service.notify(user, account, "Transfer performed from your card");
     _notification_service.notify(target_user, target_account, "Transfer performed to your card");
 }
 
 vector<Account> AccountService::get_debtors() const {
-    function<bool(const Account&)> debtors_filter = [](auto &a) {
-        return a._credit_start != 0 && a._credit_start + CREDIT_SECONDS < time(nullptr);
-    };
-    return _account_repository.get_list(Specification<Account>(debtors_filter));
+    time_t curr_time = time(nullptr);
+    return _account_repository.get_list(AccountsDebtorAtTimeSpecification(CREDIT_SECONDS, curr_time));
 }
 
 void AccountService::punish_debtor(Account account) const {
@@ -109,16 +102,16 @@ void AccountService::punish_debtor(Account account) const {
 
 void AccountService::_assert_positive_sum(int sum) const {
     if (sum < 0) {
-        throw Exception("Sum should be positive");
+        throw NonPositiveNumberException();
     }
 }
 
 void AccountService::_assert_correct_balance(const Account &account) const {
     if (account._credit_limit == 0 && account._balance < 0) {
-        throw Exception("You have simple card, you cannot have negative balance");
+        throw SimpleCardBalanceException();
     }
     if (account._credit_limit != 0 && account._balance < -account._credit_limit) {
-        throw Exception("You cannot exceed your credit limit");
+        throw CreditCardBalanceException();
     }
 }
 
@@ -130,4 +123,14 @@ void AccountService::_update_credit_start(Account &account) const {
     if (account._credit_start == 0 && account._balance < 0) {
         account._credit_start = time(nullptr);
     }
+}
+
+
+void AccountService::change_balance(Account account, const int balance_change) const {
+    account._balance += balance_change;
+
+    _assert_correct_balance(account);
+
+    _update_credit_start(account);
+    _account_repository.update(account);
 }

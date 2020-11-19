@@ -179,7 +179,7 @@
            <string/>
           </property>
           <property name="maxLength">
-           <number>10</number>
+           <number>7</number>
           </property>
           <property name="echoMode">
            <enum>QLineEdit::Normal</enum>
@@ -223,6 +223,9 @@
      <layout class="QHBoxLayout" name="ButtonsLayout">
       <item>
        <widget class="QPushButton" name="back_button">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>Back</string>
         </property>
@@ -246,6 +249,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="transfer_button">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>Transfer</string>
         </property>

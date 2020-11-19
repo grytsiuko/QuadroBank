@@ -6,7 +6,7 @@
 #include "account_service.h"
 #include "../utils/singleton.h"
 #include "../log/log_service.h"
-#include "../utils/exception.h"
+#include "backend/utils/exceptions/exception.h"
 
 class AccountController : public Singleton<AccountController> {
 
