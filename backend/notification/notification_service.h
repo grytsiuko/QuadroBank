@@ -20,11 +20,7 @@ private:
 
 public:
 
-    void notify(const User &user, const Account &account, const string &text) const {
-        cout << "### Notification to " << user._name
-             << " on card " << account._card_number
-             << ": " << text << "\n";
-    }
+    void notify(const User &user, const Account &account, const string &text) const;
 };
 
 #endif //QUADROBANK_NOTIFICATION_SERVICE_H
