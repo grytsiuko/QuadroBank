@@ -7,14 +7,14 @@
 #include "ui_updatepaymentmenu.h"
 #include "../../actions/regular_payment_actions.h"
 #include "../../actions/account_actions.h"
-
-#include "../utils/date_util.h"
+#include "frontend/menus/utils/token_menu_interface/token_menu_interface.h"
+#include "frontend/menus/utils/date_utils/date_util.h"
 
 namespace Ui {
     class UpdatePaymentMenu;
 }
 
-class UpdatePaymentMenu : public QWidget, public Singleton<UpdatePaymentMenu> {
+class UpdatePaymentMenu : public QWidget, public Singleton<UpdatePaymentMenu>, TokenInterface {
 Q_OBJECT
 
 public:
@@ -34,14 +34,13 @@ private:
             QWidget(parent),
             ui(new Ui::UpdatePaymentMenu) {
         ui->setupUi(this);
-        disconnect(ui->new_payment_button,SIGNAL(clicked()), this, SLOT(send_update_dto()));
         connect(ui->new_payment_button,SIGNAL(clicked()), this, SLOT(send_update_dto()));
-
-        disconnect(ui->delete_button,SIGNAL(clicked()), this, SLOT(send_delete_dto()));
         connect(ui->delete_button,SIGNAL(clicked()), this, SLOT(send_delete_dto()));
+
         QRegExp re("^[0-9]+(\\.[0-9]{1,2})?$");
         QRegExpValidator *validator = new QRegExpValidator(re, this);
         ui->amount_input->setValidator(validator);
+
         QRegExp onlyNumber("^[0-9]+$");
         QRegExpValidator *number_validator = new QRegExpValidator(re, this);
         ui->card_input->setValidator(number_validator);
@@ -56,7 +55,6 @@ private:
     friend object_ui<Ui::UpdatePaymentMenu, UpdatePaymentMenu>;
     RegularPaymentActions &paymentActions = RegularPaymentActions::get_instance();
     AccountActions &accountActions = AccountActions::get_instance();
-    TokenDto currentToken;
     Ui::UpdatePaymentMenu *ui;
 };
 

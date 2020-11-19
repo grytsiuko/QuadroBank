@@ -1,6 +1,6 @@
 #include "withdrawmenu.h"
 #include "ui_withdrawmenu.h"
-#include "../utils/info_message.h"
+#include "frontend/menus/utils/info_message/info_message.h"
 
 WithdrawMenu::~WithdrawMenu()
 {
@@ -8,7 +8,7 @@ WithdrawMenu::~WithdrawMenu()
 }
 
 void WithdrawMenu::set_token(const TokenDto& token){
-    currentToken = token;
+    TokenInterface::set_token(token);
     update_balance_label();
 }
 
@@ -29,7 +29,7 @@ void WithdrawMenu::withdraw(){
     bool good;
     double amount = ui->amount_input->text().toDouble(&good);
     if (!good) {
-        showInfo("Amount should be positive number");
+        showInfo("Amount should not be empty");
         ui->amount_input->setStyleSheet("border: 1px solid red");
     }
     else if (amount <= 0.001){

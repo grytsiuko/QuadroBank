@@ -119,7 +119,8 @@ add_executable(QuadroBank
         backend/regular_payment/regular_payment_service.cpp
         backend/regular_payment/regular_payment_service.h
         backend/regular_payment/regular_payment_controller.h
-        frontend/menus/utils/date_util.h
+        frontend/menus/utils/date_utils/date_util.h
+        frontend/menus/utils/date_utils/date_util.cpp
         frontend/demo_regular_payment_scheduler.h
 
         backend/notification/notification_service.h
@@ -132,8 +133,8 @@ add_executable(QuadroBank
         backend/regular_payment/regular_payment_controller.cpp
         backend/scheduler/scheduler.cpp
         backend/user/user_repository_in_memory.cpp
-        frontend/menus/utils/info_message.h
-        frontend/menus/utils/info_message.cpp
+        frontend/menus/utils/info_message/info_message.h
+        frontend/menus/utils/info_message/info_message.cpp
         backend/regular_payment/dto/regular_payment_get_dto.h
 
         backend/db/db_service.h
@@ -148,6 +149,10 @@ add_executable(QuadroBank
         backend/deposit/deposit_variant_repository_db.h
         backend/deposit/deposit_variant_repository_db.cpp
         backend/utils/string_convert.h
+
+        frontend/menus/utils/token_menu_interface/token_menu_interface.h
+        frontend/menus/utils/token_menu_interface/token_menu_interface.cpp
+
         backend/db/specifications/specification.h
         backend/db/specifications/deposits_by_card_number_specification.h
         backend/db/specifications/deposit_variants_all_specification.h

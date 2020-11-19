@@ -1,5 +1,5 @@
 #include "newdepositmenu.h"
-#include "../utils/info_message.h"
+#include "frontend/menus/utils/info_message/info_message.h"
 
 NewDepositMenu::~NewDepositMenu() {
     delete ui;
@@ -19,14 +19,13 @@ void NewDepositMenu::update_balance_label() {
 }
 
 void NewDepositMenu::set_token(const TokenDto &token) {
-    currentToken = token;
+    TokenInterface::set_token(token);
     update_balance_label();
     load_deposit_variants();
 }
 
 void NewDepositMenu::load_deposit_variants() {
     Response<vector<DepositVariantDto>> depositVectorResponse = depositActions.get_possible_variants(currentToken);
-
     if (depositVectorResponse.is_success()) {
         const vector<DepositVariantDto>& depositVector = depositVectorResponse.get_response();
         ui->comboBox->clear();
@@ -39,9 +38,6 @@ void NewDepositMenu::load_deposit_variants() {
         }
 
     }
-    else{
-        showInfo(QString::fromStdString(depositVectorResponse.get_error()));
-    }
 }
 
 void NewDepositMenu::create_deposit() {
@@ -49,7 +45,7 @@ void NewDepositMenu::create_deposit() {
     double amount = ui->amount_input->text().toDouble(&good);
     if (!good) {
         ui->amount_input->setStyleSheet("border: 1px solid red");
-        showInfo("Amount should be positive number");
+        showInfo("Amount should not be empty");
         ui->amount_input->setText("");
     }
     else if (amount <= 0.001){

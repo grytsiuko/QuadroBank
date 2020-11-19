@@ -7,13 +7,13 @@
 #include "ui_paymentsmenu.h"
 #include "../../actions/regular_payment_actions.h"
 #include "iostream"
-#include "../utils/date_util.h"
-
+#include "frontend/menus/utils/date_utils/date_util.h"
+#include "frontend/menus/utils/token_menu_interface/token_menu_interface.h"
 namespace Ui {
     class PaymentsMenu;
 }
 
-class PaymentsMenu : public QWidget, public Singleton<PaymentsMenu> {
+class PaymentsMenu : public QWidget, public Singleton<PaymentsMenu>, TokenInterface {
 Q_OBJECT
 
 public:
@@ -41,7 +41,6 @@ private:
     friend Singleton;
     friend object_ui<Ui::PaymentsMenu, PaymentsMenu>;
     RegularPaymentActions &paymentsActions = RegularPaymentActions::get_instance();
-    TokenDto currentToken;
     Ui::PaymentsMenu *ui;
 };
 

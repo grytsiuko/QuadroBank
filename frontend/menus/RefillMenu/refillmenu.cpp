@@ -1,13 +1,13 @@
 #include "refillmenu.h"
 #include "ui_refillmenu.h"
-#include "../utils/info_message.h"
+#include "frontend/menus/utils/info_message/info_message.h"
 
 RefillMenu::~RefillMenu()
 {
     delete ui;
 }
 void RefillMenu::set_token(const TokenDto &token) {
-    currentToken = token;
+    TokenInterface::set_token(token);
     update_balance_label();
 }
 
@@ -28,7 +28,7 @@ void RefillMenu::refill(){
     bool good;
     double amount = ui->amount_input->text().toDouble(&good);
     if (!good) {
-        showInfo("Amount should be positive number");
+        showInfo("Amount should not be empty");
         ui->amount_input->setStyleSheet("border: 1px solid red");
     }
     else if (amount <= 0.001){

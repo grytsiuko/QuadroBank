@@ -7,8 +7,7 @@ PaymentsMenu::~PaymentsMenu()
 }
 
 void PaymentsMenu::set_token(const TokenDto &token) {
-
-    currentToken = token;
+    TokenInterface::set_token(token);
     update_payments_list();
 }
 
@@ -32,7 +31,7 @@ void PaymentsMenu::update_payments_list() {
         currentModel->setHeaderData(4, Qt::Horizontal, QObject::tr("id"));
         currentModel->setHeaderData(5, Qt::Horizontal, QObject::tr("Period-normal"));
         for (int i = 0; i < paymentsVector.capacity(); i++) {
-            QuantityPeriod* quantityPeriod = get_quantity_and_period(paymentsVector.at(i)._period_sec);
+            const QuantityPeriod* quantityPeriod = get_quantity_and_period(paymentsVector.at(i)._period_sec);
 
             currentModel->setData(currentModel->index(i,0), QDateTime::fromTime_t(paymentsVector.at(i)._next_time).toString("dd.MM.yyyy\nH:mm:ss"));
             currentModel->setData(currentModel->index(i,1), QString("%1 %2").arg(quantityPeriod->quantity)

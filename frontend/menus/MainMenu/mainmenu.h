@@ -6,12 +6,13 @@
 #include "../utils/object_ui.h"
 #include "ui_mainmenu.h"
 #include "../../actions/account_actions.h"
+#include "frontend/menus/utils/token_menu_interface/token_menu_interface.h"
 
 namespace Ui {
 class MainMenu;
 }
 
-class MainMenu : public QWidget, public Singleton<MainMenu>
+class MainMenu : public QWidget, public Singleton<MainMenu>, TokenInterface
 {
     Q_OBJECT
 
@@ -28,11 +29,12 @@ private:
         ui->setupUi(this);
         connect(ui->refresh_button, SIGNAL(clicked()), this, SLOT(update_balance_label()));
     };;
+
     friend Singleton;
     friend object_ui<Ui::MainMenu,MainMenu>;
     AccountActions &accountActions = AccountActions::get_instance();
+
     Ui::MainMenu *ui;
-    TokenDto currentToken;
 };
 
 #endif // MAINMENU_H
