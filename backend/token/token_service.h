@@ -7,7 +7,7 @@
 
 using std::string;
 
-class TokenService: public Singleton<TokenService> {
+class TokenService : public Singleton<TokenService> {
 
 private:
 
@@ -17,13 +17,9 @@ private:
 
 public:
 
-    string generate_token(const Account &account) const {
-        return account._card_number;
-    }
+    string generate_token(const Account &account) const;
 
-    string get_card_number(const string &token) const {
-        return token;
-    }
+    string get_card_number(const string &token) const;
 };
 
 #endif //QUADROBANK_TOKEN_SERVICE_H

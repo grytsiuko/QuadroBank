@@ -179,7 +179,7 @@ add_executable(QuadroBank
         backend/utils/exceptions/another_account_rp_deletion_exception.h
         backend/utils/exceptions/no_such_target_account_exception.h
         backend/utils/exceptions/past_date_exception.h
-        backend/utils/exceptions/internal_db_error.h backend/db/db_service.cpp backend/log/log_service.cpp backend/notification/notification_service.cpp)
+        backend/utils/exceptions/internal_db_error.h backend/db/db_service.cpp backend/log/log_service.cpp backend/notification/notification_service.cpp backend/token/token_service.cpp)
 
 
 target_link_libraries(${PROJECT_NAME} Qt${QT_VERSION_MAJOR}::Widgets)
