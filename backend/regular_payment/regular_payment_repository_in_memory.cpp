@@ -1,7 +1,8 @@
 
 #include <backend/db/specifications/rps_all_except_this_specification.h>
+#include <backend/utils/exceptions/internal_error.h>
 #include "regular_payment_repository_in_memory.h"
-#include "backend/utils/exception.h"
+#include "backend/utils/exceptions/exception.h"
 
 int RegularPaymentRepositoryInMemory::_freeId = 1;
 
@@ -22,7 +23,7 @@ void RegularPaymentRepositoryInMemory::_add(const RegularPayment &regular_paymen
         copy._id = _get_free_id();
         _regular_payments.push_back(copy);
     } else {
-        throw Exception("Internal error: an attempt to create regular payment with possibly wrong id");
+        throw InternalError();
     }
 }
 

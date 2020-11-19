@@ -7,7 +7,8 @@
 #include <iostream>
 #include <QtSql/QSqlRecord>
 #include <QtCore/QVariant>
-#include "../utils/exception.h"
+#include <backend/utils/exceptions/internal_db_error.h>
+#include "backend/utils/exceptions/exception.h"
 #include "../utils/optional.h"
 
 
@@ -36,7 +37,7 @@ private:
     }
 
     void _throw_db_exception() const {
-        throw Exception("Internal DB error");
+        throw InternalDBError();
     }
 
     bool _exec(const string &sql) const {

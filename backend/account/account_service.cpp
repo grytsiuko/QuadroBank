@@ -1,5 +1,11 @@
 
 #include <backend/db/specifications/accounts_debtor_at_time_specification.h>
+#include <backend/utils/exceptions/blocked_card_exception.h>
+#include <backend/utils/exceptions/illegal_pin_exception.h>
+#include <backend/utils/exceptions/same_account_exception.h>
+#include <backend/utils/exceptions/non_positive_number_exception.h>
+#include <backend/utils/exceptions/simple_card_balance_exception.h>
+#include <backend/utils/exceptions/credit_card_balance_exception.h>
 #include "account_service.h"
 
 SessionDto AccountService::authorize(const AccountAuthorizeDto &account_authorize_dto) const {
@@ -7,7 +13,7 @@ SessionDto AccountService::authorize(const AccountAuthorizeDto &account_authoriz
     User user = _auth_service.assert_user(account._user_id);
 
     if(account._is_blocked){
-        throw Exception("This card is blocked, contact the nearest bank branch to fix it");
+        throw BlockedCardException();
     }
 
     if (account._pin != account_authorize_dto._pin) {
@@ -18,7 +24,7 @@ SessionDto AccountService::authorize(const AccountAuthorizeDto &account_authoriz
             _account_repository.update(account);
         }
 
-        throw Exception("Illegal pin");
+        throw IllegalPinException();
     }
 
     _incorrect_pins.erase(account_authorize_dto._card_number);
@@ -68,7 +74,7 @@ void AccountService::transfer(const AccountTransferDto &account_transfer_dto) co
     User target_user = _auth_service.assert_user(target_account._user_id);
 
     if (account._card_number == target_account._card_number) {
-        throw Exception("Unable to transfer to the same account");
+        throw SameAccountException();
     }
 
     change_balance(account, - account_transfer_dto._sum);
@@ -96,16 +102,16 @@ void AccountService::punish_debtor(Account account) const {
 
 void AccountService::_assert_positive_sum(int sum) const {
     if (sum < 0) {
-        throw Exception("Sum should be positive");
+        throw NonPositiveNumberException();
     }
 }
 
 void AccountService::_assert_correct_balance(const Account &account) const {
     if (account._credit_limit == 0 && account._balance < 0) {
-        throw Exception("You have simple card, you cannot have negative balance");
+        throw SimpleCardBalanceException();
     }
     if (account._credit_limit != 0 && account._balance < -account._credit_limit) {
-        throw Exception("You cannot exceed your credit limit");
+        throw CreditCardBalanceException();
     }
 }
 

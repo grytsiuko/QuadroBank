@@ -2,8 +2,15 @@
 #include <ctime>
 #include <backend/db/specifications/rps_by_card_number_specification.h>
 #include <backend/db/specifications/rps_time_passed_specification.h>
+#include <backend/utils/exceptions/no_such_rp_exception.h>
+#include <backend/utils/exceptions/non_positive_number_exception.h>
+#include <backend/utils/exceptions/internal_error.h>
+#include <backend/utils/exceptions/another_account_rp_deletion_exception.h>
+#include <backend/utils/exceptions/same_account_exception.h>
+#include <backend/utils/exceptions/no_such_target_account_exception.h>
+#include <backend/utils/exceptions/past_date_exception.h>
 #include "regular_payment_service.h"
-#include "backend/utils/exception.h"
+#include "backend/utils/exceptions/exception.h"
 
 
 RegularPaymentDto RegularPaymentService::get_by_id(const RegularPaymentGetDto &get_dto) const {
@@ -13,7 +20,7 @@ RegularPaymentDto RegularPaymentService::get_by_id(const RegularPaymentGetDto &g
     Optional<RegularPayment> optional_rp = _regular_payment_repository.get_by_id(get_dto._id);
 
     if(optional_rp.is_empty()){
-        throw Exception("Regular payment with this id does not exists");
+        throw NoSuchRPException();
     }
 
     RegularPayment rp = optional_rp.get();
@@ -54,24 +61,24 @@ void RegularPaymentService::add(const RegularPaymentCreateDto &regular_payment_c
     time_t current_time = time(nullptr);
 
     if(regular_payment_create_dto._target_card == account._card_number){
-        throw Exception("Unable to create regular payment to the same account");
+        throw SameAccountException();
     }
 
     if(regular_payment_create_dto._next_time <= current_time){
-        throw Exception("Next payment should be in the future");
+        throw PastDateException();
     }
 
     if(regular_payment_create_dto._period_sec <= 0){
-        throw Exception("Period should be positive");
+        throw NonPositiveNumberException();
     }
 
     Optional<Account> optional_account = _account_repository.get_by_card_number(regular_payment_create_dto._target_card);
     if(optional_account.is_empty()){
-        throw Exception("Target account does not exists");
+        throw NoSuchTargetAccountException();
     }
 
     if(regular_payment_create_dto._sum <= 0){
-        throw Exception("Sum should be positive");
+        throw NonPositiveNumberException();
     }
 
     _regular_payment_repository.add(RegularPayment{0,
@@ -92,28 +99,28 @@ void RegularPaymentService::update(const RegularPaymentUpdateDto &regular_paymen
 
     Optional<RegularPayment> optional_payment = _regular_payment_repository.get_by_id(regular_payment_update_dto._payment_id);
     if(optional_payment.is_empty()){
-        throw Exception("Attempt to change non-existent regular payment");
+        throw NoSuchRPException();
     }
 
     if(regular_payment_update_dto._target_card == account._card_number){
-        throw Exception("Unable to create regular payment to the same account");
+        throw SameAccountException();
     }
 
     if(regular_payment_update_dto._next_time <= current_time){
-        throw Exception("Next payment should be in the future");
+        throw PastDateException();
     }
 
     if(regular_payment_update_dto._period_sec <= 0){
-        throw Exception("Period should be positive");
+        throw NonPositiveNumberException();
     }
 
     Optional<Account> optional_account = _account_repository.get_by_card_number(regular_payment_update_dto._target_card);
     if(optional_account.is_empty()){
-        throw Exception("Target account does not exists");
+        throw NoSuchTargetAccountException();
     }
 
     if(regular_payment_update_dto._sum <= 0){
-        throw Exception("Sum should be positive");
+        throw NonPositiveNumberException();
     }
 
     _regular_payment_repository.update(RegularPayment{regular_payment_update_dto._payment_id,
@@ -133,11 +140,11 @@ void RegularPaymentService::remove(const RegularPaymentDeleteDto &regular_paymen
 
     Optional<RegularPayment> optional_payment = _regular_payment_repository.get_by_id(regular_payment_delete_dto._payment_id);
     if(optional_payment.is_empty()){
-        throw Exception("Regular payment does not exists");
+        throw NoSuchRPException();
     }
 
     if(account._card_number != optional_payment.get()._account_card){
-        throw Exception("Attempt to delete someone else's regular payment");
+        throw AnotherAccountRPDeletionException();
     }
 
     _regular_payment_repository.remove(regular_payment_delete_dto._payment_id);
@@ -160,7 +167,7 @@ void RegularPaymentService::pay(RegularPayment regular_payment) const {
         _notification_service.notify(from_user, from_account, "Not enough money, deleting regular payment");
         int removed = _regular_payment_repository.remove(regular_payment._id);
         if(removed == 0){
-            throw Exception("Internal error");
+            throw InternalError();
         }
         return;
     }
@@ -171,7 +178,7 @@ void RegularPaymentService::pay(RegularPayment regular_payment) const {
     regular_payment._next_time += regular_payment._period_sec;
     int updated = _regular_payment_repository.update(regular_payment);
     if(updated == 0){
-        throw Exception("Internal error");
+        throw InternalError();
     }
 
     _notification_service.notify(from_user, from_account, "Regular payment from your account performed");

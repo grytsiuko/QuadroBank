@@ -14,7 +14,7 @@
 #include "dto/deposit_dto.h"
 #include "../user/user_repository_in_memory.h"
 #include "../account/account_repository_in_memory.h"
-#include "../utils/exception.h"
+#include "backend/utils/exceptions/exception.h"
 #include "dto/deposit_create_dto.h"
 #include "dto/deposit_variant_dto.h"
 #include "deposit_variant_repsitory_interface.h"

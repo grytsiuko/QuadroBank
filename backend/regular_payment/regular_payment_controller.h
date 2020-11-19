@@ -1,7 +1,7 @@
 #ifndef QUADROBANK_REGULAR_PAYMENT_CONTROLLER_H
 #define QUADROBANK_REGULAR_PAYMENT_CONTROLLER_H
 
-#include "backend/utils/exception.h"
+#include "backend/utils/exceptions/exception.h"
 #include "regular_payment_service.h"
 #include "backend/log/log_service.h"
 #include "backend/utils/response.h"

@@ -17,7 +17,7 @@
 #include "../token/token_service.h"
 #include "dto/account_update_dto.h"
 #include "dto/account_transfer_dto.h"
-#include "../utils/exception.h"
+#include "backend/utils/exceptions/exception.h"
 #include "../user/user_repository_interface.h"
 #include "../user/user_repository_in_memory.h"
 #include "dto/session_dto.h"
