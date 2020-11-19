@@ -59,7 +59,7 @@ void AccountRepositoryDb::_update(const Account &account) const {
             {
                     to_param(account._user_id),
                     to_param(account._pin),
-                    account._is_blocked ? "1" : "0",
+                    to_param(account._is_blocked),
                     to_param(account._balance),
                     to_param(account._credit_limit),
                     to_param(account._credit_start),

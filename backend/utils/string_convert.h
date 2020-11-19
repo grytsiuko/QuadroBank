@@ -26,4 +26,8 @@ inline string to_param(const time_t p){
     return to_string(p);
 }
 
+inline string to_param(const bool p){
+    return p ? "1" : "0";
+}
+
 #endif //QUADROBANK_STRING_CONVERT_H
