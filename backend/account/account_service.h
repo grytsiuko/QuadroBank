@@ -68,6 +68,8 @@ public:
 
     void punish_debtor(Account account) const;
 
+    void update(Account account) const;
+
 private:
 
     void _assert_positive_sum(int sum) const;
