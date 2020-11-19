@@ -8,7 +8,7 @@
 using std::string;
 using std::cout;
 
-class LogService: public Singleton<LogService> {
+class LogService : public Singleton<LogService> {
 
 private:
 
@@ -18,9 +18,7 @@ private:
 
 public:
 
-    void log(const string &prefix, const string &text) const {
-        cout << "### LOGGER: " << prefix << " ###: " << text << "\n";
-    }
+    void log(const string &prefix, const string &text) const;
 };
 
 #endif //QUADROBANK_LOG_SERVICE_H
