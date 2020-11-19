@@ -10,7 +10,7 @@ class DepositVariantsAllSpecification: public Specification<DepositVariant> {
 
 private:
 
-    const string _where = "true";
+    const string _where = "";
     const vector<string> _params = {};
 
 private:

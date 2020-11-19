@@ -11,10 +11,10 @@ class RPsTimePassedSpecification: public Specification<RegularPayment> {
 private:
     const time_t _time;
     const string _where = "next_time < %0";
-    const vector<string> _params = {to_param(_time)};
+    const vector<string> _params;
 
 public:
-    explicit RPsTimePassedSpecification(const time_t time) : _time(time){}
+    explicit RPsTimePassedSpecification(const time_t time) : _time(time), _params({to_param(_time)}){}
 
 private:
     bool _filter(const RegularPayment &rp) const override {

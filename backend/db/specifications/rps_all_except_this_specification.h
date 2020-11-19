@@ -11,10 +11,10 @@ class RPsAllExceptThisSpecification: public Specification<RegularPayment> {
 private:
     const int _id;
     const string _where = "id <> %0";
-    const vector<string> _params = {to_param(_id)};
+    const vector<string> _params;
 
 public:
-    explicit RPsAllExceptThisSpecification(const int id): _id(id){}
+    explicit RPsAllExceptThisSpecification(const int id): _id(id), _params({to_param(_id)}){}
 
 private:
     bool _filter(const RegularPayment &rp) const override {
