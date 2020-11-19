@@ -165,11 +165,8 @@ void RegularPaymentService::pay(RegularPayment regular_payment) const {
         return;
     }
 
-    from_account._balance -= regular_payment._sum;
-    to_account._balance += regular_payment._sum;
-
-    _account_repository.update(from_account);
-    _account_repository.update(to_account);
+    _account_service.change_balance(from_account, - regular_payment._sum);
+    _account_service.change_balance(to_account, regular_payment._sum);
 
     regular_payment._next_time += regular_payment._period_sec;
     int updated = _regular_payment_repository.update(regular_payment);
