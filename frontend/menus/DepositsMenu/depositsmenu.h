@@ -17,7 +17,7 @@ class DepositsMenu :  public QWidget, public Singleton<DepositsMenu>, TokenInter
 
 public:
     ~DepositsMenu();
-    void set_token(const TokenDto& token);
+    void set_token(const SessionDto& token);
 private:
     explicit DepositsMenu(QWidget *parent = nullptr):
         QWidget(parent),

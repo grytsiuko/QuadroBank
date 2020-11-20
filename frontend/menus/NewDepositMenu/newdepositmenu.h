@@ -20,7 +20,7 @@ class NewDepositMenu :  public QWidget, public Singleton<NewDepositMenu>, TokenI
 
 public:
     ~NewDepositMenu();
-    void set_token(const TokenDto& token);
+    void set_token(const SessionDto& token);
 private slots:
     void create_deposit();
 private:

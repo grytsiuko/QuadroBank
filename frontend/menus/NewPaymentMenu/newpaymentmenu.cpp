@@ -8,7 +8,7 @@ NewPaymentMenu::~NewPaymentMenu() {
 }
 
 void NewPaymentMenu::update_balance_label() {
-    Response<AccountBalanceDto> balanceDTO = accountActions.check_balance(currentToken);
+    Response<AccountBalanceDto> balanceDTO = accountActions.check_balance(TokenDto{currentToken._token});
     if (balanceDTO.is_success()) {
         const AccountBalanceDto& account_balance = balanceDTO.get_response();
         QString balanceString;
@@ -29,7 +29,7 @@ void NewPaymentMenu::set_up_date_time_edit() {
     ui->dateTimeEdit->setMinimumTime(now);
 };
 
-void NewPaymentMenu::set_token(const TokenDto &token) {
+void NewPaymentMenu::set_token(const SessionDto &token) {
     TokenInterface::set_token(token);
     update_balance_label();
     set_payment_date_variants();

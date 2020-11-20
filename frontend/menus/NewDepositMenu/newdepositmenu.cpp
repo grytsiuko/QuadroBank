@@ -6,7 +6,7 @@ NewDepositMenu::~NewDepositMenu() {
 }
 
 void NewDepositMenu::update_balance_label() {
-    Response<AccountBalanceDto> balanceDTO = accountActions.check_balance(currentToken);
+    Response<AccountBalanceDto> balanceDTO = accountActions.check_balance(TokenDto{currentToken._token});
     if (balanceDTO.is_success()) {
         const AccountBalanceDto& account_balance = balanceDTO.get_response();
         QString balanceString;
@@ -18,14 +18,14 @@ void NewDepositMenu::update_balance_label() {
     }
 }
 
-void NewDepositMenu::set_token(const TokenDto &token) {
+void NewDepositMenu::set_token(const SessionDto &token) {
     TokenInterface::set_token(token);
     update_balance_label();
     load_deposit_variants();
 }
 
 void NewDepositMenu::load_deposit_variants() {
-    Response<vector<DepositVariantDto>> depositVectorResponse = depositActions.get_possible_variants(currentToken);
+    Response<vector<DepositVariantDto>> depositVectorResponse = depositActions.get_possible_variants(TokenDto{currentToken._token});
     if (depositVectorResponse.is_success()) {
         const vector<DepositVariantDto>& depositVector = depositVectorResponse.get_response();
         ui->comboBox->clear();

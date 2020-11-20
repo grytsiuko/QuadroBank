@@ -42,8 +42,8 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::set_token_dto(TokenDto const &ttt) {
-    currentToken = ttt;
+void MainWindow::set_token_dto(SessionDto const &sessionDto) {
+    currentSession = sessionDto;
 };
 
 void MainWindow::set_mainmenu() {
@@ -70,17 +70,17 @@ void MainWindow::set_mainmenu() {
     disconnect(mainmenu_ui->payments_button, SIGNAL(clicked()), this, SLOT(set_paymentsmenu()));
     connect(mainmenu_ui->payments_button, SIGNAL(clicked()), this, SLOT(set_paymentsmenu()));
 
-    MainMenu::get_instance().set_token(currentToken);
+    MainMenu::get_instance().set_token(currentSession);
 
     // get index of menu, we need to set, and set it
     menus->setCurrentIndex(menus->indexOf(&MainMenu::get_instance()));
 }
 
 void MainWindow::set_loginmenu() {
-    disconnect(&LoginMenu::get_instance(), SIGNAL(send_token(TokenDto const&)), this,
-               SLOT(set_token_dto(TokenDto const&)));
-    connect(&LoginMenu::get_instance(), SIGNAL(send_token(TokenDto const&)), this,
-            SLOT(set_token_dto(TokenDto const&)));
+    disconnect(&LoginMenu::get_instance(), SIGNAL(send_token(SessionDto const&)), this,
+               SLOT(set_token_dto(SessionDto const&)));
+    connect(&LoginMenu::get_instance(), SIGNAL(send_token(SessionDto const&)), this,
+            SLOT(set_token_dto(SessionDto const&)));
 
     disconnect(&LoginMenu::get_instance(), SIGNAL(input_validated()), this, SLOT(set_mainmenu()));
     connect(&LoginMenu::get_instance(), SIGNAL(input_validated()), this, SLOT(set_mainmenu()));
@@ -99,7 +99,7 @@ void MainWindow::set_transfermenu() {
     disconnect(transfermenu_ui->back_button, SIGNAL(clicked()), this, SLOT(set_mainmenu()));
     connect(transfermenu_ui->back_button, SIGNAL(clicked()), this, SLOT(set_mainmenu()));
 
-    TransferMenu::get_instance().set_token(currentToken);
+    TransferMenu::get_instance().set_token(currentSession);
     // get index of menu, we need to set, and set it
     menus->setCurrentIndex(menus->indexOf(&TransferMenu::get_instance()));
 }
@@ -113,7 +113,7 @@ void MainWindow::set_withdrawmenu() {
     disconnect(withdrawmenu_ui->back_button, SIGNAL(clicked()), this, SLOT(set_mainmenu()));
     connect(withdrawmenu_ui->back_button, SIGNAL(clicked()), this, SLOT(set_mainmenu()));
     // pass token to menu
-    WithdrawMenu::get_instance().set_token(currentToken);
+    WithdrawMenu::get_instance().set_token(currentSession);
     // get index of menu, we need to set, and set it
     menus->setCurrentIndex(menus->indexOf(&WithdrawMenu::get_instance()));
 }
@@ -128,7 +128,7 @@ void MainWindow::set_refillmenu() {
     disconnect(refillmenu_ui->back_button, SIGNAL(clicked()), this, SLOT(set_mainmenu()));
     connect(refillmenu_ui->back_button, SIGNAL(clicked()), this, SLOT(set_mainmenu()));
 
-    RefillMenu::get_instance().set_token(currentToken);
+    RefillMenu::get_instance().set_token(currentSession);
 
     menus->setCurrentIndex(menus->indexOf(&RefillMenu::get_instance()));
 }
@@ -160,7 +160,7 @@ void MainWindow::set_newdepositsmenu() {
     connect(newdepositmenu_ui->back_button, SIGNAL(clicked()), this, SLOT(set_depositsmenu()));
 
 
-    NewDepositMenu::get_instance().set_token(currentToken);
+    NewDepositMenu::get_instance().set_token(currentSession);
 
     // get index of menu, we need to set, and set it
     menus->setCurrentIndex(menus->indexOf(&NewDepositMenu::get_instance()));
@@ -189,7 +189,7 @@ void MainWindow::set_paymentsmenu() {
     connect(&PaymentsMenu::get_instance(), SIGNAL(edit_payment(int)),
             &UpdatePaymentMenu::get_instance(), SLOT(update_payment(int)));
 
-    PaymentsMenu::get_instance().set_token(currentToken);
+    PaymentsMenu::get_instance().set_token(currentSession);
     // get index of menu, we need to set, and set it
     menus->setCurrentIndex(menus->indexOf(&PaymentsMenu::get_instance()));
 }
@@ -204,7 +204,7 @@ void MainWindow::set_newpaymentmenu() {
     disconnect(newpaymentmenu_ui->back_button, SIGNAL(clicked()), this, SLOT(set_paymentsmenu()));
     connect(newpaymentmenu_ui->back_button, SIGNAL(clicked()), this, SLOT(set_paymentsmenu()));
 
-    NewPaymentMenu::get_instance().set_token(currentToken);
+    NewPaymentMenu::get_instance().set_token(currentSession);
 
     // get index of menu, we need to set, and set it
     menus->setCurrentIndex(menus->indexOf(&NewPaymentMenu::get_instance()));
@@ -224,7 +224,7 @@ void MainWindow::set_updatepaymentmenu(){
     connect(&UpdatePaymentMenu::get_instance(), SIGNAL(updated()), this, SLOT(set_paymentsmenu()));
 
 
-    UpdatePaymentMenu::get_instance().set_token(currentToken);
+    UpdatePaymentMenu::get_instance().set_token(currentSession);
 
     // get index of menu, we need to set, and set it
     menus->setCurrentIndex(menus->indexOf(&UpdatePaymentMenu::get_instance()));

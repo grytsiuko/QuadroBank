@@ -3,7 +3,7 @@
 //
 #include "token_menu_interface.h"
 
-void TokenInterface::set_token(const TokenDto& token){
+void TokenInterface::set_token(const SessionDto& token){
     if (currentToken._token != token._token)
         currentToken = token;
 }

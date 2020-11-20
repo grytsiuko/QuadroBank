@@ -7,13 +7,13 @@ MainMenu::~MainMenu()
     delete ui;
 }
 
-void MainMenu::set_token(const TokenDto &token) {
+void MainMenu::set_token(const SessionDto &token) {
     TokenInterface::set_token(token);
     update_balance_label();
 }
 
 void MainMenu::update_balance_label(){
-    Response<AccountBalanceDto> balanceDTO = accountActions.check_balance(currentToken);
+    Response<AccountBalanceDto> balanceDTO = accountActions.check_balance(TokenDto{currentToken._token});
     if (balanceDTO.is_success()) {
         const AccountBalanceDto& account_balance = balanceDTO.get_response();
         QString balanceString;

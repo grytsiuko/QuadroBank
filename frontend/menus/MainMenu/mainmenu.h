@@ -19,10 +19,10 @@ class MainMenu : public QWidget, public Singleton<MainMenu>, TokenInterface
 public:
     ~MainMenu();
 public slots:
-    void set_token(const TokenDto& token);
+    void set_token(const SessionDto& token);
     void update_balance_label();
 private:
-    MainMenu(QWidget *parent = nullptr):
+    explicit MainMenu(QWidget *parent = nullptr):
         QWidget(parent),
         ui(new Ui::MainMenu)
     {

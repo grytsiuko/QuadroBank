@@ -21,8 +21,8 @@ void LoginMenu::login_validation(){
             AccountAuthorizeDto{card_data.toStdString(), pin_data.toStdString()}
     );
     if (authorizeResponse.is_success()){
-        TokenDto tokenDto = TokenDto{authorizeResponse.get_response()._token};
-        emit send_token(tokenDto);
+        SessionDto sessionDto = authorizeResponse.get_response();
+        emit send_token(sessionDto);
         emit input_validated();
         clear_stylesheet();
         ui->card_number_input->setText("");

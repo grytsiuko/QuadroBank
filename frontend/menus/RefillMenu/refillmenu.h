@@ -19,7 +19,7 @@ class RefillMenu : public QWidget, public Singleton<RefillMenu>, TokenInterface
 public:
     ~RefillMenu();
     void update_balance_label();
-    void set_token(const TokenDto& token);
+    void set_token(const SessionDto& token);
 
 public slots:
     void refill();
