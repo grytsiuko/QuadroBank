@@ -166,6 +166,7 @@ void RegularPaymentService::pay(RegularPayment regular_payment) const {
     if(from_account._balance + from_account._credit_limit < regular_payment._sum){
         _notification_service.notify(from_user, from_account, "Not enough money, deleting regular payment");
         _regular_payment_repository.remove(regular_payment._id);
+        return;
     }
 
     _account_service.change_balance(from_account, - regular_payment._sum);
