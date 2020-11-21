@@ -1,31 +1,26 @@
 #include "newdepositmenu.h"
 #include "frontend/menus/utils/info_message/info_message.h"
-
+#include "../utils/update_balance_label/balance_label_util.h"
 NewDepositMenu::~NewDepositMenu() {
     delete ui;
 }
 
 void NewDepositMenu::update_balance_label() {
-    Response<AccountBalanceDto> balanceDTO = accountActions.check_balance(currentToken);
+    Response<AccountBalanceDto> balanceDTO = accountActions.check_balance(TokenDto{currentToken._token});
     if (balanceDTO.is_success()) {
         const AccountBalanceDto& account_balance = balanceDTO.get_response();
-        QString balanceString;
-        if (account_balance._credit_limit > 0)
-            balanceString = QString("Your Balance: %1 $\n(Cred Limit: %2)").arg(1.*account_balance._balance/100).arg(1.*account_balance._credit_limit/100);
-        else
-            balanceString = QString("Your Balance: %1 $").arg(1.*account_balance._balance/100);
-        ui->LabelName->setText(balanceString);
+        update_label(ui->LabelName, account_balance);
     }
 }
 
-void NewDepositMenu::set_token(const TokenDto &token) {
+void NewDepositMenu::set_token(const SessionDto &token) {
     TokenInterface::set_token(token);
     update_balance_label();
     load_deposit_variants();
 }
 
 void NewDepositMenu::load_deposit_variants() {
-    Response<vector<DepositVariantDto>> depositVectorResponse = depositActions.get_possible_variants(currentToken);
+    Response<vector<DepositVariantDto>> depositVectorResponse = depositActions.get_possible_variants(TokenDto{currentToken._token});
     if (depositVectorResponse.is_success()) {
         const vector<DepositVariantDto>& depositVector = depositVectorResponse.get_response();
         ui->comboBox->clear();

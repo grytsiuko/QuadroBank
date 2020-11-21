@@ -18,7 +18,7 @@ class NewPaymentMenu :  public QWidget, public Singleton<NewPaymentMenu>,  Token
     Q_OBJECT
 
 public:
-    void set_token(const TokenDto& token);
+    void set_token(const SessionDto& token);
     ~NewPaymentMenu();
 private slots:
     void create_payment();

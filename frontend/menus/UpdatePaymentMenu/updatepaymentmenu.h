@@ -20,7 +20,7 @@ Q_OBJECT
 public:
     ~UpdatePaymentMenu();
 
-    void set_token(const TokenDto &token);
+    void set_token(const SessionDto &token);
 signals:
     void updated();
 public slots:

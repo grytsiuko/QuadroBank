@@ -8,13 +8,13 @@ DepositsMenu::~DepositsMenu() {
     delete ui;
 }
 
-void DepositsMenu::set_token(const TokenDto &token) {
+void DepositsMenu::set_token(const SessionDto &token) {
     TokenInterface::set_token(token);
     update_deposits_list();
 }
 
 void DepositsMenu::update_deposits_list() {
-    Response<vector<DepositDto>> depositVectorResponse = depositActions.get_all_by_user(currentToken);
+    Response<vector<DepositDto>> depositVectorResponse = depositActions.get_all_by_user(TokenDto{currentToken._token});
 
     if (depositVectorResponse.is_success()) {
         const vector<DepositDto>& depositVector = depositVectorResponse.get_response();

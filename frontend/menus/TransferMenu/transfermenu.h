@@ -20,7 +20,7 @@ class TransferMenu : public QWidget, public Singleton<TransferMenu>,  TokenInter
 public:
     ~TransferMenu();
     void update_balance_label();
-    void set_token(const TokenDto& token);
+    void set_token(const SessionDto& token);
 
 public slots:
     void transfer();

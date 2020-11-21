@@ -20,7 +20,7 @@ class WithdrawMenu : public QWidget, public Singleton<WithdrawMenu>, TokenInterf
 public:
     ~WithdrawMenu();
 
-    void set_token(const TokenDto& token);
+    void set_token(const SessionDto& token);
 
 public slots:
     void withdraw();
