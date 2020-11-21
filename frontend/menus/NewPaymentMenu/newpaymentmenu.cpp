@@ -2,7 +2,7 @@
 #include "../../../backend/utils/time_intervals.h"
 #include "QDate"
 #include "frontend/menus/utils/info_message/info_message.h"
-
+#include "../utils/update_balance_label/balance_label_util.h"
 NewPaymentMenu::~NewPaymentMenu() {
     delete ui;
 }
@@ -11,12 +11,7 @@ void NewPaymentMenu::update_balance_label() {
     Response<AccountBalanceDto> balanceDTO = accountActions.check_balance(TokenDto{currentToken._token});
     if (balanceDTO.is_success()) {
         const AccountBalanceDto& account_balance = balanceDTO.get_response();
-        QString balanceString;
-        if (account_balance._credit_limit > 0)
-            balanceString = QString("Your Balance: %1 $\n(Cred Limit: %2)").arg(1.*account_balance._balance/100).arg(1.*account_balance._credit_limit/100);
-        else
-            balanceString = QString("Your Balance: %1 $").arg(1.*account_balance._balance/100);
-        ui->LabelName->setText(balanceString);
+        update_label(ui->LabelName, account_balance);
     }
 }
 
