@@ -186,7 +186,8 @@ add_executable(QuadroBank
         frontend/menus/utils/update_balance_label/balance_label_util.h
         frontend/menus/utils/update_balance_label/balance_label_util.cpp
         backend/utils/cypher/cypher_interface.h
-        backend/utils/cypher/xor_cypher.h frontend/demo_cypher.h)
+        backend/utils/cypher/xor_cypher.h
+        frontend/demo_cypher.h)
 
 
 target_link_libraries(${PROJECT_NAME} Qt${QT_VERSION_MAJOR}::Widgets)
