@@ -22,6 +22,7 @@
 #include "../user/user_repository_in_memory.h"
 #include "dto/session_dto.h"
 #include "account_repository_db.h"
+#include "backend/utils/cypher/xor_cypher.h"
 
 using std::map;
 
@@ -42,6 +43,7 @@ private:
     const TokenService &_token_service;
     const NotificationService &_notification_service;
     const AuthService &_auth_service;
+    const CypherInterface& _cypher;
 
 
 
@@ -50,7 +52,8 @@ private:
             _user_repository(UserRepositoryDb::get_instance()),
             _token_service(TokenService::get_instance()),
             _notification_service(NotificationService::get_instance()),
-            _auth_service(AuthService::get_instance()){}
+            _auth_service(AuthService::get_instance()),
+            _cypher(XORCypher::get_instance()){}
 
 public:
 
