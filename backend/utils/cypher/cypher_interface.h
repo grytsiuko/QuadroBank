@@ -18,10 +18,17 @@ public:
         return _decrypt(std::move(src));
     }
 
+    //true if two encrypted strings are equal
+    bool is_equal(const string& str1, const string& str2) const {
+        return _is_equal(str1, str2);
+    }
+
 private:
     virtual const string _encrypt(string src) const = 0;
 
     virtual const string _decrypt(string src) const = 0;
+
+    virtual bool _is_equal(const string& str1, const string& str2) const = 0;
 
 };
 

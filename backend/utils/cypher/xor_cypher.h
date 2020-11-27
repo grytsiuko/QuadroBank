@@ -22,6 +22,10 @@ private:
     const string _decrypt(string src) const override {
         return _encrypt(src);
     }
+
+    bool _is_equal(const string& str1, const string& str2) const override {
+        return str1 == str2;
+    }
 };
 
 #endif //QUADROBANK_XOR_CYPHER_H
