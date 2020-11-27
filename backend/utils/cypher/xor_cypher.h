@@ -12,6 +12,8 @@ class XORCypher : public  CypherInterface, public Singleton<XORCypher>{
 private:
     const string _key = "J-key";
 
+    XORCypher() = default;
+
     const string _encrypt(string src) const override {
         for(size_t i = 0; i < src.length(); ++i){
             src[i] ^= _key[i % _key.length()] + i;
@@ -23,8 +25,8 @@ private:
         return _encrypt(src);
     }
 
-    bool _is_equal(const string& str1, const string& str2) const override {
-        return str1 == str2;
+    bool _is_equal(const string& src, const string& encrypted) const override {
+        return src == _decrypt(encrypted);
     }
 };
 

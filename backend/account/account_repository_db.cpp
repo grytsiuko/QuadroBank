@@ -1,6 +1,7 @@
 #include <string>
 #include <backend/account/account_repository_db.h>
 #include <backend/utils/string_convert.h>
+#include <backend/utils/cypher/xor_cypher.h>
 
 using std::string;
 
@@ -69,24 +70,25 @@ void AccountRepositoryDb::_update(const Account &account) const {
 }
 
 void AccountRepositoryDb::_seed_data() const {
+    const CypherInterface& cypher = XORCypher::get_instance();
     int count = _db_service.count(TABLE);
     if (count > 0) {
         return;
     }
     _db_service.insert(
-            TABLE, COLUMNS, vector<string>{"'1111111111111111'", "15", "'1111'", "0", "15000", "5000", "0"}
+            TABLE, COLUMNS, vector<string>{"'1111111111111111'", "15", "'" + cypher.encrypt("1111") + "'", "0", "15000", "5000", "0"}
     );
     _db_service.insert(
-            TABLE, COLUMNS, vector<string>{"'2222222222222222'", "15", "'2222'", "0", "20000", "0", "0"}
+            TABLE, COLUMNS, vector<string>{"'2222222222222222'", "15", "'" + cypher.encrypt("2222") + "'", "0", "20000", "0", "0"}
     );
     _db_service.insert(
-            TABLE, COLUMNS, vector<string>{"'3333333333333333'", "20", "'3333'", "0", "0", "300", "0"}
+            TABLE, COLUMNS, vector<string>{"'3333333333333333'", "20", "'" + cypher.encrypt("3333") + "'", "0", "0", "300", "0"}
     );
     _db_service.insert(
-            TABLE, COLUMNS, vector<string>{"'1234123412341234'", "20", "'3333'", "0", "52000", "0", "0"}
+            TABLE, COLUMNS, vector<string>{"'1234123412341234'", "20", "'" + cypher.encrypt("3333") + "'", "0", "52000", "0", "0"}
     );
     _db_service.insert(
-            TABLE, COLUMNS, vector<string>{"'4321432143214321'", "20", "'3333'", "0", "7400", "0", "0"}
+            TABLE, COLUMNS, vector<string>{"'4321432143214321'", "20", "'" + cypher.encrypt("3333") + "'", "0", "7400", "0", "0"}
     );
 }
 
