@@ -183,7 +183,10 @@ add_executable(QuadroBank
         backend/db/db_service.cpp backend/log/log_service.cpp
         backend/notification/notification_service.cpp
         backend/token/token_service.cpp
-        frontend/menus/utils/update_balance_label/balance_label_util.h frontend/menus/utils/update_balance_label/balance_label_util.cpp)
+        frontend/menus/utils/update_balance_label/balance_label_util.h
+        frontend/menus/utils/update_balance_label/balance_label_util.cpp
+        backend/utils/cypher/cypher_interface.h
+        backend/utils/cypher/xor_cypher.h frontend/demo_cypher.h)
 
 
 target_link_libraries(${PROJECT_NAME} Qt${QT_VERSION_MAJOR}::Widgets)
