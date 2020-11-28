@@ -2,12 +2,16 @@ cmake_minimum_required(VERSION 3.5)
 project(QuadroBank)
 
 set(CMAKE_CXX_STANDARD 14)
-SET(CMAKE_CXX_FLAGS -pthread)
+set(CMAKE_CXX_FLAGS -pthread)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR}Sql REQUIRED)
+
+set(QT_NO_DEBUG_OUTPUT ON)
+set(QT_NO_WARNING_OUTPUT ON)
+set(QT_NO_INFO_OUTPUT ON)
 
 
 set(CMAKE_AUTOUIC ON)

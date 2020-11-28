@@ -8,6 +8,7 @@
 #include "ui_loginmenu.h"
 #include "../../actions/account_actions.h"
 
+
 namespace Ui {
     class LoginMenu;
 }

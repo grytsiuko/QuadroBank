@@ -12,17 +12,13 @@
 #include "menus/PaymentsMenu/paymentsmenu.h"
 #include "menus/NewPaymentMenu/newpaymentmenu.h"
 #include "menus/UpdatePaymentMenu/updatepaymentmenu.h"
-//including utils
-#include "menus/utils/object_ui.h"
 //QT includes
-#include<QDebug>
 #include <QStackedWidget>
 
-MainWindow::MainWindow(QWidget *parent)
-        : QMainWindow(parent), ui(new Ui::MainWindow) {
+MainWindow::MainWindow()
+        : QMainWindow(), ui(new Ui::MainWindow) {
     ui->setupUi(this);
-
-    menus = new QStackedWidget(this);
+    menus = new QStackedWidget();
     menus->addWidget(&LoginMenu::get_instance());
     menus->addWidget(&MainMenu::get_instance());
     menus->addWidget(&TransferMenu::get_instance());
@@ -34,11 +30,20 @@ MainWindow::MainWindow(QWidget *parent)
     menus->addWidget(&NewPaymentMenu::get_instance());
     menus->addWidget(&UpdatePaymentMenu::get_instance());
     setCentralWidget(menus);
-
     set_loginmenu();
 }
 
 MainWindow::~MainWindow() {
+    LoginMenu::get_instance().setParent(nullptr);
+    MainMenu::get_instance().setParent(nullptr);
+    TransferMenu::get_instance().setParent(nullptr);
+    WithdrawMenu::get_instance().setParent(nullptr);
+    RefillMenu::get_instance().setParent(nullptr);
+    DepositsMenu::get_instance().setParent(nullptr);
+    NewDepositMenu::get_instance().setParent(nullptr);
+    PaymentsMenu::get_instance().setParent(nullptr);
+    NewPaymentMenu::get_instance().setParent(nullptr);
+    UpdatePaymentMenu::get_instance().setParent(nullptr);
     delete ui;
 }
 
@@ -229,21 +234,6 @@ void MainWindow::set_updatepaymentmenu(){
     // get index of menu, we need to set, and set it
     menus->setCurrentIndex(menus->indexOf(&UpdatePaymentMenu::get_instance()));
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

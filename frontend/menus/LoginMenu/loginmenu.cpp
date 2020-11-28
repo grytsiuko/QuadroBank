@@ -21,7 +21,7 @@ void LoginMenu::login_validation(){
             AccountAuthorizeDto{card_data.toStdString(), pin_data.toStdString()}
     );
     if (authorizeResponse.is_success()){
-        SessionDto sessionDto = authorizeResponse.get_response();
+        const SessionDto& sessionDto = authorizeResponse.get_response();
         emit send_token(sessionDto);
         emit input_validated();
         clear_stylesheet();
