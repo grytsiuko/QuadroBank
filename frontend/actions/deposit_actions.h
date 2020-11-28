@@ -7,7 +7,7 @@
 #include "../../backend/utils/response.h"
 #include "../../backend/account/dto/token_dto.h"
 #include "../../backend/deposit/dto/deposit_dto.h"
-#include "../../backend/deposit/dto/deposit_variant_dto.h"
+#include "backend/deposit_variant/dto/deposit_variant_dto.h"
 #include "../../backend/deposit/dto/deposit_create_dto.h"
 
 using std::vector;

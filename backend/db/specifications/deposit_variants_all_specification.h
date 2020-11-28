@@ -3,7 +3,7 @@
 #define QUADROBANK_DEPOSIT_VARIANTS_ALL_SPECIFICATION_H
 
 #include "specification.h"
-#include <backend/deposit/model/deposit_variant.h>
+#include <backend/deposit_variant/model/deposit_variant.h>
 #include <backend/utils/string_convert.h>
 
 class DepositVariantsAllSpecification: public Specification<DepositVariant> {

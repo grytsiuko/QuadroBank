@@ -37,7 +37,7 @@ void UserRepositoryDb::_seed_data() const {
     if (count > 0) {
         return;
     }
-    _db_service.insert(TABLE, COLUMNS, {"15", "'Petrov Petrov'"});
+    _db_service.insert(TABLE, COLUMNS, {"15", "'Petro Petrov'"});
     _db_service.insert(TABLE, COLUMNS, {"20", "'Stepan Stepanenko'"});
 }
 

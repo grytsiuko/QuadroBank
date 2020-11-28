@@ -23,7 +23,7 @@ add_executable(QuadroBank
         backend/account/account_controller.h
         frontend/actions/deposit_actions.h
         backend/deposit/dto/deposit_dto.h
-        backend/deposit/dto/deposit_variant_dto.h
+        backend/deposit_variant/dto/deposit_variant_dto.h
         backend/deposit/dto/deposit_create_dto.h
         frontend/actions/regular_payment_actions.h
         backend/regular_payment/dto/regular_payment_create_dto.h
@@ -105,11 +105,11 @@ add_executable(QuadroBank
 
         frontend/menus/LoginMenu/loginmenu.cpp
         frontend/menus/LoginMenu/loginmenu.h
-        frontend/menus/LoginMenu/loginmenu.ui 
-        backend/deposit/model/deposit_variant.h 
-        backend/deposit/deposit_variant_repsitory_interface.h 
-        backend/deposit/deposit_variant_repository_in_memory.h 
-        backend/deposit/deposit_variant_repository_in_memory.cpp
+        frontend/menus/LoginMenu/loginmenu.ui
+        backend/deposit_variant/model/deposit_variant.h
+        backend/deposit_variant/deposit_variant_repsitory_interface.h
+        backend/deposit_variant/deposit_variant_repository_in_memory.h
+        backend/deposit_variant/deposit_variant_repository_in_memory.cpp
         backend/utils/time_intervals.h
         frontend/demo_deposit_scheduler.h
         backend/regular_payment/model/regular_payment.h
@@ -146,8 +146,8 @@ add_executable(QuadroBank
         backend/regular_payment/regular_payment_repository_db.cpp
         backend/deposit/deposit_repository_db.h
         backend/deposit/deposit_repository_db.cpp
-        backend/deposit/deposit_variant_repository_db.h
-        backend/deposit/deposit_variant_repository_db.cpp
+        backend/deposit_variant/deposit_variant_repository_db.h
+        backend/deposit_variant/deposit_variant_repository_db.cpp
         backend/utils/string_convert.h
 
         frontend/menus/utils/token_menu_interface/token_menu_interface.h

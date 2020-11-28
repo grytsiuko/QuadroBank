@@ -16,9 +16,9 @@
 #include "../account/account_repository_in_memory.h"
 #include "backend/utils/exceptions/exception.h"
 #include "dto/deposit_create_dto.h"
-#include "dto/deposit_variant_dto.h"
-#include "deposit_variant_repsitory_interface.h"
-#include "deposit_variant_repository_db.h"
+#include "backend/deposit_variant/dto/deposit_variant_dto.h"
+#include "backend/deposit_variant/deposit_variant_repsitory_interface.h"
+#include "backend/deposit_variant/deposit_variant_repository_db.h"
 
 class DepositService : public Singleton<DepositService> {
 

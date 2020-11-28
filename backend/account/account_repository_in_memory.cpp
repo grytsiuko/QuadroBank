@@ -9,7 +9,7 @@ AccountRepositoryInMemory::AccountRepositoryInMemory() : _accounts(vector<Accoun
             Account{"2222222222222222", 15, "2222", false, 20000, 0, 0}
     );
     _accounts.push_back(
-            Account{"3333333333333333", 20, "3333", false, 0, 300, 0}
+            Account{"3333333333333333", 20, "3333", false, 0, 3000, 0}
     );
     _accounts.push_back(
             Account{"1234123412341234", 20, "3333", false, 52000, 0, 0}
