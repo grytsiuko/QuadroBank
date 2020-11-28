@@ -1,9 +1,9 @@
 #ifndef QUADROBANK_DEPOSIT_VARIANT_REPOSITORY_IN_MEMORY_H
 #define QUADROBANK_DEPOSIT_VARIANT_REPOSITORY_IN_MEMORY_H
 
-#include "../utils/optional.h"
+#include "backend/utils/optional.h"
 #include "deposit_variant_repsitory_interface.h"
-#include "../utils/singleton.h"
+#include "backend/utils/singleton.h"
 
 class DepositVariantRepositoryInMemory :
         public DepositVariantRepositoryInterface,
