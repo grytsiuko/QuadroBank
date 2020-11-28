@@ -14,23 +14,21 @@
 #include "menus/UpdatePaymentMenu/updatepaymentmenu.h"
 //QT includes
 #include <QStackedWidget>
-#include <QCoreApplication>
 
 MainWindow::MainWindow()
         : QMainWindow(), ui(new Ui::MainWindow) {
     ui->setupUi(this);
-
     menus = new QStackedWidget();
     menus->addWidget(&LoginMenu::get_instance());
     menus->addWidget(&MainMenu::get_instance());
-//    menus->addWidget(&TransferMenu::get_instance());
-//    menus->addWidget(&WithdrawMenu::get_instance());
-//    menus->addWidget(&RefillMenu::get_instance());
-//    menus->addWidget(&DepositsMenu::get_instance());
-//    menus->addWidget(&NewDepositMenu::get_instance());
-//    menus->addWidget(&PaymentsMenu::get_instance());
-//    menus->addWidget(&NewPaymentMenu::get_instance());
-//    menus->addWidget(&UpdatePaymentMenu::get_instance());
+    menus->addWidget(&TransferMenu::get_instance());
+    menus->addWidget(&WithdrawMenu::get_instance());
+    menus->addWidget(&RefillMenu::get_instance());
+    menus->addWidget(&DepositsMenu::get_instance());
+    menus->addWidget(&NewDepositMenu::get_instance());
+    menus->addWidget(&PaymentsMenu::get_instance());
+    menus->addWidget(&NewPaymentMenu::get_instance());
+    menus->addWidget(&UpdatePaymentMenu::get_instance());
     setCentralWidget(menus);
     set_loginmenu();
 }

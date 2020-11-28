@@ -4,16 +4,19 @@
 #include <string>
 #include "../utils/singleton.h"
 #include "../account/model/account.h"
+#include "backend/utils/cypher/xor_cypher.h"
 
 using std::string;
 
 class TokenService : public Singleton<TokenService> {
 
-private:
-
     friend Singleton;
 
-    TokenService() = default;
+private:
+
+    const CypherInterface& _cypher;
+
+    TokenService() : _cypher(XORCypher::get_instance()){};
 
 public:
 
