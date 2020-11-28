@@ -82,7 +82,7 @@ void AccountRepositoryDb::_seed_data() const {
             TABLE, COLUMNS, vector<string>{"'2222222222222222'", "15", "'" + cypher.encrypt("2222") + "'", "0", "20000", "0", "0"}
     );
     _db_service.insert(
-            TABLE, COLUMNS, vector<string>{"'3333333333333333'", "20", "'" + cypher.encrypt("3333") + "'", "0", "0", "300", "0"}
+            TABLE, COLUMNS, vector<string>{"'3333333333333333'", "20", "'" + cypher.encrypt("3333") + "'", "0", "0", "3000", "0"}
     );
     _db_service.insert(
             TABLE, COLUMNS, vector<string>{"'1234123412341234'", "20", "'" + cypher.encrypt("3333") + "'", "0", "52000", "0", "0"}
