@@ -15,7 +15,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow();
     ~MainWindow();
 
 private slots:
@@ -30,7 +30,6 @@ private slots:
     void set_paymentsmenu();
     void set_newpaymentmenu();
     void set_updatepaymentmenu();
-
 private:
     QStackedWidget* menus=nullptr;
     Ui::MainWindow *ui;

@@ -2,14 +2,13 @@
 #include "demo_regular_payment_scheduler.h"
 #include "mainwindow.h"
 #include <QApplication>
-
+#include <QMainWindow>
 using std::cout;
 
 int main(int argc, char *argv[]) {
-    Scheduler::get_instance();
+//    Scheduler::get_instance();
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
-    a.exec();
-    return 0;
+    return a.exec();
 }
