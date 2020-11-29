@@ -6,7 +6,7 @@ PaymentsMenu::~PaymentsMenu()
     delete ui;
 }
 
-void PaymentsMenu::set_token(const TokenDto &token) {
+void PaymentsMenu::set_token(const SessionDto &token) {
     TokenInterface::set_token(token);
     update_payments_list();
 }
@@ -18,7 +18,7 @@ void PaymentsMenu::edit(const QModelIndex & index){
 }
 
 void PaymentsMenu::update_payments_list() {
-    const Response<vector<RegularPaymentDto>>& paymentsVectorResponse = paymentsActions.get_all_by_user(currentToken);
+    const Response<vector<RegularPaymentDto>> paymentsVectorResponse = paymentsActions.get_all_by_user(TokenDto{currentToken._token});
 
     if (paymentsVectorResponse.is_success()) {
         const vector<RegularPaymentDto>& paymentsVector = paymentsVectorResponse.get_response();

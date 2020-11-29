@@ -20,19 +20,20 @@ class WithdrawMenu : public QWidget, public Singleton<WithdrawMenu>, TokenInterf
 public:
     ~WithdrawMenu();
 
-    void set_token(const TokenDto& token);
+    void set_token(const SessionDto& token);
 
 public slots:
     void withdraw();
-
+    void clear_inputs();
 private:
     explicit WithdrawMenu(QWidget *parent = nullptr) :
         QWidget(parent),
         ui(new Ui::WithdrawMenu)
     {
         ui->setupUi(this);
-        disconnect( ui->withdraw_button,SIGNAL(clicked()),this,SLOT(withdraw()));
         connect( ui->withdraw_button,SIGNAL(clicked()),this,SLOT(withdraw()));
+        connect( ui->back_button,SIGNAL(clicked()),this,SLOT(clear_inputs()));
+
         QRegExp re("^[0-9]+(\\.[0-9]{1,2})?$");
         QRegExpValidator *validator = new QRegExpValidator(re, this);
         ui->amount_input->setValidator(validator);

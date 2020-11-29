@@ -19,7 +19,7 @@ Q_OBJECT
 public:
     ~PaymentsMenu();
 
-    void set_token(const TokenDto &token);
+    void set_token(const SessionDto &token);
 
 private slots:
 

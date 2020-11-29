@@ -2,23 +2,26 @@
 #include "../../../backend/utils/time_intervals.h"
 #include "QDate"
 #include "frontend/menus/utils/info_message/info_message.h"
+#include "../utils/update_balance_label/balance_label_util.h"
+#include "../utils/amount_converter/amount_convert.h"
 
 NewPaymentMenu::~NewPaymentMenu() {
     delete ui;
 }
 
 void NewPaymentMenu::update_balance_label() {
-    Response<AccountBalanceDto> balanceDTO = accountActions.check_balance(currentToken);
+    Response<AccountBalanceDto> balanceDTO = accountActions.check_balance(TokenDto{currentToken._token});
     if (balanceDTO.is_success()) {
         const AccountBalanceDto& account_balance = balanceDTO.get_response();
-        QString balanceString;
-        if (account_balance._credit_limit > 0)
-            balanceString = QString("Your Balance: %1 $\n(Cred Limit: %2)").arg(1.*account_balance._balance/100).arg(1.*account_balance._credit_limit/100);
-        else
-            balanceString = QString("Your Balance: %1 $").arg(1.*account_balance._balance/100);
-        ui->LabelName->setText(balanceString);
+        update_label(ui->LabelName, account_balance);
     }
 }
+void NewPaymentMenu::clear_inputs(){
+    ui->amount_input->setText("");
+    ui->card_input->setText("");
+    ui->quantity_input->setText("");
+};
+
 
 void NewPaymentMenu::set_up_date_time_edit() {
     QDate today = QDate::currentDate();
@@ -29,7 +32,7 @@ void NewPaymentMenu::set_up_date_time_edit() {
     ui->dateTimeEdit->setMinimumTime(now);
 };
 
-void NewPaymentMenu::set_token(const TokenDto &token) {
+void NewPaymentMenu::set_token(const SessionDto &token) {
     TokenInterface::set_token(token);
     update_balance_label();
     set_payment_date_variants();
@@ -46,14 +49,8 @@ void NewPaymentMenu::set_payment_date_variants() {
 };
 
 void NewPaymentMenu::create_payment() {
-    bool good;
-    double amount = ui->amount_input->text().toDouble(&good);
-    if (!good) {
-        showInfo("Amount should not be empty");
-        ui->amount_input->setStyleSheet("border: 1px solid red");
-        ui->amount_input->setText("");
-    }
-    else if (amount <= 0.001){
+    int amount = convertAmount(ui->amount_input->text());
+    if (amount == 0){
         showInfo("Amount cannot be 0");
         ui->amount_input->setStyleSheet("border: 1px solid red");
     }
@@ -73,13 +70,13 @@ void NewPaymentMenu::create_payment() {
                 QVariant selected_variant = ui->comboBox->currentData();
                 int period = selected_variant.toInt() * quantity;
                 time_t next_time = ui->dateTimeEdit->dateTime().toSecsSinceEpoch() + 1;
-                const Response<void> &responsePaymentCreation = paymentActions.create(
+                const Response<void> responsePaymentCreation = paymentActions.create(
                         RegularPaymentCreateDto{
                                 currentToken._token,
                                 next_time,
                                 period,
                                 card.toStdString(),
-                                static_cast<int>(amount*100)
+                                amount
                         });
                 if (responsePaymentCreation.is_success()) {
                     showInfo("Regular payment successfully created");

@@ -5,14 +5,14 @@
 #ifndef QUADROBANK_TOKEN_MENU_INTERFACE_H
 #define QUADROBANK_TOKEN_MENU_INTERFACE_H
 
-#include "backend/account/dto/token_dto.h"
+#include "backend/account/dto/session_dto.h"
 
 class TokenInterface{
 public:
-    virtual void set_token(const TokenDto& token);
+    virtual void set_token(const SessionDto& token);
 protected:
     ~TokenInterface()= default;
-    TokenDto currentToken;
+    SessionDto currentToken;
 };
 
 #endif //QUADROBANK_TOKEN_MENU_INTERFACE_H

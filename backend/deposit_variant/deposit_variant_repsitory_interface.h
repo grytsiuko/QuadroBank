@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "backend/db/specifications/specification.h"
-#include "backend/deposit/model/deposit_variant.h"
+#include "backend/deposit_variant/model/deposit_variant.h"
 
 using std::vector;
 

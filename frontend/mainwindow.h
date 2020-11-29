@@ -15,11 +15,11 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow();
     ~MainWindow();
 
 private slots:
-    void set_token_dto(TokenDto const& ttt);
+    void set_token_dto(SessionDto const&);
     void set_mainmenu();
     void set_loginmenu();
     void set_transfermenu();
@@ -30,10 +30,9 @@ private slots:
     void set_paymentsmenu();
     void set_newpaymentmenu();
     void set_updatepaymentmenu();
-
 private:
     QStackedWidget* menus=nullptr;
     Ui::MainWindow *ui;
-    TokenDto currentToken;
+    SessionDto currentSession;
 };
 #endif // MAINWINDOW_H

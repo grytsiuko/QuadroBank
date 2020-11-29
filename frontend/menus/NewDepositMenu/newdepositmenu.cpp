@@ -1,38 +1,37 @@
 #include "newdepositmenu.h"
 #include "frontend/menus/utils/info_message/info_message.h"
-
+#include "../utils/update_balance_label/balance_label_util.h"
+#include "../utils/amount_converter/amount_convert.h"
 NewDepositMenu::~NewDepositMenu() {
     delete ui;
 }
 
 void NewDepositMenu::update_balance_label() {
-    Response<AccountBalanceDto> balanceDTO = accountActions.check_balance(currentToken);
+    Response<AccountBalanceDto> balanceDTO = accountActions.check_balance(TokenDto{currentToken._token});
     if (balanceDTO.is_success()) {
         const AccountBalanceDto& account_balance = balanceDTO.get_response();
-        QString balanceString;
-        if (account_balance._credit_limit > 0)
-            balanceString = QString("Your Balance: %1 $\n(Cred Limit: %2)").arg(1.*account_balance._balance/100).arg(1.*account_balance._credit_limit/100);
-        else
-            balanceString = QString("Your Balance: %1 $").arg(1.*account_balance._balance/100);
-        ui->LabelName->setText(balanceString);
+        update_label(ui->LabelName, account_balance);
     }
 }
 
-void NewDepositMenu::set_token(const TokenDto &token) {
+void NewDepositMenu::set_token(const SessionDto &token) {
     TokenInterface::set_token(token);
     update_balance_label();
     load_deposit_variants();
 }
 
+void NewDepositMenu::clear_inputs(){
+    ui->amount_input->setText("");
+};
+
 void NewDepositMenu::load_deposit_variants() {
-    Response<vector<DepositVariantDto>> depositVectorResponse = depositActions.get_possible_variants(currentToken);
+    const Response<vector<DepositVariantDto>> depositVectorResponse = depositActions.get_possible_variants(TokenDto{currentToken._token});
     if (depositVectorResponse.is_success()) {
         const vector<DepositVariantDto>& depositVector = depositVectorResponse.get_response();
         ui->comboBox->clear();
         for (const DepositVariantDto &dep_var : depositVector) {
             QString balanceString = QString("Deposit for %1s with %2%").arg(dep_var._period_sec).arg(
                     dep_var._percentage*100);
-
             QString dataString = QString("%1").arg(dep_var._percentage);
             ui->comboBox->addItem(balanceString, dataString);
         }
@@ -41,14 +40,8 @@ void NewDepositMenu::load_deposit_variants() {
 }
 
 void NewDepositMenu::create_deposit() {
-    bool good;
-    double amount = ui->amount_input->text().toDouble(&good);
-    if (!good) {
-        ui->amount_input->setStyleSheet("border: 1px solid red");
-        showInfo("Amount should not be empty");
-        ui->amount_input->setText("");
-    }
-    else if (amount <= 0.001){
+    int amount = convertAmount(ui->amount_input->text());
+    if (amount == 0){
         showInfo("Amount cannot be 0");
         ui->amount_input->setStyleSheet("border: 1px solid red");
     }
@@ -57,7 +50,7 @@ void NewDepositMenu::create_deposit() {
         const Response<void>& responseTransfer = depositActions.create(
                 DepositCreateDto{currentToken._token,
                                  selected_variant.toDouble(),
-                                 static_cast<int>(amount*100)});
+                                 amount});
         if (responseTransfer.is_success()) {
             ui->amount_input->setText("");
             showInfo("Deposit successfully created");

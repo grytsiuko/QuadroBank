@@ -16,7 +16,7 @@ SessionDto AccountService::authorize(const AccountAuthorizeDto &account_authoriz
         throw BlockedCardException();
     }
 
-    if (account._pin != account_authorize_dto._pin) {
+    if (!_cypher.is_equal(account_authorize_dto._pin, account._pin)) {
         _incorrect_pins[account_authorize_dto._card_number] += 1;
 
         if(_incorrect_pins[account_authorize_dto._card_number] >= MAX_INCORRECT_PINS){

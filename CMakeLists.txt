@@ -2,12 +2,16 @@ cmake_minimum_required(VERSION 3.5)
 project(QuadroBank)
 
 set(CMAKE_CXX_STANDARD 14)
-SET(CMAKE_CXX_FLAGS -pthread)
+set(CMAKE_CXX_FLAGS -pthread)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR}Sql REQUIRED)
+
+set(QT_NO_DEBUG_OUTPUT)
+set(QT_NO_WARNING_OUTPUT)
+set(QT_NO_INFO_OUTPUT)
 
 
 set(CMAKE_AUTOUIC ON)
@@ -23,7 +27,7 @@ add_executable(QuadroBank
         backend/account/account_controller.h
         frontend/actions/deposit_actions.h
         backend/deposit/dto/deposit_dto.h
-        backend/deposit/dto/deposit_variant_dto.h
+        backend/deposit_variant/dto/deposit_variant_dto.h
         backend/deposit/dto/deposit_create_dto.h
         frontend/actions/regular_payment_actions.h
         backend/regular_payment/dto/regular_payment_create_dto.h
@@ -105,11 +109,11 @@ add_executable(QuadroBank
 
         frontend/menus/LoginMenu/loginmenu.cpp
         frontend/menus/LoginMenu/loginmenu.h
-        frontend/menus/LoginMenu/loginmenu.ui 
-        backend/deposit/model/deposit_variant.h 
-        backend/deposit/deposit_variant_repsitory_interface.h 
-        backend/deposit/deposit_variant_repository_in_memory.h 
-        backend/deposit/deposit_variant_repository_in_memory.cpp
+        frontend/menus/LoginMenu/loginmenu.ui
+        backend/deposit_variant/model/deposit_variant.h
+        backend/deposit_variant/deposit_variant_repsitory_interface.h
+        backend/deposit_variant/deposit_variant_repository_in_memory.h
+        backend/deposit_variant/deposit_variant_repository_in_memory.cpp
         backend/utils/time_intervals.h
         frontend/demo_deposit_scheduler.h
         backend/regular_payment/model/regular_payment.h
@@ -146,12 +150,15 @@ add_executable(QuadroBank
         backend/regular_payment/regular_payment_repository_db.cpp
         backend/deposit/deposit_repository_db.h
         backend/deposit/deposit_repository_db.cpp
-        backend/deposit/deposit_variant_repository_db.h
-        backend/deposit/deposit_variant_repository_db.cpp
+        backend/deposit_variant/deposit_variant_repository_db.h
+        backend/deposit_variant/deposit_variant_repository_db.cpp
         backend/utils/string_convert.h
 
         frontend/menus/utils/token_menu_interface/token_menu_interface.h
         frontend/menus/utils/token_menu_interface/token_menu_interface.cpp
+
+        frontend/menus/utils/amount_converter/amount_convert.cpp
+        frontend/menus/utils/amount_converter/amount_convert.h
 
         backend/db/specifications/specification.h
         backend/db/specifications/deposits_by_card_number_specification.h
@@ -183,7 +190,11 @@ add_executable(QuadroBank
         backend/db/db_service.cpp backend/log/log_service.cpp
         backend/notification/notification_service.cpp
         backend/token/token_service.cpp
-        )
+        frontend/menus/utils/update_balance_label/balance_label_util.h
+        frontend/menus/utils/update_balance_label/balance_label_util.cpp
+        backend/utils/cypher/cypher_interface.h
+        backend/utils/cypher/xor_cypher.h
+        frontend/demo_cypher.h)
 
 
 target_link_libraries(${PROJECT_NAME} Qt${QT_VERSION_MAJOR}::Widgets)

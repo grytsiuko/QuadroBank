@@ -17,15 +17,15 @@ void LoginMenu::login_validation(){
     QString card_data = ui->card_number_input->text();
     QString pin_data = ui->password_input->text();
 
-    const Response<SessionDto>& authorizeResponse = accountActions.authorize(
+    const Response<SessionDto> authorizeResponse = accountActions.authorize(
             AccountAuthorizeDto{card_data.toStdString(), pin_data.toStdString()}
     );
     if (authorizeResponse.is_success()){
-        TokenDto tokenDto = TokenDto{authorizeResponse.get_response()._token};
-        emit send_token(tokenDto);
+        const SessionDto& sessionDto = authorizeResponse.get_response();
+        emit send_token(sessionDto);
         emit input_validated();
-        clear_stylesheet();
         ui->card_number_input->setText("");
+        clear_stylesheet();
     }
     else{
         ui->card_number_input->setStyleSheet("border: 1px solid red");

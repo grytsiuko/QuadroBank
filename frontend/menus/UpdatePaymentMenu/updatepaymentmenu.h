@@ -20,7 +20,7 @@ Q_OBJECT
 public:
     ~UpdatePaymentMenu();
 
-    void set_token(const TokenDto &token);
+    void set_token(const SessionDto &token);
 signals:
     void updated();
 public slots:
@@ -28,6 +28,7 @@ public slots:
 private slots:
     void send_update_dto();
     void send_delete_dto();
+    void clear_inputs();
 
 private:
     explicit UpdatePaymentMenu(QWidget *parent = nullptr) :
@@ -36,6 +37,7 @@ private:
         ui->setupUi(this);
         connect(ui->new_payment_button,SIGNAL(clicked()), this, SLOT(send_update_dto()));
         connect(ui->delete_button,SIGNAL(clicked()), this, SLOT(send_delete_dto()));
+        connect(ui->back_button,SIGNAL(clicked()), this, SLOT(clear_inputs()));
 
         QRegExp re("^[0-9]+(\\.[0-9]{1,2})?$");
         QRegExpValidator *validator = new QRegExpValidator(re, this);

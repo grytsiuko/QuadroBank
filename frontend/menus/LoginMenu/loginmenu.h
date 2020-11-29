@@ -8,6 +8,7 @@
 #include "ui_loginmenu.h"
 #include "../../actions/account_actions.h"
 
+
 namespace Ui {
     class LoginMenu;
 }
@@ -20,7 +21,7 @@ public:
 
 signals:
     void input_validated();
-    void send_token(TokenDto const &);
+    void send_token(SessionDto const &);
 
 private slots:
     void login_validation();

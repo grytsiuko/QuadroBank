@@ -18,10 +18,11 @@ class NewPaymentMenu :  public QWidget, public Singleton<NewPaymentMenu>,  Token
     Q_OBJECT
 
 public:
-    void set_token(const TokenDto& token);
+    void set_token(const SessionDto& token);
     ~NewPaymentMenu();
 private slots:
     void create_payment();
+    void clear_inputs();
 private:
     explicit NewPaymentMenu(QWidget *parent = nullptr):
         QWidget(parent),
@@ -29,6 +30,7 @@ private:
     {
         ui->setupUi(this);
         connect( ui->new_payment_button,SIGNAL(clicked()),this,SLOT(create_payment()));
+        connect( ui->back_button,SIGNAL(clicked()),this,SLOT(clear_inputs()));
 
         QRegExp re("^[0-9]+(\\.[0-9]{1,2})?$");
         QRegExpValidator *validator = new QRegExpValidator(re, this);
