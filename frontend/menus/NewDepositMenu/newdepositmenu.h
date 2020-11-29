@@ -23,6 +23,7 @@ public:
     void set_token(const SessionDto& token);
 private slots:
     void create_deposit();
+    void clear_inputs();
 private:
     explicit NewDepositMenu(QWidget *parent = nullptr):
         QWidget(parent),
@@ -30,7 +31,10 @@ private:
     {
         ui->setupUi(this);
         connect( ui->new_deposit_button,SIGNAL(clicked()),this,SLOT(create_deposit()));
+        connect( ui->back_button,SIGNAL(clicked()),this,SLOT(clear_inputs()));
+
         ui->comboBox->setItemDelegate(new QStyledItemDelegate(ui->comboBox));
+
         QRegExp re("^[0-9]+(\\.[0-9]{1,2})?$");
         QRegExpValidator *validator = new QRegExpValidator(re, this);
         ui->amount_input->setValidator(validator);

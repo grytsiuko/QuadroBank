@@ -24,8 +24,8 @@ void LoginMenu::login_validation(){
         const SessionDto& sessionDto = authorizeResponse.get_response();
         emit send_token(sessionDto);
         emit input_validated();
-        clear_stylesheet();
         ui->card_number_input->setText("");
+        clear_stylesheet();
     }
     else{
         ui->card_number_input->setStyleSheet("border: 1px solid red");

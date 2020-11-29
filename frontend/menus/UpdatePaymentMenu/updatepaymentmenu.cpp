@@ -37,7 +37,11 @@ void UpdatePaymentMenu::set_payment_date_variants() {
     ui->comboBox->addItem("Days", TimeIntervals::DAY);
     ui->comboBox->addItem("Month", TimeIntervals::MONTH);
 };
-
+void UpdatePaymentMenu::clear_inputs(){
+    ui->amount_input->setText("");
+    ui->card_input->setText("");
+    ui->quantity_input->setText("");
+}
 
 
 void UpdatePaymentMenu::update_payment(int currentPaymentId) {

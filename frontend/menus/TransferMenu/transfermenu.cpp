@@ -10,6 +10,10 @@ void TransferMenu::set_token(const SessionDto &token) {
     TokenInterface::set_token(token);
     update_balance_label();
 }
+void TransferMenu::clear_inputs(){
+    ui->card_number_input->setText("");
+    ui->amount_input->setText("");
+}
 
 void TransferMenu::update_balance_label() {
     Response<AccountBalanceDto> balanceDTO = accountActions.check_balance(TokenDto{currentToken._token});

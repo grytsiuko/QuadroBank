@@ -14,6 +14,12 @@ void NewPaymentMenu::update_balance_label() {
         update_label(ui->LabelName, account_balance);
     }
 }
+void NewPaymentMenu::clear_inputs(){
+    ui->amount_input->setText("");
+    ui->card_input->setText("");
+    ui->quantity_input->setText("");
+};
+
 
 void NewPaymentMenu::set_up_date_time_edit() {
     QDate today = QDate::currentDate();

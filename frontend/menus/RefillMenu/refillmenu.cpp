@@ -19,6 +19,10 @@ void RefillMenu::update_balance_label() {
     }
 }
 
+void RefillMenu::clear_inputs(){
+    ui->amount_input->setText("");
+}
+
 void RefillMenu::refill(){
     bool good;
     double amount = ui->amount_input->text().toDouble(&good);

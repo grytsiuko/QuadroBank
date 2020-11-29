@@ -23,6 +23,7 @@ public:
 
 public slots:
     void refill();
+    void clear_inputs();
 
 private:
     explicit RefillMenu(QWidget *parent = nullptr) :
@@ -31,6 +32,9 @@ private:
     {
         ui->setupUi(this);
         connect( ui->refill_button,SIGNAL(clicked()),this,SLOT(refill()));
+        connect( ui->back_button,SIGNAL(clicked()),this,SLOT(clear_inputs()));
+
+
         QRegExp re("^[0-9]+(\\.[0-9]{1,2})?$");
         QRegExpValidator *validator = new QRegExpValidator(re, this);
         ui->amount_input->setValidator(validator);
