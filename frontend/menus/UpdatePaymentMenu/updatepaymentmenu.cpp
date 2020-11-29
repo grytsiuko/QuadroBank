@@ -3,6 +3,7 @@
 #include <QtCore/QDate>
 #include "frontend/menus/utils/info_message/info_message.h"
 #include "../utils/update_balance_label/balance_label_util.h"
+#include "../utils/amount_converter/amount_convert.h"
 UpdatePaymentMenu::~UpdatePaymentMenu() {
     delete ui;
 }
@@ -90,14 +91,8 @@ void UpdatePaymentMenu::send_delete_dto(){
 
 
 void UpdatePaymentMenu::send_update_dto(){
-    bool good;
-    double amount = ui->amount_input->text().toDouble(&good);
-    if (!good) {
-        showInfo("Amount should not be empty");
-        ui->amount_input->setStyleSheet("border: 1px solid red");
-        ui->amount_input->setText("");
-    }
-    else if (amount <= 0.001){
+    int amount = convertAmount(ui->amount_input->text());
+    if (amount == 0){
         showInfo("Amount cannot be 0");
         ui->amount_input->setStyleSheet("border: 1px solid red");
     }
@@ -123,7 +118,7 @@ void UpdatePaymentMenu::send_update_dto(){
                                 period,
                                 next_time,
                                 card.toStdString(),
-                                static_cast<int>(amount*100)
+                                amount
                         });
                 if (responseUpdatePayment.is_success()) {
                     ui->amount_input->setText("");

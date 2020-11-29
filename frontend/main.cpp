@@ -3,9 +3,10 @@
 #include <QApplication>
 
 int main(int argc, char *argv[]) {
-    Scheduler::get_instance();
     QApplication a(argc, argv);
     MainWindow w;
+    Scheduler::get_instance();
     w.show();
-    return a.exec();
+    a.exec();
+    return 0;
 }

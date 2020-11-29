@@ -2,6 +2,7 @@
 #include "ui_transfermenu.h"
 #include "frontend/menus/utils/info_message/info_message.h"
 #include "../utils/update_balance_label/balance_label_util.h"
+#include "../utils/amount_converter/amount_convert.h"
 TransferMenu::~TransferMenu() {
     delete ui;
 }
@@ -25,12 +26,8 @@ void TransferMenu::update_balance_label() {
 
 
 void TransferMenu::transfer() {
-    bool good;
-    double amount = ui->amount_input->text().toDouble(&good);
-    if (!good) {
-        showInfo("Amount should not be empty");
-    }
-    else if (amount <= 0.001){
+    int amount = convertAmount(ui->amount_input->text());
+    if (amount == 0){
         showInfo("Amount cannot be 0");
         ui->amount_input->setStyleSheet("border: 1px solid red");
     }
@@ -38,7 +35,7 @@ void TransferMenu::transfer() {
         const Response<void> &responseTransfer = accountActions.transfer(
                 AccountTransferDto{currentToken._token,
                                    ui->card_number_input->text().toStdString(),
-                                   static_cast<int>(amount * 100)});
+                                   amount});
         if (responseTransfer.is_success()) {
             ui->card_number_input->setText("");
             ui->amount_input->setText("");

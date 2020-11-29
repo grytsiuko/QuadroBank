@@ -157,6 +157,9 @@ add_executable(QuadroBank
         frontend/menus/utils/token_menu_interface/token_menu_interface.h
         frontend/menus/utils/token_menu_interface/token_menu_interface.cpp
 
+        frontend/menus/utils/amount_converter/amount_convert.cpp
+        frontend/menus/utils/amount_converter/amount_convert.h
+
         backend/db/specifications/specification.h
         backend/db/specifications/deposits_by_card_number_specification.h
         backend/db/specifications/deposit_variants_all_specification.h

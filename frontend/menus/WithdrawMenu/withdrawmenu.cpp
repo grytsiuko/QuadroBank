@@ -2,6 +2,7 @@
 #include "ui_withdrawmenu.h"
 #include "frontend/menus/utils/info_message/info_message.h"
 #include "../utils/update_balance_label/balance_label_util.h"
+#include "../utils/amount_converter/amount_convert.h"
 
 WithdrawMenu::~WithdrawMenu() {
     delete ui;
@@ -24,18 +25,14 @@ void WithdrawMenu::update_balance_label() {
 }
 
 void WithdrawMenu::withdraw() {
-    bool good;
-    double amount = ui->amount_input->text().toDouble(&good);
-    if (!good) {
-        showInfo("Amount should not be empty");
-        ui->amount_input->setStyleSheet("border: 1px solid red");
-    } else if (amount <= 0.001) {
+    int amount = convertAmount(ui->amount_input->text());
+    if (amount == 0) {
         showInfo("Amount cannot be 0");
         ui->amount_input->setStyleSheet("border: 1px solid red");
     } else {
         const Response<void> &responseWithdraw = accountActions.withdraw(
                 AccountUpdateDto{currentToken._token,
-                                 static_cast<int>(amount * 100)});
+                                 amount});
         if (responseWithdraw.is_success()) {
             ui->amount_input->setStyleSheet("border: 1px solid green");
             showInfo("Withdraw successfully processed");

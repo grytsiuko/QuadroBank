@@ -1,6 +1,7 @@
 #include "newdepositmenu.h"
 #include "frontend/menus/utils/info_message/info_message.h"
 #include "../utils/update_balance_label/balance_label_util.h"
+#include "../utils/amount_converter/amount_convert.h"
 NewDepositMenu::~NewDepositMenu() {
     delete ui;
 }
@@ -39,14 +40,8 @@ void NewDepositMenu::load_deposit_variants() {
 }
 
 void NewDepositMenu::create_deposit() {
-    bool good;
-    double amount = ui->amount_input->text().toDouble(&good);
-    if (!good) {
-        ui->amount_input->setStyleSheet("border: 1px solid red");
-        showInfo("Amount should not be empty");
-        ui->amount_input->setText("");
-    }
-    else if (amount <= 0.001){
+    int amount = convertAmount(ui->amount_input->text());
+    if (amount == 0){
         showInfo("Amount cannot be 0");
         ui->amount_input->setStyleSheet("border: 1px solid red");
     }
@@ -55,7 +50,7 @@ void NewDepositMenu::create_deposit() {
         const Response<void>& responseTransfer = depositActions.create(
                 DepositCreateDto{currentToken._token,
                                  selected_variant.toDouble(),
-                                 static_cast<int>(amount*100)});
+                                 amount});
         if (responseTransfer.is_success()) {
             ui->amount_input->setText("");
             showInfo("Deposit successfully created");
