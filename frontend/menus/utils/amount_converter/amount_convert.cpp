@@ -5,7 +5,7 @@
 int convertAmount(const QString& amount){
     QStringList amount_list = amount.split(".");
     if (amount_list.length() < 2){
-        return amount.toInt();
+        return amount.toInt() * 100;
     }
     else{
         if (amount_list[1].length() < 2 && amount_list[1] != ""){
