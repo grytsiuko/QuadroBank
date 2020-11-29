@@ -1,21 +1,24 @@
 
+#include <backend/utils/cypher/cypher_interface.h>
+#include <backend/utils/cypher/xor_cypher.h>
 #include "account_repository_in_memory.h"
 
 AccountRepositoryInMemory::AccountRepositoryInMemory() : _accounts(vector<Account>()) {
+    const CypherInterface &cypher = XORCypher::get_instance();
     _accounts.push_back(
-            Account{"1111111111111111", 15, "1111", false, 15000, 5000, 0}
+            Account{"1111111111111111", 15, cypher.encrypt("1111"), false, 15000, 5000, 0}
     );
     _accounts.push_back(
-            Account{"2222222222222222", 15, "2222", false, 20000, 0, 0}
+            Account{"2222222222222222", 15, cypher.encrypt("2222"), false, 20000, 0, 0}
     );
     _accounts.push_back(
-            Account{"3333333333333333", 20, "3333", false, 0, 3000, 0}
+            Account{"3333333333333333", 20, cypher.encrypt("3333"), false, 0, 3000, 0}
     );
     _accounts.push_back(
-            Account{"1234123412341234", 20, "3333", false, 52000, 0, 0}
+            Account{"1234123412341234", 20, cypher.encrypt("3333"), false, 52000, 0, 0}
     );
     _accounts.push_back(
-            Account{"4321432143214321", 20, "3333", false, 7400, 0, 0}
+            Account{"4321432143214321", 20, cypher.encrypt("3333"), false, 7400, 0, 0}
     );
 }
 
