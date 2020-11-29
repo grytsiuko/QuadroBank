@@ -111,7 +111,7 @@ void UpdatePaymentMenu::send_update_dto(){
                 int period = selected_variant.toInt() * quantity;
                 time_t next_time = ui->dateTimeEdit->dateTime().toSecsSinceEpoch() + period;
 
-                const Response<void>& responseUpdatePayment =
+                const Response<void> responseUpdatePayment =
                         paymentActions.update(RegularPaymentUpdateDto{
                                 currentToken._token,
                                 payment_id,

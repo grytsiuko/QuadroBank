@@ -25,7 +25,7 @@ void NewDepositMenu::clear_inputs(){
 };
 
 void NewDepositMenu::load_deposit_variants() {
-    Response<vector<DepositVariantDto>> depositVectorResponse = depositActions.get_possible_variants(TokenDto{currentToken._token});
+    const Response<vector<DepositVariantDto>> depositVectorResponse = depositActions.get_possible_variants(TokenDto{currentToken._token});
     if (depositVectorResponse.is_success()) {
         const vector<DepositVariantDto>& depositVector = depositVectorResponse.get_response();
         ui->comboBox->clear();
