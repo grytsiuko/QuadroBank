@@ -19,9 +19,11 @@ void MainMenu::update_balance_label(){
         ui->UserLabel->setText(QString("Current User: %1").arg(QString::fromStdString(currentToken._name)));
         if (account_balance._credit_limit > 0){
             ui->deposits_button->setHidden(true);
+            ui->horizontalSpacer_8->changeSize(0,0);
         }
         else {
             ui->deposits_button->setHidden(false);
+            ui->horizontalSpacer_8->changeSize(40,0);
         }
     }
 };
