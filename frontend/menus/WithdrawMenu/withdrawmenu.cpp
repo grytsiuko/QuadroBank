@@ -11,6 +11,9 @@ void WithdrawMenu::set_token(const SessionDto &token) {
     TokenInterface::set_token(token);
     update_balance_label();
 }
+void WithdrawMenu::clear_inputs(){
+    ui->amount_input->setText("");
+};
 
 void WithdrawMenu::update_balance_label() {
     Response<AccountBalanceDto> balanceDTO = accountActions.check_balance(TokenDto{currentToken._token});

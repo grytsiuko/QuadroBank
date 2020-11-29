@@ -19,6 +19,10 @@ void NewDepositMenu::set_token(const SessionDto &token) {
     load_deposit_variants();
 }
 
+void NewDepositMenu::clear_inputs(){
+    ui->amount_input->setText("");
+};
+
 void NewDepositMenu::load_deposit_variants() {
     Response<vector<DepositVariantDto>> depositVectorResponse = depositActions.get_possible_variants(TokenDto{currentToken._token});
     if (depositVectorResponse.is_success()) {
@@ -27,7 +31,6 @@ void NewDepositMenu::load_deposit_variants() {
         for (const DepositVariantDto &dep_var : depositVector) {
             QString balanceString = QString("Deposit for %1s with %2%").arg(dep_var._period_sec).arg(
                     dep_var._percentage*100);
-
             QString dataString = QString("%1").arg(dep_var._percentage);
             ui->comboBox->addItem(balanceString, dataString);
         }
