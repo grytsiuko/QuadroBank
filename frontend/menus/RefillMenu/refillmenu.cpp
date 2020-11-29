@@ -32,7 +32,7 @@ void RefillMenu::refill(){
         ui->amount_input->setStyleSheet("border: 1px solid red");
     }
     else {
-        const Response<void>& responseTransfer = accountActions.top_up(
+        const Response<void> responseTransfer = accountActions.top_up(
                 AccountUpdateDto{currentToken._token, amount});
         if (responseTransfer.is_success()){
             showInfo("Successfully refilled");

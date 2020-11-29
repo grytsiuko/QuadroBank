@@ -32,7 +32,7 @@ void TransferMenu::transfer() {
         ui->amount_input->setStyleSheet("border: 1px solid red");
     }
     else {
-        const Response<void> &responseTransfer = accountActions.transfer(
+        const Response<void> responseTransfer = accountActions.transfer(
                 AccountTransferDto{currentToken._token,
                                    ui->card_number_input->text().toStdString(),
                                    amount});

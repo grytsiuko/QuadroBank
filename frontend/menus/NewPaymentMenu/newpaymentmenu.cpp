@@ -70,7 +70,7 @@ void NewPaymentMenu::create_payment() {
                 QVariant selected_variant = ui->comboBox->currentData();
                 int period = selected_variant.toInt() * quantity;
                 time_t next_time = ui->dateTimeEdit->dateTime().toSecsSinceEpoch() + 1;
-                const Response<void> &responsePaymentCreation = paymentActions.create(
+                const Response<void> responsePaymentCreation = paymentActions.create(
                         RegularPaymentCreateDto{
                                 currentToken._token,
                                 next_time,

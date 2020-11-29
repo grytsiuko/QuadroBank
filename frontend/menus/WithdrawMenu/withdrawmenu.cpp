@@ -30,7 +30,7 @@ void WithdrawMenu::withdraw() {
         showInfo("Amount cannot be 0");
         ui->amount_input->setStyleSheet("border: 1px solid red");
     } else {
-        const Response<void> &responseWithdraw = accountActions.withdraw(
+        const Response<void> responseWithdraw = accountActions.withdraw(
                 AccountUpdateDto{currentToken._token,
                                  amount});
         if (responseWithdraw.is_success()) {
