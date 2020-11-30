@@ -151,6 +151,7 @@ void MainWindow::set_depositsmenu() {
     disconnect(depositsmenu_ui->new_deposit_button, SIGNAL(clicked()), this, SLOT(set_newdepositsmenu()));
     connect(depositsmenu_ui->new_deposit_button, SIGNAL(clicked()), this, SLOT(set_newdepositsmenu()));
 
+    DepositsMenu::get_instance().set_token(currentSession);
     menus->setCurrentIndex(menus->indexOf(&DepositsMenu::get_instance()));
 }
 
